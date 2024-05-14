@@ -13,6 +13,15 @@ from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 
 # from models import Person
+@api.route('/wipeall', methods=['GET'])
+def database_wipe():
+    try:
+        db.reflect()
+        db.drop_all()
+        db.session.commit()
+    except Exception as e:
+        return "mec", 500
+    return "ok", 200
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
