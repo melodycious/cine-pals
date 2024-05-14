@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './navbar.css';
+import logo from "../../../img/logo-sin-fondo.png";
 
 export const Navbar = () => {
 	const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const Navbar = () => {
 		<nav className="navbar bg-body-tertiary">
 			<div className="container-fluid d-flex justify-content-between">
 				<Link to="/">
-					<img src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Logo" width="30" height="24" className="d-inline-block align-text-top"/>
+					<img src={logo} alt="Logo" width="100" height="90" className="d-inline-block align-text-top"/>
 				</Link>
 				<form className="d-flex flex-grow-1 justify-content-end">
 					<a className="btn btn-outline-success me-2" type="button" href="/profile">My Lists</a>
