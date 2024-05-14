@@ -50,12 +50,28 @@ def handle_login():
 @api.route('/users/<int:id>', methods=['GET'])
 def handle_get_one_user(id):
     user = User.query.get(id)
+    users = User.query.all()
+    users_serialized = []
+    for user in users:
+        users_serialized.append(user.serialize())
     response_body = {
         "msg": "The user: ",
         "user": user.serialize()
     }
     return jsonify(response_body), 200
 
+""" @api.route('/users', methods=['GET'])
+def handle_get_users():
+    users = User.query.all()
+    users_serialized = []
+    for user in users:
+        users_serialized.append(user.serialize())
+    response_body = {
+        "msg": "The users: ",
+        "users": users_serialized
+    }
+    return jsonify(response_body), 200
+ """
 @api.route('/users/<int:id>', methods=['DELETE'])
 def handle_delete_user(id):
     user = User.query.get(id)
@@ -82,4 +98,6 @@ def handle_edit_user(id):
 
     }
     return jsonify(response_body), 200
+
+
 
