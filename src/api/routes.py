@@ -45,3 +45,41 @@ def handle_login():
    
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token), 200
+
+
+@api.route('/users/<int:id>', methods=['GET'])
+def handle_get_one_user(id):
+    user = User.query.get(id)
+    response_body = {
+        "msg": "The user: ",
+        "user": user.serialize()
+    }
+    return jsonify(response_body), 200
+
+@api.route('/users/<int:id>', methods=['DELETE'])
+def handle_delete_user(id):
+    user = User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    response_body = {
+        "msg": "The user was deleted "
+    }
+    return jsonify(response_body), 200
+
+
+
+@api.route('/users/<int:id>', methods=['PUT'])
+def handle_edit_user(id):
+    email = request.json.get('email')
+    password = request.json.get('password')
+    user = User.query.get(id)
+    user.email = email
+    user.password = password
+    db.session.commit()
+    response_body = {
+        "msg": "The user was modified ",
+        "user": user.serialize()
+
+    }
+    return jsonify(response_body), 200
+
