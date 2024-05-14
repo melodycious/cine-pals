@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import './navbar.css';
 
 export const Navbar = () => {
+	const navigate = useNavigate();
+	const handleLogout = () => {
+		console.log('logout');
+		localStorage.removeItem('token');
+		localStorage.removeItem('userId');
+		navigate('/login');
+	}
 	return (
 
 
@@ -13,7 +20,7 @@ export const Navbar = () => {
 				</Link>
 				<form className="d-flex flex-grow-1 justify-content-end">
 					<a className="btn btn-outline-success me-2" type="button" href="/profile">My Lists</a>
-					<a className="btn btn-outline-success me-2" type="button" href="/">Log out</a>
+					<a className="btn btn-outline-success me-2" type="button" onClick={()=> handleLogout()}>Log out</a>
 				</form>
 			</div>
 		</nav>
