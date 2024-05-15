@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         await fetch(
-          "https://shiny-space-zebra-9775x5x6pjv637xjw-3001.app.github.dev/api/signup",
+          `${process.env.BACKEND_URL}/api/signup`,
           requestOptions
         )
           .then((response) => response.json())
@@ -65,9 +65,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           requestOptions
         )
           .then((response) => {
-            if (!response.ok) {
+          /*   if (!response.ok) {
               throw new Error("La solicitud no fue exitosa");
-            }
+            } */
             return response.json();
           })
 

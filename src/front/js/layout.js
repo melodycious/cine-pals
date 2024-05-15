@@ -9,9 +9,9 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Profile from "./pages/profile";
-import Login from "./pages/login";
+import Login from "./pages/login.jsx";
 import Movie from "./pages/movie";
-import List from "./pages/list";
+import List from "./pages/list.jsx";
 
 //create your first component
 const Layout = () => {
