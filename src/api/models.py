@@ -1,7 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
+""" 
+user_list_association = db.Table('user_list_association',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('list_id', db.Integer, db.ForeignKey('list.id'))
+    )
+ """
 
 class User(db.Model):
     id = db.Column(db.Integer,unique=True, primary_key=True)
@@ -9,10 +14,8 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
     lists = db.relationship('List', backref='user', lazy=True)
-    #mi_lista = db.Column(db.ARRAY(db.String), nullable=True)
     nombre = db.Column(db.String(120), nullable=True)
 
-   
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -21,9 +24,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-           """  "mi_lista": list(map(lambda x: x.serialize(), self.mi_lista)), """
             "nombre": self.nombre
-
             # do not serialize the password, it's a security breach
         }
 
@@ -32,8 +33,8 @@ class List(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(120), nullable=False) 
     movies = db.relationship('Movie', backref='list', lazy=True) 
-    series = db.relationship('Serie', backref='list', lazy=True) 
-    owner = db.Column(db.ARRAY(db.String), nullable=True)
+    series = db.relationship('Serie', backref='list', lazy=True)
+    owners = db.Column(db.ARRAY(db.String), nullable=True)
 
     def __repr__(self):
         return f'<List {self.id}>'
@@ -44,8 +45,7 @@ class List(db.Model):
             "name": self.name,
             "user_id": self.user_id,
             "movies": list(map(lambda x: x.serialize(), self.movies)),
-            "series": list(map(lambda x: x.serialize(), self.series)),
-            "owner": list(map(lambda x: x.serialize(), self.owner))
+            "series": list(map(lambda x: x.serialize(), self.series))
          }
 
 class Movie(db.Model):
@@ -57,7 +57,7 @@ class Movie(db.Model):
     release_date = db.Column(db.String(120), nullable=False)
     runtime = db.Column(db.Integer, nullable=False)
     tagline = db.Column(db.Integer, nullable=False)
-    list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=False)
+    list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
 
     def __repr__(self):
         return f'<Movie {self.title}>'
@@ -86,7 +86,7 @@ class Serie(db.Model):
     number_of_seasons = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(120), nullable=False)
     network = db.Column(db.ARRAY(db.String), nullable=True)
-    list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=False)
+    list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
 
     def __repr__(self):    
         return f'<Serie {self.name}>'
