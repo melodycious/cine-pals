@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import '../../styles/profile.css';
 import cinePals from "../../img/cinePals.jpg";
+import ListCard from "../component/listCard/listCard.jsx";
 
 const Profile = () => {
 
@@ -8,9 +9,11 @@ const Profile = () => {
         return (
           
             <> 
+            <div className="d-inline m-1 p-2">            
+                <button className="btn btn-outline-primary m-2 profileButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Profile</button>
+                <button className="btn btn-primary newList" type="button">+ New List</button>
+            </div>
             <div className="sideBar m-3">
-                <button className="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Profile</button>  
-
                 <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
                     <div className="offcanvas-header">
                         <h2 className="offcanvas-title" id="offcanvasWithBothOptionsLabel">Your profile</h2>
@@ -27,48 +30,16 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-          
-            <h1 class="text-center">My Lists</h1>
-
-            <div className="row row-cols-1 row-cols-md-3 g-4 m-5 p-3">
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="..." className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="..." className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a short card.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="..." className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="col">
-                    <div className="card h-100">
-                        <img src="..." className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        </div>
-                    </div>
-                </div>
+            <div className="container center">
+                <h1 class="text-center">My Lists</h1>
+                <div className="divisor"></div>
+            </div>
+            <div className="row row-cols-1 row-cols-md-4 g-4 m-2 p-1 align-items-center justify-content-md-center">
+               <ListCard />
+               <ListCard />
+               <ListCard />
+               <ListCard />
+               <ListCard />
             </div>
         </>
         )

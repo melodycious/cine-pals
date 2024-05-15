@@ -6,10 +6,29 @@
     color: #1D5B79;
     border-color: #1D5B79;
 }
+.btn:focus{
+    background-color: #468B97; 
+    color: aliceblue;
+    border-color: aliceblue;
+}
 .btn:hover{
     background-color: #EF6262;
 }
 .deleteButton{
     background-color: #EF6262;
     color:antiquewhite;
+}
+h1,.card, .card-title{
+    color: #1D5B79;
+    border-color: #1D5B79;
+}
+
+.divisor{
+    border-bottom: 1px solid #1D5B79; /* Esto crea una línea divisora sólida de 1 píxel de ancho en color negro */
+    margin-bottom: 10px;
+}
+.newList, .profileButton{
+    background-color: #468B97 ;
+    color: aliceblue;
+    border-color: aliceblue;
 }
