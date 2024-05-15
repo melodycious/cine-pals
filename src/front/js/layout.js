@@ -6,8 +6,8 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { Navbar } from "./component/navbar/navbar.jsx";
+import { Footer } from "./component/footer/footer.jsx";
 import Profile from "./pages/profile";
 import Login from "./pages/login";
 import Movie from "./pages/movie";
