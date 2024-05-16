@@ -85,7 +85,7 @@ export const Login = () => {
                 aria-controls="signup-tab-pane"
                 aria-selected="false"
               >
-                <span style={{ color: "white" }}>Signup</span>
+                <span style={{ color: "white" }}>Sign up</span>
               </button>
             </li>
           </ul>
@@ -189,7 +189,7 @@ export const Login = () => {
               tabIndex="0"
             >
               <div className="text-center mt-5">
-                <h1>Signup</h1>
+                <h1>Sign up</h1>
                 <p>Register to access the content</p>
                 <br />
                 <form>
@@ -238,7 +238,7 @@ export const Login = () => {
                   }}
                   className="btn btn-primary"
                 >
-                  SIGNUP
+                  SIGN UP
                 </button>
               </div>
             </div>

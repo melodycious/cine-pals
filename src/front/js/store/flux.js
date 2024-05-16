@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: "",
     },
     actions: {
+      
       /* ESTE ES EL REGISTRO */
 
       getCrearUsuario: async (email, password) => {
