@@ -34,7 +34,7 @@ class List(db.Model):
     name = db.Column(db.String(120), nullable=False) 
     movies = db.relationship('Movie', backref='list', lazy=True) 
     series = db.relationship('Serie', backref='list', lazy=True)
-    owners = db.Column(db.ARRAY(db.String), nullable=True)
+    """ owners = db.Column(db.ARRAY(db.String), nullable=True) """
 
     def __repr__(self):
         return f'<List {self.id}>'
