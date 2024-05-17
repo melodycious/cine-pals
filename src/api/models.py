@@ -1,19 +1,19 @@
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-""" 
+
+
 user_list_association = db.Table('user_list_association',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('list_id', db.Integer, db.ForeignKey('list.id'))
-    )
- """
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('list_id', db.Integer, db.ForeignKey('list.id'), primary_key=True)
+)
 
 class User(db.Model):
-    id = db.Column(db.Integer,unique=True, primary_key=True)
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
-    lists = db.relationship('List', backref='user', lazy=True)
+    lists = db.relationship('List', secondary=user_list_association, backref='owners', lazy=True)
     nombre = db.Column(db.String(120), nullable=True)
 
 
@@ -43,9 +43,9 @@ class List(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "user_id": self.user_id,
-            "movies": list(map(lambda x: x.serialize(), self.movies)),
-            "series": list(map(lambda x: x.serialize(), self.series))
+            "owners": [user.serialize() for user in self.owners],
+            "movies": [movie.serialize() for movie in self.movies],
+            "series": [serie.serialize() for serie in self.series]
          }
 
 class Movie(db.Model):

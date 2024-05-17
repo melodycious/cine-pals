@@ -28,11 +28,11 @@ export const Login = () => {
     actions.getLogin();
   }, []);
 
-  useEffect(() => {
-    if (store.token !== null) {
+/*   useEffect(() => {
+    if (store.token !== ' ') {
       navigate("/profile");
     }
-  }, [store.token, navigate]);
+  }, [store.token]); */
 
   return (
     <div

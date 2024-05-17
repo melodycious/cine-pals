@@ -48,7 +48,7 @@ def handle_login():
     return jsonify(access_token=access_token), 200
 
 
-@api.route('/newuser/<int:id>/<int:listid>', methods=['POST'])
+@api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
 def handle_newuser(id,listid):
     user = User.query.get(id)
     targetList = List.query.get(listid)
@@ -56,7 +56,7 @@ def handle_newuser(id,listid):
     db.session.commit()
     return "Pleaseee!!"
 
-@api.route('/users/<int:id>', methods=['GET'])
+@api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
 def handle_get_one_user(id):
     user = User.query.options(joinedload(User.lists).joinedload(List.movies),joinedload(User.lists).joinedload(List.series)).get(id)
     
@@ -98,9 +98,11 @@ def handle_delete_user(id):
 def handle_edit_user(id):
     email = request.json.get('email')
     password = request.json.get('password')
+    nombre = request.json.get('nombre')
     user = User.query.get(id)
     user.email = email
     user.password = password
+    user.nombre = nombre
     db.session.commit()
     response_body = {
         "msg": "The user was modified ",
@@ -109,5 +111,83 @@ def handle_edit_user(id):
     }
     return jsonify(response_body), 200
 
+@api.route('/lists', methods=['POST'])
+def handle_new_list():
+    request_body = request.get_json()
+    name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
+    user_id = request_body.get('user_id')
+    list = List(name=name, user_id=user_id)
+    db.session.add(list)
+    db.session.commit()
+    response_body = {
+        "msg": "List created successfully",
+        "list": list.serialize()
+    }
+    return jsonify(response_body), 200
+
+@api.route('/lists/<int:id>', methods=['PUT'])
+def handle_edit_list(id):
+    name = request.json.get('name')
+    list = List.query.get(id)           #query para buscar el id (es consulta)
+    list.name = name
+    db.session.commit()
+    response_body = {
+        "msg": "The list was modified ",
+        "list": list.serialize()
+
+    }
+    return jsonify(response_body), 200
+
+@api.route('/lists/<int:id>', methods=['DELETE'])    #elimina la lista por completo
+def handle_delete_list(id):
+    list = List.query.get(id)
+    db.session.delete(list)
+    db.session.commit()
+    response_body = {
+        "msg": "The list was deleted "
+    }
+    return jsonify(response_body), 200
+
+@api.route('/lists/<int:list_id>/add_user', methods=['POST'])
+def add_user_to_list(list_id):
+    user_id = request.json.get('user_id')
+    list = List.query.get(list_id)
+    user = User.query.get(user_id)
+
+    if not list or not user:
+        return jsonify({'msg': 'List or User not found'}), 404
+
+    list.owners.append(user)
+    db.session.commit()
+
+    return jsonify({'msg': 'User added to list'}), 200
+
+@api.route('/lists/<int:list_id>', methods=['GET'])
+def get_list_details(list_id):
+    list = List.query.get(list_id)
+
+    if not list:
+        return jsonify({'msg': 'List not found'}), 404
+
+    return jsonify(list.serialize()), 200
+
+@api.route('/lists/<int:list_id>', methods=['PUT'])
+@jwt_required()
+def edit_list(list_id):
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+    list = List.query.get(list_id)
+
+    if not list:
+        return jsonify({'msg': 'List not found'}), 404
+
+    if current_user not in list.owners:
+        return jsonify({'msg': 'User not authorized to modify this list'}), 403
+
+    name = request.json.get('name')
+    list.name = name
+    db.session.commit()
+
+    return jsonify({'msg': 'List updated', 'list': list.serialize()}), 200
 
 
