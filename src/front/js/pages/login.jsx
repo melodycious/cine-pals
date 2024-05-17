@@ -2,38 +2,30 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import getState from "../store/flux";
-
 export const Login = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const handleSignup = () => {
     actions.getCrearUsuario(email, password);
   };
-
   const handleLogin = () => {
     actions.getLogin(loginEmail, loginPassword);
   };
-
   useEffect(() => {
     actions.getCrearUsuario();
   }, []);
-
   useEffect(() => {
     actions.getLogin();
   }, []);
-
   useEffect(() => {
     if (store.token !== '') {
       navigate("/profile");             //me lleva a la pagina de profile automaticamente
     }
   }, [store.token]);
-
   return (
     <div
       style={{ display: "flex", justifyContent: "center", padding: "2rem" }}
@@ -108,7 +100,7 @@ export const Login = () => {
                         <div className="user-icon">
                           <i
                             style={{
-                              backgroundColor: "#1d5b79",
+                              backgroundColor: "#1D5B79",
                               padding: "10px",
                               color: "white",
                               borderRadius: "8px",
@@ -143,7 +135,7 @@ export const Login = () => {
                         <div className="password-icon">
                           <i
                             style={{
-                              backgroundColor: "#1d5b79",
+                              backgroundColor: "#1D5B79",
                               padding: "10px",
                               color: "white",
                               borderRadius: "8px",
@@ -173,7 +165,7 @@ export const Login = () => {
                   </div>
                 </form>
                 <button
-                  style={{ backgroundColor: "#f3aa60", border: "none" }}
+                  style={{ backgroundColor: "#F3AA60", border: "none" }}
                   onClick={handleLogin}
                   className="btn btn-primary"
                 >
@@ -226,7 +218,7 @@ export const Login = () => {
                   </div>
                 </form>
                 <button
-                  style={{ backgroundColor: "#f3aa60", border: "none" }}
+                  style={{ backgroundColor: "#F3AA60", border: "none" }}
                   onClick={() => {
                     if (!email || email.indexOf("@") === -1) {
                       alert(
@@ -248,5 +240,4 @@ export const Login = () => {
     </div>
   );
 };
-
 export default Login;
