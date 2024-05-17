@@ -18,7 +18,16 @@ const List = () => {
             role="tab"
             aria-controls="pills-home"
             aria-selected="true"
-            /* style={{ backgroundColor: }} */
+           /*  style={{
+              marginBottom: "1rem",
+              backgroundColor: "transparent",
+              color: "white",
+              border: "1px solid white",
+              :hover: {
+                color: "black",
+                backgroundColor: "white",
+              },
+            }} */
           >
             Series
           </button>
@@ -34,6 +43,12 @@ const List = () => {
             role="tab"
             aria-controls="pills-profile"
             aria-selected="false"
+            style={{
+              marginBottom: "1rem",
+              backgroundColor: "transparent",
+              color: "white",
+              border: "1px solid white",
+            }}
           >
             Pelicuas
           </button>
