@@ -29,10 +29,10 @@ export const Login = () => {
   }, []);
 
   useEffect(() => {
-    if (store.token !== null) {
-      navigate("/profile");
+    if (store.token !== '') {
+      navigate("/profile");             //me lleva a la pagina de profile automaticamente
     }
-  }, [store.token, navigate]);
+  }, [store.token]);
 
   return (
     <div
