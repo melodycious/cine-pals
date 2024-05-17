@@ -7,6 +7,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       usuario: {},
       userId: {},
       token: "",
+      /* movie: {}, */
+
+
+
     },
     actions: {
       
@@ -91,7 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
        /*  navigate("/login"); */
       },
 
-    /* ESTO RETRAE LA INFORMACION DE LAS PELICULAS */
+    /* ESTO RETRAE LA INFORMACION DE LA PELICULA selecionada */
     
    /*  class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
