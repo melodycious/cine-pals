@@ -1,6 +1,9 @@
 .footer{
     background-color: #1D5B79;
     color: #F3AA60;
+    position: fixed ;
+    bottom: 0 ;
+    width: 100vw ;
 }
 a{
     color: #468B97;
