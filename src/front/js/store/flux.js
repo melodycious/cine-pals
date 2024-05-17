@@ -71,9 +71,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           requestOptions
         )
           .then((response) => {
-          /*   if (!response.ok) {
-              throw new Error("La solicitud no fue exitosa");
-            } */
+      
             return response.json();
           })
 

@@ -48,7 +48,7 @@ def handle_login():
     return jsonify(access_token=access_token), 200
 
 
-@api.route('/newuser/<int:id>/<int:listid>', methods=['POST'])
+@api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
 def handle_newuser(id,listid):
     user = User.query.get(id)
     targetList = List.query.get(listid)
@@ -56,7 +56,7 @@ def handle_newuser(id,listid):
     db.session.commit()
     return "Pleaseee!!"
 
-@api.route('/users/<int:id>', methods=['GET'])
+@api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
 def handle_get_one_user(id):
     user = User.query.options(joinedload(User.lists).joinedload(List.movies),joinedload(User.lists).joinedload(List.series)).get(id)
     
@@ -109,5 +109,41 @@ def handle_edit_user(id):
     }
     return jsonify(response_body), 200
 
+@api.route('/lists', methods=['POST'])
+def handle_new_list():
+    request_body = request.get_json()
+    name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
+    user_id = request_body.get('user_id')
+    list = List(name=name, user_id=user_id)
+    db.session.add(list)
+    db.session.commit()
+    response_body = {
+        "msg": "List created successfully",
+        "list": list.serialize()
+    }
+    return jsonify(response_body), 200
+
+@api.route('/lists/<int:id>', methods=['PUT'])
+def handle_edit_list(id):
+    name = request.json.get('name')
+    list = List.query.get(id)           #query para buscar el id (es consulta)
+    list.name = name
+    db.session.commit()
+    response_body = {
+        "msg": "The list was modified ",
+        "list": list.serialize()
+
+    }
+    return jsonify(response_body), 200
+
+@api.route('/lists/<int:id>', methods=['DELETE'])    #elimina la lista por completo
+def handle_delete_list(id):
+    list = List.query.get(id)
+    db.session.delete(list)
+    db.session.commit()
+    response_body = {
+        "msg": "The list was deleted "
+    }
+    return jsonify(response_body), 200
 
 
