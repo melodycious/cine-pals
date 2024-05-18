@@ -7,7 +7,7 @@ const ListCard = (props) => {
   const seriesCount = props.series ? props.series.length : 0;
 
   return (
-    <Link to={`/users/${props.id}`} className="btn btn-primary">
+    <Link to={`/users/${props.id}`} >
       <div className="col">
         <div className="card h-100 text-center">
           <div className="card-body">
