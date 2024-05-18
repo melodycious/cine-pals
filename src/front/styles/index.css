@@ -4,20 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 body {
     font-family: "Montserrat", sans-serif;
+    overflow-y: hidden; /* Oculta la barra de desplazamiento vertical */
   }
-body {
-  background: #1d5b79; /* Old browsers */
-  background: -moz-linear-gradient(-45deg,  #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg,  #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); /* Chrome10-25, Safari5.1-6 */
-  background: linear-gradient(135deg, #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1d5b79', endColorstr='#f3aa60', GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-  
-}
-
-h1, p {
-  color: white;
-}
-.white-placeholder::placeholder {
-    color: #CCCCCC;
-}
 
