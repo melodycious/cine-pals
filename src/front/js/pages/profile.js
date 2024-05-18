@@ -24,14 +24,14 @@ const Profile = () => {
                         <h3 className="m-2">User Name</h3>
                         <h4 className="m-2">Email</h4>
                         <div className="d-grid gap-2 col-6 mx-auto">
-                            <button className="btn btn-primary" type="button">Edit profile</button>
+                            <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit profile</button>
                             <button className="deleteButton btn btn-primary" type="button">Delete profile</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="container center">
-                <h1 class="text-center">My Lists</h1>
+                <h1 className="text-center">My Lists</h1>
                 <div className="divisor"></div>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4 m-2 p-1 align-items-center justify-content-md-center">
