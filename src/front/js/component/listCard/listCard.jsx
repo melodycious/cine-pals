@@ -1,23 +1,38 @@
-import React from "react"
+import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
+const ListCard = (props) => {
+  const movieCount = props.movies ? props.movies.length : 0;
+  const seriesCount = props.series ? props.series.length : 0;
 
-const ListCard = () => {
+  return (
+    <Link to={`/users/${props.id}`} className="btn btn-primary">
+      <div className="col">
+        <div className="card h-100 text-center">
+          <div className="card-body">
+            <h4 className="card-title mt-2">{props.name}</h4>
+            <p className="card-text">
+              Movies ({movieCount}) <br></br> Series ({seriesCount})
+            </p>
+            <button className="btn btn-primary btn-sm m-1" type="button">
+              Edit
+            </button>
+            <button className="deleteButton btn btn-primary btn-sm" type="button">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
 
-
-    return (
-
-                <div className="col ">
-                    <div className="card h-100 text-center">
-                        <div className="card-body">
-                            <h4 className="card-title mt-2">Netflix</h4>
-                            <p className="card-text">Movies (30) <br></br> Series (60)</p>
-                            <button className="btn btn-primary btn-sm m-1" type="button">Edit</button>
-                            <button className="deleteButton btn btn-primary btn-sm" type="button">Delete</button>
-                        </div>
-                    </div>
-                </div>
-
-        )
-    }
+ListCard.propTypes = {
+  name: PropTypes.string,
+  id: PropTypes.number,
+  movies: PropTypes.array,
+  series: PropTypes.array,
+};
 
 export default ListCard;

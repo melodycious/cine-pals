@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './navbar.css';
 import logo from "../../../img/logo-sin-fondo.png";
 import { Context } from "../../store/appContext";
 
-
 export const Navbar = () => {
-	/* const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
+	const { actions } = useContext(Context);
+
 	const handleLogOut = () => {
-		actions.getLogout();
-	}; */
+		const token = localStorage.getItem("token");
+		actions.getLogout(navigate, token);
+	};
+
 	return (
-
-
 		<nav className="navbar bg-body-tertiary">
 			<div className="container-fluid d-flex justify-content-between">
 				<Link to="/">
@@ -20,7 +21,7 @@ export const Navbar = () => {
 				</Link>
 				<form className="d-flex flex-grow-1 justify-content-end">
 					<a className="btn btn-outline-success me-2" type="button" href="/profile">My Lists</a>
-					{/* <a className="btn btn-outline-success me-2" type="button" onClick={handleLogOut}>Log out</a>  */}
+					<button className="btn btn-outline-success me-2" type="button" onClick={handleLogOut}>Log out</button>
 				</form>
 			</div>
 		</nav>

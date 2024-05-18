@@ -86,12 +86,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(token);
 
         setStore({ token: "" });
-       /*  navigate("/login"); */
+        navigate("/login");
       },
 
+
+
       getInfoUser: async () => {
+        const uid = getStore().userId;
+        if (!uid) return;
+        fetch(`${process.env.BACKEND_URL}/api/users/${uid}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${getStore().token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            console.log(result);
+            setStore({ usuario: result });
+          })
+          .catch((error) => console.log("error", error));
+      },
 
-
+      
+      
 
 
 
