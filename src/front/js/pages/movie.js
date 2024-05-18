@@ -2,6 +2,7 @@ import React from "react";
 import './movie.css';
 import { useContext } from "react";    /* esperando al FLUX */
 import { Context } from "../store/appContext"; 
+import { Link } from "react-router-dom";
 
 
 const Movie = () => {
@@ -18,9 +19,9 @@ const Movie = () => {
       console.log(store.movie)
 
   },[store.movie])
-   */
   
-
+  
+ */
     return (
         <>
 <div className="container1">
@@ -71,8 +72,15 @@ const Movie = () => {
             <a className="dropdown-item" href="#">NETLFLIX?</a>
           </div> */}
           
+          
+          <button className="btn btn-info rounded">ADD TO ONE OF MY LIST</button>
           <br/>
-          <button type="button" className="btn btn-info rounded">ADD TO ONE OF MY LIST</button>
+          <Link to="./profile">
+				<button className="btn btn-info btn-sm" href="#">
+					Back to search
+				</button>
+			</Link>
+
         </div>
       </div>
     </div>

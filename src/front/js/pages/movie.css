@@ -1,7 +1,12 @@
   .container1 {
     margin: 20px;
     padding: 10px;
+    background-color: antiquewhite;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px;
+    font-family: "Montserrat", sans-serif;
   }
+  
   
   .container2 {
     display: flex;
@@ -43,6 +48,7 @@
   
   .card-body {
     padding: 20px;
+    font-palette: black;
   }
   
   .card-title {
@@ -57,7 +63,7 @@
   
   .btn-group .btn {
     width: max-content; 
-    box-shadow: 0 2px 4px rgba(76, 238, 252, 0.874);
+    box-shadow: 0 2px 4px rgba(1, 19, 21, 0.874);
     display: center;
     position: relative;
     left: 50%; /* Move the button to the center horizontally */
@@ -65,6 +71,6 @@
   } 
   btn:hover {
     /* Shadow effect on hover (optional) */
-    box-shadow: 0 20px 10px rgb(239, 210, 95); /* Example shadow values */
+    box-shadow: 0 20px 10px rgb(0, 7, 8); /* Example shadow values */
   }
   

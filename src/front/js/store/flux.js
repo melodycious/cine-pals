@@ -8,6 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userId: {},
       token: "",
       /* movie: {}, */
+      /* favovitoMovie:[] */
 
 
 
@@ -95,25 +96,20 @@ const getState = ({ getStore, getActions, setStore }) => {
        /*  navigate("/login"); */
       },
 
-    /* ESTO RETRAE LA INFORMACION DE LA PELICULA selecionada */
+
+
+    /* add to favoritos?....*/
+
+   /*  addFavoritomovie:(favorito) => {
+      console.log("este es el ADD",favorito)
+      setStore({ favoritosmovies:getStore().favoritosmovies.concat(favorito)})
+       console.log(getStore().favoritosmovies)      
+  }, */
     
-   /*  class Movie(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), unique=False, nullable=False)
-    Movie.name = db.Column(db.String(250), unique=False, nullable=False)
-    actores = db.Column(db.String(250), unique=False, nullable=False)
-    director = db.Column(db.String(250), unique=False, nullable=False)
+  
 
-    def __repr__(self):
-        return '<Movie %r>' % self.name
 
-    def serialize(self):
-        return {
-            "id": self.id
-            "movie.name": 
-            "actores": 
-			"director": 
-			"year": */
+
             
 
 
