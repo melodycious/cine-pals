@@ -21,7 +21,7 @@ const ListCard = (props) => {
             <button className="deleteButton btn btn-primary btn-sm" type="button">
               Delete
             </button>
-          </div>
+          </div> 
         </div>
       </div>
     </Link>
