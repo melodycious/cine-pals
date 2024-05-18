@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import getState from "../store/flux";
+import "./login.css";
+
+
 export const Login = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -22,13 +25,14 @@ export const Login = () => {
     actions.getLogin();
   }, []);
   useEffect(() => {
-    if (store.token !== '') {
-      navigate("/profile");             //me lleva a la pagina de profile automaticamente
+    if (store.token !== "") {
+      navigate("/profile"); 
     }
   }, [store.token]);
   return (
-    <div
-      style={{ display: "flex", justifyContent: "center", padding: "2rem" }}
+    <div className="fondoLogin">
+    <div 
+      style={{ display: "flex", justifyContent: "center", padding: "2rem", height: "100vh"}}
       className="container"
     >
       <div style={{ width: "50%" }} className="containerFormulario">
@@ -237,6 +241,7 @@ export const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
