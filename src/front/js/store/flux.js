@@ -89,6 +89,8 @@ const getState = ({ getStore, getActions, setStore }) => {
        /*  navigate("/login"); */
       },
 
+      getInfoUser: async () => {
+
 
 
 
