@@ -3,14 +3,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
 
-const MovieDetail = () => {
+const SerieDetail = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
+  const [serie, setSerie] = useState(null);
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, {
+    const fetchSerieDetails = async () => {
+      const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?language=es-ES`, {
         method: 'GET',
         headers: {
           accept: 'application/json',
@@ -18,21 +18,21 @@ const MovieDetail = () => {
         }
       });
       const result = await response.json();
-      setMovie(result);
+      setSerie(result);
     };
 
-    fetchMovieDetails();
+    fetchSerieDetails();
   }, [id]);
 
-  if (!movie) return <div>Cargando...</div>;
+  if (!serie) return <div>Cargando...</div>;
 
   return (
     <div>
-      <h1>{movie.title}</h1>
-      <p>{movie.overview}</p>
+      <h1>{serie.title}</h1>
+      <p>{serie.overview}</p>
       {/* Agrega más detalles según sea necesario */}
     </div>
   );
 };
 
-export default MovieDetail;
+export default SerieDetail;

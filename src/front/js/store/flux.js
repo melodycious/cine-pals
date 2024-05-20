@@ -8,6 +8,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userId: {},
       token: "",
       latestMovies: [],
+      allInfo: [],
     },
     actions: {
       
@@ -115,6 +116,29 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+    
+    // prueba para buscador, busca pelis y series en la BBDD de la api
+
+    
+      getAllMoviesSeries: async (query) => {
+
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
+          }
+        };
+
+        try {
+          const response = await fetch(`https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=es-ES&page=1`, options);
+          const result = await response.json();
+          setStore({ allInfo: result.results });
+          console.log(result);
+        } catch (error) {
+          console.error(error);
+        }
+      },
 
 
       // Use getActions to call a function within a fuction

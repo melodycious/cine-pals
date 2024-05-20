@@ -12,6 +12,9 @@ import Profile from "./pages/profile";
 import Login from "./pages/login.jsx";
 import Movie from "./pages/movie";
 import List from "./pages/list.jsx";
+import Searcher from "./component/search/searcher.jsx";
+import MovieDetail from "./pages/movie";
+import SerieDetail from "./pages/serie.jsx";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +36,9 @@ const Layout = () => {
                         <Route element={<Movie />} path="/movie" />
                         <Route element={<List />} path="/list" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route path="/search" element={<Searcher />} />
+                        <Route path="/movie/:id" element={<MovieDetail />} /> 
+                        <Route path="/serie/:id" element={<SerieDetail />} />   
                     </Routes>
                     <Footer />
                 </ScrollToTop>
