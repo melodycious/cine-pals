@@ -14,10 +14,5 @@ body {
   
 }
 
-h1, p {
-  color: white;
-}
-.white-placeholder::placeholder {
-    color: #CCCCCC;
-}
+
 
