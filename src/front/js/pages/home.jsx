@@ -24,7 +24,9 @@ export const Home = () => {
         <h5>
           Crea tus listas de películas y series favoritas e invita a tus amigos para que puedan compartir contigo las suyas.
         </h5>
+        <Link to="/login">
         <button className="btn btn-primary mt-4">Unirme</button>
+        </Link>
       </div>
       <div className="col mt-4 mb-4">
         <img width="450px" src={gifcinepals3} alt="Cinepals" />
