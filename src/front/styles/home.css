@@ -13,3 +13,12 @@ body {
 h1, p {
     color: black;
   }
+
+.landingback {
+    margin: 20px;
+    padding: 10px;
+    background-color: antiquewhite;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px;
+    font-family: "Montserrat", sans-serif;
+  }

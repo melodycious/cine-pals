@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       usuario: {},
       userId: {},
       token: "",
+      latestMovies: [],
     },
     actions: {
       
@@ -93,12 +94,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
+      /* PRUEBA PARA TRAER LAS ULTIMAS PELIS */
 
-
-
-
-
-
+      getMoviesLanding: async () => {
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
+          }
+        };
+        
+        try {
+          const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1', options);
+          const result = await response.json();
+          setStore({ latestMovies: result.results });
+          console.log(result);
+        } catch (error) {
+          console.error(error);
+        }
+      },
 
 
 
