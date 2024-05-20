@@ -5,14 +5,18 @@
 body {
     font-family: "Montserrat", sans-serif;
   }
-/* body {
-  background: #1d5b79; 
-  background: -moz-linear-gradient(-45deg,  #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
-  background: -webkit-linear-gradient(-45deg,  #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%);
-  background: linear-gradient(135deg, #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1d5b79', endColorstr='#f3aa60', GradientType=1 );
-  
-} */
+  body {
+    background: #1d5b79; 
+    background: -moz-linear-gradient(-45deg, #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
+    background: -webkit-linear-gradient(-45deg, #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%);
+    background: linear-gradient(135deg, #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1d5b79', endColorstr='#f3aa60', GradientType=1);
+    
+    /* Propiedades adicionales para ajustar el fondo */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
 
 /* h1, p {
   color: white;
