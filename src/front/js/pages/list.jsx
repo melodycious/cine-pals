@@ -102,7 +102,7 @@ const List = () => {
 
           <li className="nav-item" role="presentation">
             <button
-              style={{ display: "flex", justifyContent: "center", marginLeft: "20%"}}
+              style={{ display: "flex", justifyContent: "center", marginLeft: "40%"}}
               className="nav-link"
               id="pills-profile-tab"
               data-bs-toggle="pill"
