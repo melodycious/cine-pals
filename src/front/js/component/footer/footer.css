@@ -1,9 +1,12 @@
 .footer {
   background-color: #1d5b79;
   color: #f3aa60;
-  position: fixed; 
+  position:sticky;
   bottom: 0;
   width: 100%;
+} 
+.creadores{
+  color:#f3aa60;
 }
 a {
   color: #468b97;
