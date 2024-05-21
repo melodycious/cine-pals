@@ -7,6 +7,10 @@ import { Context } from "../store/appContext.js";
 const Profile = (props) => {
       const { store, actions } = useContext(Context);
       const [editMode, setEditMode] = useState(false);
+
+      const [name, setName] = useState("");
+      const [createList, setCreateList] = useState(false);
+
       const [editedProfile, setEditedProfile] = useState({
         nombre: store.usuario.nombre,
         email: store.usuario.email,
@@ -29,11 +33,21 @@ const Profile = (props) => {
         });
       };
 
+      const handleCreateList = () => {
+        actions.getCrearLista(name);
+      };
+
+
       const handleSaveChanges = () => {
         // Aquí enviar los datos editados a la API
         console.log("Profile edited:", editedProfile);
         toggleEditMode();
       };
+
+      useEffect(() => {
+          actions.getCrearLista();
+      },[]);
+
 
       return (
         <>
@@ -41,32 +55,35 @@ const Profile = (props) => {
             <button className="btn btn-outline-primary m-2 profileButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
               Mi perfil
             </button>
-            <button button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               + Nueva Lista
             </button>
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Lista</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="exampleModalLabel">Nueva Lista</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                         <form>
-                          <div class="mb-3">
-                            <label for="text" class="form-label">Nombre de la lista</label>
-                            <input type="text" class="form-control" id="text" aria-describedby="emailHelp" placeholder="Lista de la familia"/>
+                          <div className="mb-3">
+                            <label for="text" className="form-label" >Nombre de la lista</label>
+                            <input type="text" className="form-control" id="text" aria-describedby="emailHelp" placeholder="Lista de la familia"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            />
                           </div>
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Participantes</label>
-                            <input type="email" class="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"/>
-                            <div id="emailHelp" class="form-text">¿Quieres compartir la lista con alguien más. Introduce su email.</div>
-                          </div>
+                         {/*  <div className="mb-3">
+                            <label for="exampleInputPassword1" className="form-label">Participantes</label>
+                            <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"/>
+                            <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más. Introduce su email.</div>
+                          </div> */}
                         </form>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar cambios</button>
+                        <div className="modal-footer">
+                          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleCreateList}>Guardar cambios</button>
                         </div>
                       </div>
                     </div>
@@ -137,11 +154,7 @@ const Profile = (props) => {
                 );
               })
             )}
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-           
+            
           </div>
         </>
       );

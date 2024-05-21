@@ -30,7 +30,7 @@ class User(db.Model):
 
 class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     name = db.Column(db.String(120), nullable=False) 
     movies = db.relationship('Movie', backref='list', lazy=True) 
     series = db.relationship('Serie', backref='list', lazy=True)

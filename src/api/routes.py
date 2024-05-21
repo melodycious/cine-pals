@@ -26,6 +26,7 @@ def handle_signup():
         'user': user.serialize()
     }
     return jsonify(reponse_body), 200
+
 @api.route('/login', methods=['POST'])
 def handle_login():
     request_body = request.get_json()
@@ -36,6 +37,7 @@ def handle_login():
         return jsonify({'msg': 'Error en el email o password'}), 401
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token), 200
+
 @api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
 def handle_newuser(id,listid):
     user = User.query.get(id)
@@ -43,6 +45,7 @@ def handle_newuser(id,listid):
     user.lists.append(targetList)
     db.session.commit()
     return "Pleaseee!!"
+
 @api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
 def handle_get_one_user(id):
     user = User.query.options(joinedload(User.lists).joinedload(List.movies),joinedload(User.lists).joinedload(List.series)).get(id)
