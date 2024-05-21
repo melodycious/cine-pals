@@ -80,8 +80,6 @@ def handle_get_one_user(id):
 
 
 
-
-
 @api.route('/users/<int:id>', methods=['DELETE'])
 def handle_delete_user(id):
     user = User.query.get(id)
@@ -111,17 +109,28 @@ def handle_edit_user(id):
     }
     return jsonify(response_body), 200
 
+## AHORA CREA LA LISTA ASOCIADA AL ID DEL USUARIO QUE HA GENERADO EL TOKEN CON EL JWT_IDENTITY
+
 @api.route('/lists', methods=['POST'])
+@jwt_required()
 def handle_new_list():
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+
+    if not current_user:
+        return jsonify({'msg': 'User not found'}), 404
+
     request_body = request.get_json()
-    name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
-    user_id = request_body.get('user_id')
-    list = List(name=name, user_id=user_id)
-    db.session.add(list)
+    name = request_body.get('name')
+
+    new_list = List(name=name)
+    new_list.owners.append(current_user)
+    db.session.add(new_list)
     db.session.commit()
+
     response_body = {
         "msg": "List created successfully",
-        "list": list.serialize()
+        "list": new_list.serialize()
     }
     return jsonify(response_body), 200
 
@@ -148,7 +157,38 @@ def handle_delete_list(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists/<int:list_id>/add_user', methods=['POST'])
+
+## ESTE SERIA EL ACTUALIZADO PARA COMPARTIR LAS LISTAS CON OTRO USUARIO A TRAVES DEL MAIL
+
+@api.route('/lists/<int:list_id>/share', methods=['POST'])
+@jwt_required()
+def share_list(list_id):
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+
+    if not current_user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    list_to_share = List.query.get(list_id)
+    if not list_to_share:
+        return jsonify({'msg': 'List not found'}), 404
+
+    request_body = request.get_json()
+    recipient_email = request_body.get('email')
+
+    recipient_user = User.query.filter_by(email=recipient_email).first()
+    if not recipient_user:
+        return jsonify({'msg': 'Recipient user not found'}), 404
+
+    if recipient_user in list_to_share.owners:
+        return jsonify({'msg': 'User already has access to this list'}), 400
+
+    list_to_share.owners.append(recipient_user)
+    db.session.commit()
+
+    return jsonify({'msg': 'List shared successfully'}), 200
+
+""" @api.route('/lists/<int:list_id>/add_user', methods=['POST'])
 def add_user_to_list(list_id):
     user_id = request.json.get('user_id')
     list = List.query.get(list_id)
@@ -160,7 +200,9 @@ def add_user_to_list(list_id):
     list.owners.append(user)
     db.session.commit()
 
-    return jsonify({'msg': 'User added to list'}), 200
+    return jsonify({'msg': 'User added to list'}), 200 """
+
+### ESTE DE ABAJO TE TRAE LA INFO DE LAS LISTAS CON LOS OWNERS
 
 @api.route('/lists/<int:list_id>', methods=['GET'])
 def get_list_details(list_id):

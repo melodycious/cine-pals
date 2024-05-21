@@ -8,12 +8,14 @@ user_list_association = db.Table('user_list_association',
     db.Column('list_id', db.Integer, db.ForeignKey('list.id'), primary_key=True)
 )
 
+
+
 class User(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
-    lists = db.relationship('List', secondary=user_list_association, backref='owners', lazy=True)
+    lists = db.relationship('List', secondary=user_list_association, back_populates='owners', lazy=True)
     nombre = db.Column(db.String(120), nullable=True)
 
 
@@ -28,13 +30,15 @@ class User(db.Model):
             # do not serialize the password, it's a security breach
         }
 
+    
+
 class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(120), nullable=False) 
     movies = db.relationship('Movie', backref='list', lazy=True) 
     series = db.relationship('Serie', backref='list', lazy=True)
-    """ owners = db.Column(db.ARRAY(db.String), nullable=True) """
+    owners = db.relationship('User', secondary=user_list_association, back_populates='lists')
 
     def __repr__(self):
         return f'<List {self.id}>'
