@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -7,8 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       usuario: {},
       userId: {},
       token: "",
-      /* movie: {}, */
-      /* favovitoMovie:[] */
+      movie: {},
+      /* favovitoMovie:[]  */
 
 
 
@@ -98,29 +98,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-    /* add to favoritos?....*/
+   /* esto es el fecth para las peliculas */
+   /* this works on postman and the movie information comes up.. pero ahora me da error la parte de abajo que pone getActions to call a funtion */
 
-   /*  addFavoritomovie:(favorito) => {
-      console.log("este es el ADD",favorito)
-      setStore({ favoritosmovies:getStore().favoritosmovies.concat(favorito)})
-       console.log(getStore().favoritosmovies)      
-  }, */
+
+   getMovie: async () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNzBmOTBmOWQxMDI4MDQxODFiMDhiOWFlMjhmZmNiNCIsInN1YiI6IjY2NDI0ZGRiMjg4YTg4NWVlNTNhMWQ5NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MDlTW4YxxWK6-8LYtKHG8PiqYaaV6sWefJD78zQuS4A'
+      }
+    };
     
-  
+    fetch('https://www.omdbapi.com/?i=tt3896198&apikey=2b3569e7', options)
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
 
-
-
-            
-
-
-
-
-
-
-
-
-
-
+  },
 
 
       // Use getActions to call a function within a fuction
