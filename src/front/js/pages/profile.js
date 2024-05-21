@@ -141,20 +141,7 @@ const Profile = (props) => {
             <ListCard/>
             <ListCard/>
             <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
-            <ListCard/>
+           
           </div>
         </>
       );
