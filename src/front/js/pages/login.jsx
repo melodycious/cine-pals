@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import getState from "../store/flux";
 import "./login.css";
@@ -95,7 +95,7 @@ export const Login = () => {
             >
               <div className="text-center mt-5">
                 <h1>Login</h1>
-                <p>Access to the content</p>
+                <p style={{color:'white'}}>Access to the content</p>
                 <br />
                 <form>
                   <div className="form-group">
@@ -186,7 +186,7 @@ export const Login = () => {
             >
               <div className="text-center mt-5">
                 <h1>Sign up</h1>
-                <p>Register to access the content</p>
+                <p style={{color:'white'}}>Register to access the content</p>
                 <br />
                 <form>
                   <div className="form-group">
@@ -222,7 +222,7 @@ export const Login = () => {
                   </div>
                 </form>
                 <button
-                  style={{ backgroundColor: "#F3AA60", border: "none" }}
+                  style={{ backgroundColor: "#F3AA60", border: "none"}}
                   onClick={() => {
                     if (!email || email.indexOf("@") === -1) {
                       alert(
@@ -235,7 +235,7 @@ export const Login = () => {
                   className="btn btn-primary"
                 >
                   SIGN UP
-                </button>
+                </button >
               </div>
             </div>
           </div>

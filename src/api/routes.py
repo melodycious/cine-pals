@@ -36,6 +36,7 @@ def handle_login():
         return jsonify({'msg': 'Error en el email o password'}), 401
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token), 200
+
 @api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
 def handle_newuser(id,listid):
     user = User.query.get(id)
@@ -43,6 +44,7 @@ def handle_newuser(id,listid):
     user.lists.append(targetList)
     db.session.commit()
     return "Pleaseee!!"
+
 @api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
 def handle_get_one_user(id):
     user = User.query.options(joinedload(User.lists).joinedload(List.movies),joinedload(User.lists).joinedload(List.series)).get(id)
@@ -63,6 +65,7 @@ def handle_get_one_user(id):
         } for list in user.lists]
     }
     return jsonify(response_body), 200
+
 @api.route('/users/<int:id>', methods=['DELETE'])
 def handle_delete_user(id):
     user = User.query.get(id)
@@ -72,6 +75,7 @@ def handle_delete_user(id):
         "msg": "The user was deleted "
     }
     return jsonify(response_body), 200
+
 @api.route('/users/<int:id>', methods=['PUT'])
 def handle_edit_user(id):
     email = request.json.get('email')
@@ -87,6 +91,7 @@ def handle_edit_user(id):
         "user": user.serialize()
     }
     return jsonify(response_body), 200
+
 @api.route('/lists', methods=['POST'])
 def handle_new_list():
     request_body = request.get_json()
@@ -100,6 +105,7 @@ def handle_new_list():
         "list": list.serialize()
     }
     return jsonify(response_body), 200
+
 @api.route('/lists/<int:id>', methods=['PUT'])
 def handle_edit_list(id):
     name = request.json.get('name')
@@ -111,6 +117,7 @@ def handle_edit_list(id):
         "list": list.serialize()
     }
     return jsonify(response_body), 200
+
 @api.route('/lists/<int:id>', methods=['DELETE'])    #elimina la lista por completo
 def handle_delete_list(id):
     list = List.query.get(id)
@@ -120,6 +127,7 @@ def handle_delete_list(id):
         "msg": "The list was deleted "
     }
     return jsonify(response_body), 200
+
 @api.route('/lists/<int:list_id>/add_user', methods=['POST'])
 def add_user_to_list(list_id):
     user_id = request.json.get('user_id')
@@ -130,6 +138,7 @@ def add_user_to_list(list_id):
     list.owners.append(user)
     db.session.commit()
     return jsonify({'msg': 'User added to list'}), 200
+
 @api.route('/lists/<int:list_id>', methods=['GET'])
 def get_list_details(list_id):
     list = List.query.get(list_id)
