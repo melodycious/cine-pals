@@ -111,9 +111,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       }
     };
     
-    fetch('https://www.omdbapi.com/?i=tt3896198&apikey=2b3569e7', options)
+    fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=2b3569e7`)
+   /*  https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1 */ /*esta es el link de la api corrceta*/
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => setStore({movie:response})  )
       .catch(err => console.error(err));
 
   },

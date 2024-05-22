@@ -10,7 +10,7 @@ const Movie = () => {
 
   useEffect(() => {
     actions.getMovie(); // Call the action to fetch movie data
-  }, [actions]);
+  }, []);
 
   useEffect(() => {
     console.log(store.movie); // Log the movie data from the store
@@ -21,27 +21,27 @@ const Movie = () => {
     <>
       <div className="container1">
         <div className="container2">
-          <span><h6>genres: {movie.genres}</h6></span>
+          <span><h6>genres: {store.movie.Genre}</h6></span>
           <span>🔸</span>
-          <span><h6>runtime: {movie.runtime}</h6></span>
+          <span><h6>runtime: {store.movie.runtime}</h6></span>
           <span>🔸</span>
-          <span><h6>release_date: {movie.release_date}</h6></span>
+          <span><h6>release_date: {store.movie.release_date}</h6></span>
         </div>
 
         <div className="row g-0">
           <div className="col-md-4">
             <img 
-              src={movie.poster_path} 
+              src={store.movie.Poster} 
               className="img-fluid rounded" 
               alt="Poster" 
             />
-            {movie.poster_path}
+            {store.movie.poster_path}
           </div>
           <div className="col-md-8">
             <div className="card-body">
-              <h4 className="card-title border border-top-0">title: {movie.title}</h4>
+              <h4 className="card-title border border-top-0">title: {store.movie.title}</h4>
               <p className="card-text">
-                overview: {movie.overview}
+                overview: {store.movie.overview}
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
               </p>
 
@@ -49,7 +49,8 @@ const Movie = () => {
               <br/>
 
               <div className="btn-group">
-                <button className="btn btn-info rounded">ADD TO ONE OF MY LIST</button>
+              
+                <button id="openModalBtn" className="btn btn-info rounded">ADD TO ONE OF MY LIST</button>
                 <br/>
                 <Link to="./profile">
                   <button className="btn btn-info btn-sm">
