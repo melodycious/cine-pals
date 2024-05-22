@@ -18,7 +18,7 @@ const Profile = (props) => {
       });
 
       useEffect(() => {
-        actions.getInfoUser();
+        actions.getTraerUsuario();
       }, []);
 
       const toggleEditMode = () => {
@@ -51,6 +51,8 @@ const Profile = (props) => {
           actions.getCrearLista();
       },[]);
 
+        console.log(store.usuario);
+        console.log(store);
 
       return (
         <>
@@ -117,7 +119,7 @@ const Profile = (props) => {
                   </>
                 ) : (
                   <>
-                    <h3 className="m-2">{store.usuario.nombre}</h3>
+                    <h3 className="m-2">{store.usuario.name}</h3>
                     <h4 className="m-2">{store.usuario.email}</h4>
                   </>
                 )}

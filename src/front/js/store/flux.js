@@ -93,20 +93,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-      getInfoUser: async (id) => {
+      getTraerUsuario : async (userId) => {
         const myHeaders = new Headers();
-          myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxOvPGSzDKJRs6u1Ak71bwSa4k_cr4bUmPK2hzwd1rOjD5OUgE2QYHnVd_gbH-YQFhCplOSGgJTA0QN_fltC2xXR_Bnx81uqaGM0DJFVFSQlPnvSrZtUGf3D5ct2iRrjbA3sliiAvE9cxCYp4MLzyCzGvr7xnZvzJO_T4VLPV1WsS0YgVw_Bi_PVmCBPU95FEfKmr9tH2kMmHJn2SG-iYag0IEH1Hq3P8awoq_fajAbMW2y5VuQIMElo02tgtdvJNk-wkwPyOizAPA3_wp7EjnV_M0yFwILQrH3X3OPkw1Qyj6Lm4D7CMjeuWb1Py0qBIwW_c3YB-Qy5imtTBhWbT-y6FlRm8wBnps04HjzXKebQGj0HNgsMSIRKr33Ast395ubklGviy8tjMpKPDa2y7Of6of0Gx5gttVrifmBMnRUxe6awBf76WY0TjMiZOpZmRw0Jskfp-w6_Gt8a7Kr8nlAXRigWQvSJfXRiueVgDnZbs1NlHUzkOotng0cuuOAEbkJ9oIGrqjwyNDc4MsJNnnr8ENICtNChIfyVYcw5VYHHHmdvMWA6Fu7XyR8Ms_cm2C4PNpr53gLjVOCWOkciMw650Rf3Xx1h4hikOIo5GOzYiS1kdKSHX5lVZ6dJrLUqDyYkfiRKCACnddQ8Kmkkg0DLNjoUgC12wu48wgBaOLIrftp3EkqM6345w3kwTYzOxs1p10GZ4ttZI__YECd2PKkJxDcH0i31IbyKvjtA7WmtoTB5SkyA-_YdtEFdGdC5PePXpNmnxXSX-w_J_Nf0M53-gwfU-tUeLyxaq7LAMjWEfquhQlDaR1QL7jF5-tm2N3IeqzKmFWLWIcD6d9QDnoAefu9SLAJbefZA2uhqwEXuUjCSRfXAjfKotgEMZ9g89Znw22j2xDxvQA1HbqCMS0Y6tVcp0r5p869gw7Uud2rmxFjW-7x9uFQ9jDfiFRshQHeO22kxb2itNFSzzQmtBpSi");
-
-          const requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow"
-          };
-
-          fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/users/${id}`, requestOptions)
-            .then((response) => response.text())
-            .then((result) => setStore({ usuario: result }))
-            .catch((error) => console.error(error));
+        myHeaders.append("Content-Type", "application/json");
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+        await fetch(
+          `${process.env.BACKEND_URL}/api/users/${userId}`,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((data) => setStore ({usuario: data}))
+          .catch((error) => console.log("error", error));
       },
 
       getEditUser: async (id, nombre, email, password) => {
