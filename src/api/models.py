@@ -4,6 +4,7 @@ user_list_association = db.Table('user_list_association',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('list_id', db.Integer, db.ForeignKey('list.id'), primary_key=True)
 )
+
 class User(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -20,6 +21,7 @@ class User(db.Model):
             "nombre": self.nombre
             # do not serialize the password, it's a security breach
         }
+    
 class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -37,6 +39,7 @@ class List(db.Model):
             "movies": [movie.serialize() for movie in self.movies],
             "series": [serie.serialize() for serie in self.series]
          }
+    
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genres = db.Column(db.ARRAY(db.String), nullable=True)
@@ -60,6 +63,7 @@ class Movie(db.Model):
             "runtime": self.runtime,
             "tagline": self.tagline
         }
+    
 class Serie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genres = db.Column(db.ARRAY(db.String), nullable=True)
@@ -75,6 +79,7 @@ class Serie(db.Model):
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
     def __repr__(self):
         return f'<Serie {self.name}>'
+    
     def serialize(self):
         return {
             "id": self.id,

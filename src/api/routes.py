@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, List
+from api.models import db, User, List, Movie, Serie
 from sqlalchemy.orm import joinedload
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -145,6 +145,7 @@ def get_list_details(list_id):
     if not list:
         return jsonify({'msg': 'List not found'}), 404
     return jsonify(list.serialize()), 200
+
 @api.route('/lists/<int:list_id>', methods=['PUT'])
 @jwt_required()
 def edit_list(list_id):
@@ -159,3 +160,54 @@ def edit_list(list_id):
     list.name = name
     db.session.commit()
     return jsonify({'msg': 'List updated', 'list': list.serialize()}), 200
+
+@api.route('/lists/<int:list_id>/add', methods=['PATCH']) #añadir una pelicula o serie a una lista
+@jwt_required()
+def add_movie_to_list(list_id):
+    list = List.query.get(list_id)
+    if not list:
+        return jsonify({'msg': 'List not found'}), 404
+    
+   
+    data = request.get_json()
+    
+    if 'movie' in data:
+        movie_data = data['movie']
+        new_movie = Movie(
+            title=movie_data['title'],
+            overview=movie_data['overview'],
+            poster_path=movie_data['poster_path'],
+            release_date=movie_data['release_date'],
+            runtime=movie_data['runtime'],
+            tagline=movie_data['tagline'],
+            list_id=list_id
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        list.movies.append(new_movie)
+        db.session.commit()
+        return jsonify({'msg': 'Movie added to list', 'list': list.serialize()}), 200
+    
+    if 'serie' in data:
+        serie_data = data['serie']
+        new_serie = Serie(
+            name=serie_data['name'],
+            overview=serie_data['overview'],
+            poster_path=serie_data['poster_path'],
+            first_air_date=serie_data['first_air_date'],
+            list_id=list_id
+        )
+        db.session.add(new_serie)
+        db.session.commit()
+        list.series.append(new_serie)
+        db.session.commit()
+        return jsonify({'msg': 'Serie added to list', 'list': list.serialize()}), 200
+    
+    return jsonify({'msg': 'No valid data provided'}), 400
+
+   
+   
+   
+   
+   
+   
