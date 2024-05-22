@@ -38,13 +38,44 @@ def handle_login():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token), 200
 
-@api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
+""" @api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
 def handle_newuser(id,listid):
     user = User.query.get(id)
     targetList = List.query.get(listid)
     user.lists.append(targetList)
     db.session.commit()
-    return "Pleaseee!!"
+    return "Pleaseee!!" """
+
+## ESTE SERIA EL ACTUALIZADO PARA COMPARTIR LAS LISTAS CON OTRO USUARIO A TRAVES DEL MAIL
+
+@api.route('/lists/<int:list_id>/share', methods=['POST'])
+@jwt_required()
+def share_list(list_id):
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+
+    if not current_user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    list_to_share = List.query.get(list_id)
+    if not list_to_share:
+        return jsonify({'msg': 'List not found'}), 404
+
+    request_body = request.get_json()
+    recipient_email = request_body.get('email')
+
+    recipient_user = User.query.filter_by(email=recipient_email).first()
+    if not recipient_user:
+        return jsonify({'msg': 'Recipient user not found'}), 404
+
+    if recipient_user in list_to_share.owners:
+        return jsonify({'msg': 'User already has access to this list'}), 400
+
+    list_to_share.owners.append(recipient_user)
+    db.session.commit()
+
+    return jsonify({'msg': 'List shared successfully'}), 200
+
 
 @api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
 def handle_get_one_user(id):
@@ -90,7 +121,7 @@ def handle_edit_user(id):
         "user": user.serialize()
     }
     return jsonify(response_body), 200
-@api.route('/lists', methods=['POST'])
+""" @api.route('/lists', methods=['POST'])
 def handle_new_list():
     request_body = request.get_json()
     name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
@@ -102,7 +133,33 @@ def handle_new_list():
         "msg": "List created successfully",
         "list": list.serialize()
     }
+    return jsonify(response_body), 200 """
+
+## AHORA CREA LA LISTA ASOCIADA AL ID DEL USUARIO QUE HA GENERADO EL TOKEN CON EL JWT_IDENTITY
+
+@api.route('/lists', methods=['POST'])
+@jwt_required()
+def handle_new_list():
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+
+    if not current_user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    request_body = request.get_json()
+    name = request_body.get('name')
+
+    new_list = List(name=name)
+    new_list.owners.append(current_user)
+    db.session.add(new_list)
+    db.session.commit()
+
+    response_body = {
+        "msg": "List created successfully",
+        "list": new_list.serialize()
+    }
     return jsonify(response_body), 200
+
 @api.route('/lists/<int:id>', methods=['PUT'])
 def handle_edit_list(id):
     name = request.json.get('name')
