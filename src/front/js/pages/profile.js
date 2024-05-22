@@ -14,7 +14,7 @@ const Profile = (props) => {
       const [editedProfile, setEditedProfile] = useState({
         nombre: store.usuario.nombre,
         email: store.usuario.email,
-        password: ""
+        password: store.usuario.password
       });
 
       useEffect(() => {
@@ -39,9 +39,12 @@ const Profile = (props) => {
 
 
       const handleSaveChanges = () => {
-        // Aquí enviar los datos editados a la API
-        console.log("Profile edited:", editedProfile);
+        actions.getEditUser(editedProfile);
         toggleEditMode();
+      };
+
+      const handleDeleteUser = () => {
+        actions.getDeleteUser();
       };
 
       useEffect(() => {
@@ -127,7 +130,7 @@ const Profile = (props) => {
                       Guardar
                   </button>
                     )}
-                  <button className="deleteButton btn btn-primary" type="button">
+                  <button className="deleteButton btn btn-primary" type="button" onClick={handleDeleteUser}>
                     Eliminar perfil
                   </button>
                 </div>

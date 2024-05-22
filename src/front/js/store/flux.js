@@ -93,22 +93,63 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-      getInfoUser: async () => {
-        const uid = getStore().userId;
-        if (!uid) return;
-        fetch(`${process.env.BACKEND_URL}/api/users/${uid}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${getStore().token}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result);
-            setStore({ usuario: result });
-          })
-          .catch((error) => console.log("error", error));
+      getInfoUser: async (id) => {
+        const myHeaders = new Headers();
+          myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxOvPGSzDKJRs6u1Ak71bwSa4k_cr4bUmPK2hzwd1rOjD5OUgE2QYHnVd_gbH-YQFhCplOSGgJTA0QN_fltC2xXR_Bnx81uqaGM0DJFVFSQlPnvSrZtUGf3D5ct2iRrjbA3sliiAvE9cxCYp4MLzyCzGvr7xnZvzJO_T4VLPV1WsS0YgVw_Bi_PVmCBPU95FEfKmr9tH2kMmHJn2SG-iYag0IEH1Hq3P8awoq_fajAbMW2y5VuQIMElo02tgtdvJNk-wkwPyOizAPA3_wp7EjnV_M0yFwILQrH3X3OPkw1Qyj6Lm4D7CMjeuWb1Py0qBIwW_c3YB-Qy5imtTBhWbT-y6FlRm8wBnps04HjzXKebQGj0HNgsMSIRKr33Ast395ubklGviy8tjMpKPDa2y7Of6of0Gx5gttVrifmBMnRUxe6awBf76WY0TjMiZOpZmRw0Jskfp-w6_Gt8a7Kr8nlAXRigWQvSJfXRiueVgDnZbs1NlHUzkOotng0cuuOAEbkJ9oIGrqjwyNDc4MsJNnnr8ENICtNChIfyVYcw5VYHHHmdvMWA6Fu7XyR8Ms_cm2C4PNpr53gLjVOCWOkciMw650Rf3Xx1h4hikOIo5GOzYiS1kdKSHX5lVZ6dJrLUqDyYkfiRKCACnddQ8Kmkkg0DLNjoUgC12wu48wgBaOLIrftp3EkqM6345w3kwTYzOxs1p10GZ4ttZI__YECd2PKkJxDcH0i31IbyKvjtA7WmtoTB5SkyA-_YdtEFdGdC5PePXpNmnxXSX-w_J_Nf0M53-gwfU-tUeLyxaq7LAMjWEfquhQlDaR1QL7jF5-tm2N3IeqzKmFWLWIcD6d9QDnoAefu9SLAJbefZA2uhqwEXuUjCSRfXAjfKotgEMZ9g89Znw22j2xDxvQA1HbqCMS0Y6tVcp0r5p869gw7Uud2rmxFjW-7x9uFQ9jDfiFRshQHeO22kxb2itNFSzzQmtBpSi");
+
+          const requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow"
+          };
+
+          fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/users/${id}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => setStore({ usuario: result }))
+            .catch((error) => console.error(error));
       },
+
+      getEditUser: async (id, nombre, email, password) => {
+        const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxOnQLzo-WJT0sdNJZNG7IgDqzf0wx2UZHMzZR7RT1nhj0nL-YWwVG3-6OezD5YyZU-yGJ-oLH0l59d7K3yqi1qPUhFDQR7qemGeagONwwzHiwMP_J6ygdX3kyv-ZbLpkaXpKct2nK31pQ3W0CAe6E53vJgkkD5OwK8unsX01i9OoOpc8Nq3K2QiCJi2-v3dXCjiN9I_aIjFXasSUpWzfmNrY-wb3pnWOk50P-oB6YDI9sKg9rOSAA2saBKqE26Xdy2cLLEcOGx6JOpD61bEKvf2zyljqMFC8KKDzNUHDNYa7UoMCZfaasXiTmKiLpfRomvnyvSlDEKJU9CVf9FYTWnoXxUvUxT87NwcsCU4rcXK3iZTfH4D-y8HNKJmgs5b9xYX7ObkSceZ3fc3lLeTR5UbgFLpC_oAQzC83xZdyoi2CcvuDttZxvZlZp-BQeK914GtjsUMOX52Z11jYYt1K2VYT3kfE6neBVCYRsOUEph1hH1vUO9VrHCNXgo8CX41VFvG-AptW4VfGd_hMsMNDuwra20aE7BMRr_b2MFv5DkDtGOvR6pwxnFZe1pWlqPsl3RKRnJcQjzLZDp8AIbw-xjvr04pd7vakywW3VX57OtjrljsMwjDcfqNjZwfcbGGNcC834e-PWgP1RwDIJImHStWHosYE3i5G6139n5SFYLp6gTdpxU1trh1aVJk5K3ov0S4L6t4sXQDZmMJfB-JPyKFcrOmYKuyzkA6PjRyWDzpXQIQd_HOhyxUIiiHt3WF7PE93KOcJ3mlRvS1fxr662rf7i2PFAJaM5XnArnrEuN4qlMd9iki6lATuYU2omXlbVTidSjTx_eag_nyXEfJdysUTa4fMKExJqEzzRv0rYkRMSE-PhbjAHUxQBHisVdTcdJ_Fmf2tDRAHzZsgupUeI3BHwjuK-B4T4lzwAyi3ReDNPgXnImSfn9vLW_2VzDfa0X9JIvcT9d-ZUY8EUotGQGa");
+
+            const raw = JSON.stringify({
+              "email": email,
+              "password": password,
+              "name": nombre
+            });
+
+            const requestOptions = {
+              method: "PUT",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow"
+            };
+
+            fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/users/${id}`, requestOptions)
+              .then((response) => response.text())
+              .then((result) => setStore({ usuario: result }))
+              .catch((error) => console.error(error));
+
+      },
+
+      getDeleteUser: async (id) => {
+        const myHeaders = new Headers();
+          myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxORm-9RVJfLsAAtN5lJiZYaB2XUzMRB5Zdr_Iw1KrO0yFWAzzt-zLjcTqenqh2VivhDRmQp-r_q1nVh0-RWYojbiNAXJEGXBiyrualJseX-5N-7Z9BSE_caxVtu8LtDBh7UVckO3dKZh_HSU21SrE5kSa5HW7jmJMM-Pk5_mlp_AZE8t5GOy9H1UfmXHxDBhx97xQMAq2jZIfaqQ0iQcQaabhUWFqdgX9qODzUAn9AkP-TGBnw38BVoEDOF2t1ZUeUoQ9zanuFZr14fnJACKrzpolhZjWPPkEtFokqEOqid2dgnqhFnUliVd-Bzdci3VyjYrG7EWDtqIcWTrxg8tb-wY1Re_hG_3XezLPeKf9ap9qicWZdAfGHOsJGUrFDPbOGSSX3e39M30UHlYyf7hphGlghcXAJqThQtBX1I8MA93TVyqEFi4UfZaoZHmecgecRyqRFisHtRVoKLLfg5DEgbRVDVSpUoJVaVZ9BBem-jRkXrDkUeTRyb7OwDLsiFFZ_bfHFTsH34qsWcuNsk5mRhx5drKK4qw4T37yo6fQRYUGWvPFqzGD647wT-Qhb8yvA5RoRC9ef1Vj7i6rY5dT6o6rzBEvL5Pm3AxLmAwSj2JyEjdWPefHeRDxabbDSV6kSfdjYFFijLRIyYTpU5oZAmsYiUQKU24g-epvrjqNJJaFp7f58MKYIFppIdkscG7oQHY15yvgOgJNbaJmPUv0SD3KlZtaZBoMIkt6Dqr4CjDKUt1ImlDbS8q1X--mIR3Z6Go04cl_qUnsiINVedkIgpEWOgUxxMxS6F87iBD1qNEfNLwELe9Uxh4teiocBCgSdqJmsi23Vsjq7JItFPAQSY2IyFHx4bDiT0OYKSjP8ZzNgNkGq894Nd_QxFgGVfh2U_tX_8cD6RaKA3uTYRrqBUWXhc0PYN8gJ_ps0umQWuClGFM1vm2F_s0WHpmwKpttqW-8z7M1vzTCvBEbwXM25P");
+
+          const requestOptions = {
+            method: "DELETE",
+            headers: myHeaders,
+            redirect: "follow"
+          };
+
+          fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/users/${id}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => setStore({ usuario: result }))
+            .catch((error) => console.error(error));
+      },
+
 
       getCrearLista: async (name) => {
         console.log(name);

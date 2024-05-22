@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Context } from "../../store/appContext.js";
 
 const ListCard = (props) => {
   const movieCount = props.movies ? props.movies.length : 0;
   const seriesCount = props.series ? props.series.length : 0;
   const modalId = `exampleModal-${props.id}`;
+  const { store, actions } = useContext(Context);
 
   return (
     <div className="col">

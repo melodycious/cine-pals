@@ -97,6 +97,7 @@ def handle_get_one_user(id):
         } for list in user.lists]
     }
     return jsonify(response_body), 200
+
 @api.route('/users/<int:id>', methods=['DELETE'])
 def handle_delete_user(id):
     user = User.query.get(id)
@@ -106,6 +107,7 @@ def handle_delete_user(id):
         "msg": "The user was deleted "
     }
     return jsonify(response_body), 200
+
 @api.route('/users/<int:id>', methods=['PUT'])
 def handle_edit_user(id):
     email = request.json.get('email')
