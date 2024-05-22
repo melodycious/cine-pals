@@ -233,3 +233,82 @@ def edit_list(list_id):
     return jsonify({'msg': 'List updated', 'list': list.serialize()}), 200
 
 
+
+
+
+
+
+#####################
+
+@api.route('/lists/<int:list_id>/add', methods=['PATCH']) #añadir una pelicula o serie a una lista
+@jwt_required()
+def add_movie_to_list(list_id):
+    list = List.query.get(list_id)
+    if not list:
+        return jsonify({'msg': 'List not found'}), 404
+    data = request.get_json()
+    if 'movie' in data:
+        movie_data = data['movie']
+        new_movie = Movie(
+            title=movie_data['title'],
+            overview=movie_data['overview'],
+            poster_path=movie_data['poster_path'],
+            release_date=movie_data['release_date'],
+            runtime=movie_data['runtime'],
+            tagline=movie_data['tagline'],
+            list_id=list_id
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        list.movies.append(new_movie)
+        db.session.commit()
+        return jsonify({'msg': 'Movie added to list', 'list': list.serialize()}), 200
+    if 'serie' in data:
+        serie_data = data['serie']
+        new_serie = Serie(
+            name=serie_data['name'],
+            overview=serie_data['overview'],
+            poster_path=serie_data['poster_path'],
+            first_air_date=serie_data['first_air_date'],
+            list_id=list_id
+        )
+        db.session.add(new_serie)
+        db.session.commit()
+        list.series.append(new_serie)
+        db.session.commit()
+        return jsonify({'msg': 'Serie added to list', 'list': list.serialize()}), 200
+    return jsonify({'msg': 'No valid data provided'}), 400
+
+
+###### prueba para eliminar pelis de la lista
+
+@api.route('/lists/<int:list_id>/remove', methods=['DELETE'])
+@jwt_required()
+def remove_item_from_list(list_id):
+    list = List.query.get(list_id)
+    if not list:
+        return jsonify({'msg': 'List not found'}), 404
+    
+    data = request.get_json()
+
+    # Eliminar una película de la lista
+    if 'movie_id' in data:
+        movie_id = data['movie_id']
+        movie = Movie.query.get(movie_id)
+        if not movie or movie.list_id != list_id:
+            return jsonify({'msg': 'Movie not found in the list'}), 404
+        db.session.delete(movie)
+        db.session.commit()
+        return jsonify({'msg': 'Movie removed from list', 'list': list.serialize()}), 200
+
+    # Eliminar una serie de la lista
+    if 'serie_id' in data:
+        serie_id = data['serie_id']
+        serie = Serie.query.get(serie_id)
+        if not serie or serie.list_id != list_id:
+            return jsonify({'msg': 'Series not found in the list'}), 404
+        db.session.delete(serie)
+        db.session.commit()
+        return jsonify({'msg': 'Series removed from list', 'list': list.serialize()}), 200
+
+    return jsonify({'msg': 'No valid data provided'}), 400
