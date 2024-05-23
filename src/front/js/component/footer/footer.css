@@ -1,10 +1,7 @@
-.footer {
-  background-color: #1d5b79;
-  color: #f3aa60;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-} 
+.footer{
+  background-color: #1D5B79;
+  color: #F3AA60;
+}
 .creadores{
   color:#f3aa60;
 }

@@ -47,6 +47,7 @@ const Profile = (props) => {
         actions.getDeleteUser();
       };
 
+
       useEffect(() => {
           actions.getCrearLista();
       },[]);
@@ -159,8 +160,9 @@ const Profile = (props) => {
                 );
               })
             )}
-            
+            <ListCard /><ListCard /><ListCard /><ListCard /><ListCard /><ListCard /><ListCard /><ListCard /><ListCard /><ListCard />
           </div>
+          
         </>
       );
     };

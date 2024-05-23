@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       usuario: {},
       lista: {},
       listas: [],
-      userId: {},
+      userId: "",
       token: "",
     },
     actions: {
@@ -48,38 +48,33 @@ const getState = ({ getStore, getActions, setStore }) => {
       getLogin: async (email, password) => {
         console.log(email, password)
         const myHeaders = new Headers();
-       
         myHeaders.append("Content-Type", "application/json");
-
+    
         const raw = JSON.stringify({
-          email: email,
-          password: password,
+            email: email,
+            password: password,
         });
-
+    
         const requestOptions = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw,
-          redirect: "follow",
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
         };
-
+    
         await fetch(
-          `${process.env.BACKEND_URL}/api/login`,
-          requestOptions
+            `${process.env.BACKEND_URL}/api/login`,
+            requestOptions
         )
-          .then((response) => {
-      
-            return response.json();
-          })
-
-          .then((result) => {
-            setStore({ token: result.token });
-            setStore({ userId: result.userId });
+        .then((response) => response.json())
+        .then((result) => {
+            setStore({ token: result.token, userId: result.id });
             console.log(result);
-          })
-
-          .catch((error) => console.log("error", error));
-      },
+            // Llamar a getTraerUsuario justo después de obtener el token y el userId
+            getActions().getTraerUsuario(result.id);
+        })
+        .catch((error) => console.log("error", error));
+    },
 
       /* ESTE ES EL LOGOUT */
 
@@ -93,9 +88,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-      getTraerUsuario: async (userId) => {
+      getTraerUsuario: async () => {
         const store = getStore();
         const token = store.token;
+        const userId = store.userId;
+    
+        console.log("Token:", token);
+        console.log("User ID:", userId);
+    
+        if (!userId) {
+            console.error("userId is not defined");
+            return;
+        }
     
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -107,13 +111,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             redirect: "follow",
         };
     
-        await fetch(
-            `${process.env.BACKEND_URL}/api/users/${userId}`,
-            requestOptions
-        )
-        .then((response) => response.json())
-        .then((data) => setStore({ usuario: data }))
-        .catch((error) => console.log("error", error));
+        try {
+            const response = await fetch(
+                `${process.env.BACKEND_URL}/api/users/${userId}`,
+                requestOptions
+            );
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            console.log("User data:", data);
+            setStore({ usuario: data });
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
     },
 
       getEditUser: async (id, nombre, email, password) => {
@@ -208,7 +221,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             .catch((error) => console.error(error));
     },
 
+    getEliminarLista: async (id) => {
+      const myHeaders = new Headers();
+      myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxMP3HDuOn0OeJUmAsBFU4_oIJaHUo7pzWgZsLjbE9coCfVPxr9rN03_gw572Y2NB66UJBeCAt6ex-5B08PR1oP8_s9gVUq4dRhbhiS2K-X7jVnoZFi_hHRQn7P-m7dab83AkQ4YSAinA0bZn6R5YFkaWuUsWD0yr2rNZJE5TFyoSedKdIB9L7sPDUfB0M1U7rP4XBdCC5ySmdJ4yYdGGbTvZGvmvNvnoZ5IG1z1v7KPSbM-agVgHNxmBKUvYgI2fDYjuckTXt-ABkkmANTjHjWa0dYZDolwhqXaZPX7mU2ShhqjgI9R76MQi-cLInTlgH67YvSGZe7I2Mzsa0X0un556Vm7Oq1dOZqP74DVehq_hFRXys0hLP4YyBPTc3kEdnP8TkDo9Gk9bJOUhqU4BoZudIFddR2poIzLVPljksrg9I10BRk6hiRc2XJGVX4_14zD98iGEd2Hjb5F3zG9a8VtPAWW1ngcKRU2rSJ90tpDyWn5IfOdvtgeua8seem3ysTK1Vp0BZU8JrxvUK4n8baLW449OXUqs7nDBVMTHatg0ayZmOFwxfeIOvP75s86HablgHtsfqE_1-4ZtdmRrXMBWq8pFwv9O4MUEdJ5eZVIFCTSGdqGbeKv53XslA31iY6jOWY2nJ5BaAQ8NQthv3f8Sa6TA4pbKfpvbjX2EmB6uCj4P-asNz2RxSKD7iNAnxJ13_1Z95JHenm47s-Siw0TA_wxMFCCwZ_GbrgcTR8mhW_aEkNgXIANgQI4dqOmek4FdKSU_7J4jTL8k3-sDM91A6VAYarBWFIB601fublEul3P_hPYqUmBefWvYPlVGzc72s8lCLFMw4jH_ft5imN6yMnblTfyCnlCeJZYwhC1iD0TCpTbBCdOK_mUd3VQUftp7fn4SMTWf6KGNpsqCd4vkTfVHZ1aJx8ZW87q_ftMYhHO-Ft6gtxDNxCmFgoaUHUYG3O4h0gqddw_YqCDMR3rT6prGOcWombYM-vpEhXLrw");
 
+      const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+
+      fetch("https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/lists/7", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+
+    },
 
 
 
