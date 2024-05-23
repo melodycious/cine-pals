@@ -93,22 +93,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-      getTraerUsuario : async (userId) => {
+      getTraerUsuario: async (userId) => {
+        const store = getStore();
+        const token = store.token;
+    
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+    
         const requestOptions = {
-          method: "GET",
-          headers: myHeaders,
-          redirect: "follow",
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
         };
+    
         await fetch(
-          `${process.env.BACKEND_URL}/api/users/${userId}`,
-          requestOptions
+            `${process.env.BACKEND_URL}/api/users/${userId}`,
+            requestOptions
         )
-          .then((response) => response.json())
-          .then((data) => setStore ({usuario: data}))
-          .catch((error) => console.log("error", error));
-      },
+        .then((response) => response.json())
+        .then((data) => setStore({ usuario: data }))
+        .catch((error) => console.log("error", error));
+    },
 
       getEditUser: async (id, nombre, email, password) => {
         const myHeaders = new Headers();
@@ -152,51 +158,55 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
 
-      getCrearLista: async (name) => {
-        console.log(name);
-        const myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxOVUvWi4TCs7XIbJP1uHqhIvTU-rYsOeG0-Xl_GIOZm1W5nEqoiIYeEsHpC_BD2IpM-7kM_BT17nf0sb_690YiP9sOfsKECJFqprFL8oYl4uyDNEWLpwdXzEFj44Tgkb-vRccwfsSvh1WOe4N1USGKharXXv3OHM7W6RkdfyM2de203LBGgRI7npFHw1md5vzJwXaZzOgPXeuFJ6g5uPcde09Stl_tKSgG1TYj1egMCpGsMK8bgNNjAd3VtmAZqBniKwY9iSTw2REiF-d-l61DyKPziZiH6sWrQ9m-FTRjqJTrj_0U8uFJV4UPJo8Ft1I1AafTmbvRA8cjX3Ro-2ig1AM-hhPSYwvhyok7ldbiHKy6zdmnovjEG7HJWIhq4o8tllQIqSFOVz64lHwv9FKnPhGMD7OONSiHWrtu_L4fHqi_-YQWfVWCFYahz2Gac0oCFa4O21d4U9P7J-ytG5w1wdpqqe3Tb9ZmXSLpWJd3jPgkJKRBwdxz9qadwRPSWX43oAsfwY3uIHIvEFoVxlwFP1a_5OhcyZIrHhZWIbVI9jp6zv-Zjdy2HWNVa4nlzRSbx9kptL20iyYgqiZp5llu9cdXyWxcROUYTELvtN8Yid2v88C3WzwrGOyPgV9-GV9mevA9BIq_xyVKqGbbA75rwP0wGX0LGQAPimp8GWBXBJu3il9G5tYGRkPdfioJ07Puono234GwaKINnFhCWJL-dOmtrsaCaTuYcgGa-D-3bsqpFDLrwAL8VSoKj3jHm8MftzJgj1EKxj_bqOXzF_UQWklL-O8ekYnNP18MDB7Ti4ScQue7hVnqr0B11yE8-Z77mDmwHHNi4_YN_aPXnvKJyQkehcKIQ4aEsaIiO-C-r3WixdYQcX2-ENps6GWhaIzvHKFKCpilbDzkuM03BqJ-j9uNfWwHYfaNJJUr34aJpW8ZnBS2KWl4jeJKSJ5Z6pQxkoSiQgi1Jw3-Q0YKIgXB1");
-
-          const raw = JSON.stringify({
-            "name": name,
-           /*  "user_id": id */
-          });
-
-          const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
-          };
-
-          fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/lists/${store.userId}`, requestOptions)
-            .then((response) => response.json())
-            .then((result) => setStore({ lista: result }))
-            .catch((error) => console.error(error));
-        },
+        getCrearLista: async (name) => {
+          const store = getStore();
+          const token = store.token;
       
-      getEditarLista: async (name, id) => {
-        const myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxOxFN2xCLzezeysRm58pcuqpRyd-s4cgh7oMXb2F-OfCL1Z8rFeBzvEKMOBT2ARYH2gFBMV0-IanG5fjU8yhd6pRg_oWOr9FOhfSuGPkkZAY0tEQrra-wJ7ZLfRItKpQaPkxxWENcuhTeQXPNX3xNNEVmE7FqlwpPwj0hYkzJcv9rpY1CnsO1O0bkkVRhSQtnL0gkrRF_cTSjDfSrr_gN1dlJqf70-7paD4MktWANf-U3DTl2i5C75urqmEhr0Pj9L3VPu9bJ6JE7QGLADHRz8lpbkVT8OjZBWZrjzXf6jjOAcuVNujdN1-z04ajWvN5SdfK6lz4Swx8bNhaZRsNn0AmsEhhNpU01Wml4bEkGAuOvLTDTIFc8eDGCaT0ufIwAJIRxa6mfyCm25XNCty8VuTNpme_ekDty-E7kGbN_WTSoDgtrakqMJwH-2rYRxB_3x1EOEwujUGbi8FeOTblYORGQBFyt7w6oJ3YKksjNRQgCz0FqUwtJqITfvjvK5c1Z5Un3T1wVsXW0FmVkWLyHTtg-Yc8eX8DzM-Lt5Kw-a8WIBXQbH0dbSYXrBek9-dCRkaWjaXOMjX1cU__J0OHwoWoiGge5CRxr0yuDWFx0iJCbM63hMEsU10agplivie8Rhp5eOyDaWjSmUJqbcPRto9PMGsmQF6SYe29MRLx4XZkvVHT-DdquzYY94nXne0M-uRDIglfq0CH0JNinv3Nv4i8OXt7T2v5u_tzYqnILtrmeDrjCV1YrxWmsyqfg7HJbXSrzaNZekdzqccaMckK5GSa5vSMcx53Tyl6STJYlmKOLLKNV0TmMm8ln0T_TGPAfwtN9Stds537q8fzCec1rbFPE3jYhxynhsBYFqZjeSLNBVKQ-7-0mbIiMKzLPz114jdS2T0uCNN2Oqj3BzWl0YRIrMxxhR0HhqgdBYW6RMBxMJ-o6RSf6sZLEAzzlWFy0lKD3lCFICG5vyCHqFxpXyB");
-
-            const raw = JSON.stringify({
-              "name": name
-            });
-
-            const requestOptions = {
-              method: "PUT",
+          const myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Authorization", `Bearer ${token}`);
+      
+          const raw = JSON.stringify({
+              name: name,
+          });
+      
+          const requestOptions = {
+              method: "POST",
               headers: myHeaders,
               body: raw,
-              redirect: "follow"
-            };
-
-            fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/lists/${store.lista}`, requestOptions)
-              .then((response) => response.text())
-              .then((result) => console.log(result))
+              redirect: "follow",
+          };
+      
+          fetch(`${process.env.BACKEND_URL}/api/lists/${store.userId}`, requestOptions)
+              .then((response) => response.json())
+              .then((result) => setStore({ lista: result }))
               .catch((error) => console.error(error));
-          },
+      },
+        
+      getEditarLista: async (name, id) => {
+        const store = getStore();
+        const token = store.token;
+    
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+    
+        const raw = JSON.stringify({
+            name: name,
+        });
+    
+        const requestOptions = {
+            method: "PUT",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+    
+        fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
+    },
 
 
 
