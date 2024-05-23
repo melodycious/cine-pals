@@ -11,7 +11,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       /* favovitoMovie:[]  */
 
 
-
     },
     actions: {
       
@@ -96,27 +95,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-   /* esto es el fecth para las peliculas */
+   /* esto es el fetch para las peliculas */
    /* this works on postman and the movie information comes up.. pero ahora me da error la parte de abajo que pone getActions to call a funtion */
 
 
-   getMovie: async () => {
+   getMoviesLanding: async () => {
     const options = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNzBmOTBmOWQxMDI4MDQxODFiMDhiOWFlMjhmZmNiNCIsInN1YiI6IjY2NDI0ZGRiMjg4YTg4NWVlNTNhMWQ5NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MDlTW4YxxWK6-8LYtKHG8PiqYaaV6sWefJD78zQuS4A'
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
       }
     };
     
-    fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=2b3569e7`)
-   /*  https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1 */ /*esta es el link de la api corrceta*/
-      .then(response => response.json())
-      .then(response => setStore({movie:response})  )
-      .catch(err => console.error(err));
-
+    try {
+      const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1', options);
+      const result = await response.json();
+      setStore({ latestMovies: result.results });
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
   },
-
 
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
