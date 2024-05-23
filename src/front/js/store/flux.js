@@ -68,10 +68,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
         .then((response) => response.json())
         .then((result) => {
-            setStore({ token: result.token, userId: result.id });
-            console.log(result);
+            setStore({ token: result.access_token, userId: result.userId });
+            console.log('result: ' + JSON.stringify(result));
             // Llamar a getTraerUsuario justo después de obtener el token y el userId
-            getActions().getTraerUsuario(result.id);
+            getActions().getTraerUsuario(result.userId);
         })
         .catch((error) => console.log("error", error));
     },
@@ -93,6 +93,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = store.token;
         const userId = store.userId;
     
+        console.log("store:", store);
         console.log("Token:", token);
         console.log("User ID:", userId);
     

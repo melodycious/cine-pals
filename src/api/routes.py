@@ -45,7 +45,7 @@ def handle_login():
         return jsonify({'msg': 'Error en el email o password'}), 401
    
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token), 200
+    return jsonify(access_token=access_token, userId=user.id), 200
 
 
 @api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
