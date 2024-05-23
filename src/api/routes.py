@@ -150,3 +150,24 @@ def edit_list(list_id):
     list.name = name
     db.session.commit()
     return jsonify({'msg': 'List updated', 'list': list.serialize()}), 200
+
+""" esto era una prueba para ver de donde tomaba la informacion el front (ahora nos sale 200) """
+@api.route('/hello', methods=['GET'])
+def getHello ():
+    return jsonify({'msg':'text'})
+
+    """ esto es la ruta para generar la información para MOVIE """
+
+@app.route('/movie/<int:movie_id>', methods=['GET'])
+def getMovie(movie_id):
+    movie = next((p for p in movie if p['id'] == movie_id), None)
+    if movie:
+        return jsonify(movie)
+    else:
+        return jsonify({'mensaje': 'No se encontró la película con el ID proporcionado'}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+    
+

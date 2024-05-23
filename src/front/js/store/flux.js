@@ -99,24 +99,26 @@ const getState = ({ getStore, getActions, setStore }) => {
    /* this works on postman and the movie information comes up.. pero ahora me da error la parte de abajo que pone getActions to call a funtion */
 
 
-   getMoviesLanding: async () => {
+   getMovie: async (id) => { 
     const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
-      }
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
+        }
     };
+
+    fetch(`https://api.themoviedb.org/3/discover/movie/${id}`, options)
     
-    try {
-      const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1', options);
-      const result = await response.json();
-      setStore({ latestMovies: result.results });
-      console.log(result);
-    } catch (error) {
-      console.error(error);
-    }
-  },
+      .then(response => response.json())
+      .then((response) => {
+        setStore({ movie: response });
+        console.log(response);
+      })
+      .catch(err => console.error(err));
+    },
+
+
 
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
