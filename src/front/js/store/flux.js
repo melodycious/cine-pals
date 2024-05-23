@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: "",
       latestMovies: [],
       allInfo: [],
+      movie: [],
     },
     actions: {
       
@@ -139,6 +140,38 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
+
+      // pruebas codigo Lucia
+
+      getMovie: async (id) => { 
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
+            }
+        };
+
+        fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, options)
+          .then(response => response.json())
+          .then((response) => {
+            setStore({ movie: response });
+            console.log(response);
+          })
+          .catch(err => console.error(err));
+    
+        /* try {
+            const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, options);
+            
+            const data = await response.json();
+            setStore({ movie: data });
+        } catch (error) {
+            console.error('Error fetching movie details:', error);
+        } */
+    },
+
+    
 
 
       // Use getActions to call a function within a fuction

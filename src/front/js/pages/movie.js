@@ -1,71 +1,72 @@
-// MovieDetail.jsx
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
 
-const MovieDetail = () => {
+const Movie = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [watchProviders, setWatchProviders] = useState(null);
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
-      const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
-        }
-      });
-      const result = await response.json();
-      setMovie(result);
-    };
-
-    const fetchWatchProviders = async () => {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/watch/providers?language=es-ES`, {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
-          }
-        });
-        const result = await response.json();
-        console.log(result); // Verifica la respuesta en la consola
-        const provider = result.results;
-        console.log(provider.ES.flatrate);
-        if (provider && provider.ES) {
-          // El resultado es provider.ES, no provider.results.ES
-          setWatchProviders(provider.ES); // Filtrar para ES
-        } else {
-          setWatchProviders([]); // Si no hay resultados para ES
-        }
-      };
-
-    fetchMovieDetails();
-    fetchWatchProviders();
+    actions.getMovie(id); // Call the action to fetch movie data
   }, [id]);
-  if (!movie) return <div>Cargando...</div>;
+
+  useEffect(() => {
+    console.log(store.movie); // Log the movie data from the store
+  }, [store.movie]);
+
+  // Renderización condicional
+  if (!store.movie || Object.keys(store.movie).length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
-            <div>
-                <h1>{movie.title}</h1>
-                <p>{movie.overview}</p>
-                {watchProviders && watchProviders.flatrate && (
-                <div>
-                    <h3>Lo puedes ver en:</h3>
-                    <ul className="d-flex">
-                    {watchProviders.flatrate.map((provider) => (
-                        <li key={provider.provider_id}>
-                        <img src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`} alt={provider.provider_name} />
-                        {provider.provider_name}
-                        </li>
-                    ))}
-                    </ul>
-                </div>
-)}
+    <div className="container1">
+      <div className="container2">
+        <span>
+          <h6>genres: {store.movie.genres.map(genre => genre.name).join(', ') }</h6>
+        </span>
+        <span>🔸</span>
+        <span>
+          <h6>runtime: {store.movie.runtime}</h6>
+        </span>
+        <span>🔸</span>
+        <span>
+          <h6>release_date: {store.movie.release_date}</h6>
+        </span>
+      </div>
+
+      <div className="row g-0">
+        <div className="col-md-4">
+          <img 
+            src={`https://image.tmdb.org/t/p/w500${store.movie.poster_path}`} 
+            className="img-fluid rounded" 
+            alt="Poster" 
+          />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h4 className="card-title border border-top-0">title: {store.movie.title}</h4>
+            <p className="card-text">
+              overview: {store.movie.overview}
+            </p>
+
+            <br />
+            <br />
+
+            <div className="btn-group">
+              <button id="openModalBtn" className="btn btn-info rounded">ADD TO ONE OF MY LIST</button>
+              <br />
+              <Link to="./profile">
+                <button className="btn btn-info btn-sm">
+                  Back to search
+                </button>
+              </Link>
             </div>
-);
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default MovieDetail;
+export default Movie;
