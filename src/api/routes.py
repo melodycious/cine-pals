@@ -18,14 +18,19 @@ def handle_signup():
     request_body = request.get_json()
     email = request_body.get('email')
     password = request_body.get('password')
+   
+
     user = User(email=email, password=password)
+   
     db.session.add(user)
     db.session.commit()
     reponse_body = {
         'msg': 'User created successfully',
+
         'user': user.serialize()
     }
     return jsonify(reponse_body), 200
+
 @api.route('/login', methods=['POST'])
 def handle_login():
     request_body = request.get_json()
@@ -35,7 +40,7 @@ def handle_login():
     if user is None:
         return jsonify({'msg': 'Error en el email o password'}), 401
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token), 200
+    return jsonify(access_token=access_token, userId=user.id), 200
 
 @api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
 def handle_newuser(id,listid):
@@ -57,10 +62,15 @@ def handle_get_one_user(id):
             "name": list.name,
             "users": list.user_id,
             "movies": [{
-                "id": movie.id
+                "id": movie.id,
+                "title": movie.title,
+                "poster_path": movie.poster_path
+
             } for movie in list.movies],
             "series": [{
-                "id": serie.id
+                "id": serie.id,
+                "name": serie.name,
+                "poster_path": serie.poster_path
             } for serie in list.series]
         } for list in user.lists]
     }
@@ -203,6 +213,37 @@ def add_movie_to_list(list_id):
         db.session.commit()
         return jsonify({'msg': 'Serie added to list', 'list': list.serialize()}), 200
     
+    return jsonify({'msg': 'No valid data provided'}), 400
+
+@api.route('/lists/<int:list_id>/remove', methods=['DELETE'])
+@jwt_required()
+def remove_item_from_list(list_id):
+    list = List.query.get(list_id)
+    if not list:
+        return jsonify({'msg': 'List not found'}), 404
+    
+    data = request.get_json()
+
+    # Eliminar una película de la lista
+    if 'movie_id' in data:
+        movie_id = data['movie_id']
+        movie = Movie.query.get(movie_id)
+        if not movie or movie.list_id != list_id:
+            return jsonify({'msg': 'Movie not found in the list'}), 404
+        db.session.delete(movie)
+        db.session.commit()
+        return jsonify({'msg': 'Movie removed from list', 'list': list.serialize()}), 200
+
+    # Eliminar una serie de la lista
+    if 'serie_id' in data:
+        serie_id = data['serie_id']
+        serie = Serie.query.get(serie_id)
+        if not serie or serie.list_id != list_id:
+            return jsonify({'msg': 'Series not found in the list'}), 404
+        db.session.delete(serie)
+        db.session.commit()
+        return jsonify({'msg': 'Series removed from list', 'list': list.serialize()}), 200
+
     return jsonify({'msg': 'No valid data provided'}), 400
 
    

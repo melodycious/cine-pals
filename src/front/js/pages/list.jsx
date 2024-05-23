@@ -62,8 +62,12 @@ const List = () => {
     handleAnimation(id);
   };
 
+  useEffect(() => {
+    actions.getTraerPeliulas();
+    actions.getTraerSeries();
+  }, []);
 
-
+  console.log(store.pelis)
   return (
     <div className="container_list">
       <ul
@@ -121,7 +125,7 @@ const List = () => {
           <div className="container-fluid">
             <h2>Nombre de la lista de Peliculas</h2>
             <div className="row">
-              {store.pelis.map((pelicula) => (
+              {store.pelis?.map((pelicula) => (
                 <div key={pelicula.id} className="card" style={{ width: "18rem" }}>
                   <img
                     style={{ marginTop: "10px" }}
