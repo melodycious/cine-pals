@@ -90,43 +90,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getTraerUsuario: async () => {
         const store = getStore();
-        const token = store.token;
-        const userId = store.userId;
-    
-        console.log("store:", store);
-        console.log("Token:", token);
-        console.log("User ID:", userId);
-    
-        if (!userId) {
-            console.error("userId is not defined");
-            return;
-        }
-    
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${token}`);
-    
-        const requestOptions = {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-        };
-    
+        console.log("Token en getTraerUsuario:", store.token);
         try {
-            const response = await fetch(
-                `${process.env.BACKEND_URL}/api/users/${userId}`,
-                requestOptions
-            );
+            const response = await fetch(`${process.env.BACKEND_URL}/api/users/${store.userId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${store.token}`
+                }
+            });
     
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (response.status !== 200) {
+                throw new Error("Error al obtener el usuario");
             }
     
             const data = await response.json();
-            console.log("User data:", data);
+            console.log("Datos del usuario:", data);
             setStore({ usuario: data });
         } catch (error) {
-            console.error("Error fetching user data:", error);
+            console.error("Error al obtener el usuario", error);
         }
     },
 

@@ -59,7 +59,7 @@ const Profile = (props) => {
         <>
           <div className="d-inline m-1 p-2">
             <button className="btn btn-outline-primary m-2 profileButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-              Mi perfil
+              Mis datos
             </button>
             <button button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               + Nueva Lista
