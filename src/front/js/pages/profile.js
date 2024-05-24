@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import "../../styles/profile.css";
 import cinePals from "../../img/cinePals.jpg";
+import { Link, useNavigate } from "react-router-dom";
 import ListCard from "../component/listCard/listCard.jsx";
 import { Context } from "../store/appContext.js";
 
@@ -10,6 +11,8 @@ const Profile = (props) => {
 
       const [name, setName] = useState("");
       const [createList, setCreateList] = useState(false);
+
+      const navigate = useNavigate();
 
       const [editedProfile, setEditedProfile] = useState({
         nombre: store.usuario.nombre,
@@ -44,12 +47,15 @@ const Profile = (props) => {
       };
 
       const handleDeleteUser = () => {
-        actions.getDeleteUser();
+        actions.getDeleteUser(navigate);
+        console.log(store.token, store.userId);
       };
+
 
       useEffect(() => {
           actions.getCrearLista();
       },[]);
+
 
         console.log(store.usuario);
         console.log(store);
@@ -58,7 +64,7 @@ const Profile = (props) => {
         <>
           <div className="d-inline m-1 p-2">
             <button className="btn btn-outline-primary m-2 profileButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-              Mi perfil
+              Mis datos
             </button>
             <button button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
               + Nueva Lista
@@ -119,8 +125,8 @@ const Profile = (props) => {
                   </>
                 ) : (
                   <>
-                    <h3 className="m-2">{store.usuario.name}</h3>
-                    <h4 className="m-2">{store.usuario.email}</h4>
+                    <h3 className="m-4">{store.usuario.name}</h3>
+                    <h4 className="m-4">{store.usuario.email}</h4>
                   </>
                 )}
                 <div className="d-grid gap-2 col-6 mx-auto">
@@ -145,7 +151,7 @@ const Profile = (props) => {
           </div>
           <div className="row row-cols-1 row-cols-md-4 g-4 m-2 p-1 align-items-center justify-content-md-center">
             {store.usuario.lists === null || store.usuario.lists?.length === 0 ? (
-              <p className="empty">Aún no has añadido ninguna lista</p>
+              <p className="empty">Aún no has añadido ninguna lista</p> 
             ) : (
               store.usuario.lists?.map((list, index) => {
                 return (
@@ -159,8 +165,9 @@ const Profile = (props) => {
                 );
               })
             )}
-            
+           
           </div>
+          
         </>
       );
     };
