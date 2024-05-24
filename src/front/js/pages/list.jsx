@@ -68,6 +68,7 @@ const List = () => {
   }, []);
 
   console.log(store.pelis)
+  console.log(store.series)
   return (
     <div className="container_list">
       <ul
@@ -186,7 +187,7 @@ const List = () => {
           <div className="container-fluid">
             <h2>Nombre de la lista de Series</h2>
             <div className="row">
-              {store.series.map((serie) => (
+              {store.series?.map((serie) => (
                 <div key={serie.id} className="card" style={{ width: "18rem" }}>
                   <img
                     src={serie.poster_path}

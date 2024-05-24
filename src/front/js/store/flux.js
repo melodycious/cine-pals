@@ -135,24 +135,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       /* TRAE LAS SERIES*/
 
       getTraerSeries : async () => {
-        const myHeaders = new Headers();
-        myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxP7z1SIMXf07yfX787BPAhxukgyD3MYfMXC7R7A8Cw6FSW9H1bfykwAxOx9PUttUyEn3ITLYNOu6G-aape9TBM4cLNzLt4EnCW-e3ulkBkdwNEtSLjoFk1fk8keaf_tXs_PB7-ZgA0UtKgxK3lKM9-krBVIPdut6bbgbocB-qKvCMtgGgiYpwo7e1KbtSYEkIndRapjHZ4aP_j3sTzcNCmEJTPIKU7rZzaB2GKNQqF7pHHRcLSHBvEfxD1eI2K9NtTWhLderwvVnnMEgorl7IPbehVpF3zq7fBfN5s1CjMxnNX1YUMuSoo2lUlOteRw4Y1X-FdiHe9iPorhTwgUWCIvMIJ0fPHl0wUW4NNW6uzCzSRsy2qMWIyk3eOHQdJWx1Y2nBo6kL_33JhW12zd3wpdjMAEOy0D61dWRp_dh6QMKJEgiqMeouFU5OwFOUH3ZX8yf0ijY0GgZ57Bq8aE6V5A6AYVm3KaMFZUqJ8MGiAaQW1eMkgUcd_6bm6nuG7woAnsYkxlFADc1ClAGWiBjuMSwcUdFF8YezSLqWtC8RLopeWT52ujgkHNjYJbbX2OgfhjmxlGxMi7RaVH5rbR-lOJw4-WPUxo4QNAGPeJH-BzYEC-KQZIDIwWpmZ4wGM4Cdu6z7DNqRWNxIORWenwBnbwOhhs4qLFbW4zSH8u-JIXBdQZj59it8Dy3hlfRC-1n42KDEq5QU8se6MiJ9dYl19IXC7LXXj3r9kpcXTNdKsCMlfG3Z_Hq4IHc8ko2iEwCC-HchwtzItFFgVmiFJzgG-ElAz3RUOhtNmMa91Hpa4g78b6sKsiVXMMd_EVcl-TjB2_SXiAeyET_Ju-wAk3AnU9In0WeE-rn9K2zHUVieKncoDU5QyhnU_sVtzg1Y9moHOxrzCNW1bo1rYPrMJhCcwXP_C4fKIG7zYFsGOYmpsus_uKN9Wc32w2QNvZVJroxhevXwHCna6Ulh9O_YK5-T3yoYuV92na-i7ly7tfmjS6Gg");
-        
-        const requestOptions = {
-          method: "GET",
-          headers: myHeaders,
-          redirect: "follow",
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzQ3OTJjYmM2M2QyNGVjMjE3Yzk0ZTExYWI0YjA2YyIsInN1YiI6IjY2M2Q0YWY0ZTBkNDdhNjc3YzMwMDU4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m8apju8RrkFJoZK8iTvLDshA6b6R-ehBfF8rstG_E8w'
+          }
         };
-
-        await fetch(
-          `${process.env.BACKEND_URL}/api/lists/7`,
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((data) => setStore ({series: data.series}))
-          
-          .catch((error) => console.log("error", error));
-
+        
+        fetch('https://api.themoviedb.org/3/tv/on_the_air', options)
+          .then(response => response.json())
+          .then((data) => setStore ({series: data.results}))
+          .catch(err => console.error(err));
       },
 
       /* trae usuario */
