@@ -20,7 +20,7 @@ export const Navbar = () => {
 					<img src={logo} alt="Logo" width="100" height="90" className="d-inline-block align-text-top"/>
 				</Link>
 				<form className="d-flex flex-grow-1 justify-content-end">
-					<a className="btn btn-outline-success me-2" type="button" href="/profile">Mis Listas</a>
+					<a className="btn btn-outline-success me-2" type="button" href="/profile/:id">Mis Listas</a>
 					<button className="btn btn-outline-success me-2" type="button" onClick={handleLogOut}>Cerrar sesión</button>
 				</form>
 			</div>

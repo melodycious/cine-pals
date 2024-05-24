@@ -10,7 +10,7 @@ const ListCard = (props) => {
 
 
   const handleDeleteList = () => {
-    actions.getDeleteUser();
+    actions.getEliminarLista();
   };
 
   return (

@@ -83,7 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(token);
 
         setStore({ token: "" });
-        navigate("/login");
+        navigate("/");
       },
 
 
@@ -112,30 +112,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
     },
 
-      getEditUser: async (id, nombre, email, password) => {
-        const myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxOnQLzo-WJT0sdNJZNG7IgDqzf0wx2UZHMzZR7RT1nhj0nL-YWwVG3-6OezD5YyZU-yGJ-oLH0l59d7K3yqi1qPUhFDQR7qemGeagONwwzHiwMP_J6ygdX3kyv-ZbLpkaXpKct2nK31pQ3W0CAe6E53vJgkkD5OwK8unsX01i9OoOpc8Nq3K2QiCJi2-v3dXCjiN9I_aIjFXasSUpWzfmNrY-wb3pnWOk50P-oB6YDI9sKg9rOSAA2saBKqE26Xdy2cLLEcOGx6JOpD61bEKvf2zyljqMFC8KKDzNUHDNYa7UoMCZfaasXiTmKiLpfRomvnyvSlDEKJU9CVf9FYTWnoXxUvUxT87NwcsCU4rcXK3iZTfH4D-y8HNKJmgs5b9xYX7ObkSceZ3fc3lLeTR5UbgFLpC_oAQzC83xZdyoi2CcvuDttZxvZlZp-BQeK914GtjsUMOX52Z11jYYt1K2VYT3kfE6neBVCYRsOUEph1hH1vUO9VrHCNXgo8CX41VFvG-AptW4VfGd_hMsMNDuwra20aE7BMRr_b2MFv5DkDtGOvR6pwxnFZe1pWlqPsl3RKRnJcQjzLZDp8AIbw-xjvr04pd7vakywW3VX57OtjrljsMwjDcfqNjZwfcbGGNcC834e-PWgP1RwDIJImHStWHosYE3i5G6139n5SFYLp6gTdpxU1trh1aVJk5K3ov0S4L6t4sXQDZmMJfB-JPyKFcrOmYKuyzkA6PjRyWDzpXQIQd_HOhyxUIiiHt3WF7PE93KOcJ3mlRvS1fxr662rf7i2PFAJaM5XnArnrEuN4qlMd9iki6lATuYU2omXlbVTidSjTx_eag_nyXEfJdysUTa4fMKExJqEzzRv0rYkRMSE-PhbjAHUxQBHisVdTcdJ_Fmf2tDRAHzZsgupUeI3BHwjuK-B4T4lzwAyi3ReDNPgXnImSfn9vLW_2VzDfa0X9JIvcT9d-ZUY8EUotGQGa");
-
-            const raw = JSON.stringify({
-              "email": email,
-              "password": password,
-              "name": nombre
-            });
-
-            const requestOptions = {
-              method: "PUT",
-              headers: myHeaders,
-              body: raw,
-              redirect: "follow"
-            };
-
-            fetch(`https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/users/${id}`, requestOptions)
-              .then((response) => response.text())
-              .then((result) => setStore({ usuario: result }))
-              .catch((error) => console.error(error));
-
-      },
+    getEditUser: async (editedProfile) => {
+      const store = getStore();
+      try {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/users/${store.userId}`, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${store.token}`
+              },
+              body: JSON.stringify(editedProfile)
+          });
+          if (response.status !== 200) {
+              throw new Error("Error al editar usuario");
+          } 
+          const data = await response.json();
+          setStore({ usuario: data });
+          console.log(data);
+      } catch (error) {
+          console.error("Error al editar usuario", error);
+      }
+  },
 
       getDeleteUser: async (navigate) => {
         const store = getStore();
@@ -181,7 +178,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               redirect: "follow",
           };
       
-          fetch(`${process.env.BACKEND_URL}/api/lists/${store.userId}`, requestOptions)
+          fetch(`${process.env.BACKEND_URL}/api/lists`, requestOptions)
               .then((response) => response.json())
               .then((result) => setStore({ lista: result }))
               .catch((error) => console.error(error));
@@ -212,22 +209,26 @@ const getState = ({ getStore, getActions, setStore }) => {
             .catch((error) => console.error(error));
     },
 
-    getEliminarLista: async (id) => {
-      const myHeaders = new Headers();
-      myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxMP3HDuOn0OeJUmAsBFU4_oIJaHUo7pzWgZsLjbE9coCfVPxr9rN03_gw572Y2NB66UJBeCAt6ex-5B08PR1oP8_s9gVUq4dRhbhiS2K-X7jVnoZFi_hHRQn7P-m7dab83AkQ4YSAinA0bZn6R5YFkaWuUsWD0yr2rNZJE5TFyoSedKdIB9L7sPDUfB0M1U7rP4XBdCC5ySmdJ4yYdGGbTvZGvmvNvnoZ5IG1z1v7KPSbM-agVgHNxmBKUvYgI2fDYjuckTXt-ABkkmANTjHjWa0dYZDolwhqXaZPX7mU2ShhqjgI9R76MQi-cLInTlgH67YvSGZe7I2Mzsa0X0un556Vm7Oq1dOZqP74DVehq_hFRXys0hLP4YyBPTc3kEdnP8TkDo9Gk9bJOUhqU4BoZudIFddR2poIzLVPljksrg9I10BRk6hiRc2XJGVX4_14zD98iGEd2Hjb5F3zG9a8VtPAWW1ngcKRU2rSJ90tpDyWn5IfOdvtgeua8seem3ysTK1Vp0BZU8JrxvUK4n8baLW449OXUqs7nDBVMTHatg0ayZmOFwxfeIOvP75s86HablgHtsfqE_1-4ZtdmRrXMBWq8pFwv9O4MUEdJ5eZVIFCTSGdqGbeKv53XslA31iY6jOWY2nJ5BaAQ8NQthv3f8Sa6TA4pbKfpvbjX2EmB6uCj4P-asNz2RxSKD7iNAnxJ13_1Z95JHenm47s-Siw0TA_wxMFCCwZ_GbrgcTR8mhW_aEkNgXIANgQI4dqOmek4FdKSU_7J4jTL8k3-sDM91A6VAYarBWFIB601fublEul3P_hPYqUmBefWvYPlVGzc72s8lCLFMw4jH_ft5imN6yMnblTfyCnlCeJZYwhC1iD0TCpTbBCdOK_mUd3VQUftp7fn4SMTWf6KGNpsqCd4vkTfVHZ1aJx8ZW87q_ftMYhHO-Ft6gtxDNxCmFgoaUHUYG3O4h0gqddw_YqCDMR3rT6prGOcWombYM-vpEhXLrw");
-
-      const requestOptions = {
-        method: "DELETE",
-        headers: myHeaders,
-        redirect: "follow"
-      };
-
-      fetch("https://psychic-space-carnival-x55p5rqv6wvxc6gr7-3001.app.github.dev/api/lists/7", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-
-    },
+    getEliminarLista: async () => {
+      const store = getStore();
+      try {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/${store.list.id}`, {
+              method: 'DELETE',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${store.token}`
+              }
+          });
+  
+          if (response.status !== 200) {
+              throw new Error("Error al eliminar lista");
+          }
+          const data = await response.json(data);
+          console.log(store);
+      } catch (error) {
+          console.error("Error al eliminar la lista", error);
+      }
+  },
 
 
 
