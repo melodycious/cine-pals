@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
+import './movie.css'
 
 const Movie = () => {
   const { store, actions } = useContext(Context);
@@ -21,19 +22,6 @@ const Movie = () => {
 
   return (
     <div className="container1">
-      <div className="container2">
-        <span>
-          <h6>genres: {store.movie.genres.map(genre => genre.name).join(', ') }</h6>
-        </span>
-        <span>🔸</span>
-        <span>
-          <h6>runtime: {store.movie.runtime}</h6>
-        </span>
-        <span>🔸</span>
-        <span>
-          <h6>release_date: {store.movie.release_date}</h6>
-        </span>
-      </div>
 
       <div className="row g-0">
         <div className="col-md-4">
@@ -45,12 +33,26 @@ const Movie = () => {
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h4 className="card-title border border-top-0">title: {store.movie.title}</h4>
+            <h4 className="card-title border border-top-0">&#8212;  {store.movie.title}  &#8212;</h4>
             <p className="card-text">
               overview: {store.movie.overview}
             </p>
 
             <br />
+            <div className="container2">
+            <span>🔸</span>
+              <span>
+                <p><strong>Genero:</strong> {store.movie.genres.map(genre => genre.name).join(', ') }</p>
+              </span>
+              <span>🔸</span>
+              <span>
+                <p><strong>Duracion:</strong> {store.movie.runtime}</p>
+              </span>
+              <span>🔸</span>
+              <span>
+                <p><strong>Fecha de Estreno:</strong> {store.movie.release_date}</p>
+              </span>
+            </div>
             <br />
 
             <div className="btn-group">
