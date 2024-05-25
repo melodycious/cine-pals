@@ -1,11 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
-import './movie.css'
+import './movie.css';
+import './modal.css';
 
 const Movie = () => {
   const { store, actions } = useContext(Context);
   const { id } = useParams();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     actions.getMovie(id); // Call the action to fetch movie data
@@ -15,6 +17,13 @@ const Movie = () => {
     console.log(store.movie); // Log the movie data from the store
   }, [store.movie]);
 
+  const handleAddToList = (listId) => {
+    // Add functionality to add the movie to the selected list
+    actions.addMovieToList(listId, store.movie.title);
+    console.log(`Adding movie to list ${listId}`);
+    setShowModal(false); // Close modal after adding to list
+  };
+
   // Renderización condicional
   if (!store.movie || Object.keys(store.movie).length === 0) {
     return <div>Loading...</div>;
@@ -22,7 +31,6 @@ const Movie = () => {
 
   return (
     <div className="container1">
-
       <div className="row g-0">
         <div className="col-md-4">
           <img 
@@ -40,7 +48,7 @@ const Movie = () => {
 
             <br />
             <div className="container2">
-            <span>🔸</span>
+              <span>🔸</span>
               <span>
                 <p><strong>Genero:</strong> {store.movie.genres.map(genre => genre.name).join(', ') }</p>
               </span>
@@ -56,13 +64,43 @@ const Movie = () => {
             <br />
 
             <div className="btn-group">
-              <button id="openModalBtn" className="btn btn-info rounded">ADD TO ONE OF MY LIST</button>
+              <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mi listas, ya!</button>
               <br />
-              <Link to="./profile">
+              <Link to="/">
                 <button className="btn btn-info btn-sm">
-                  Back to search
+                  Recomendaciones de la semana!
                 </button>
               </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Modal */}
+      <div className={`modal fade ${showModal ? 'show' : ''}`} style={{ display: showModal ? 'block' : 'none' }} tabIndex="-1" role="dialog">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Selecciona una Lista</h5>
+              <button type="button" className="close" onClick={() => setShowModal(false)} aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <ul>
+                <li onClick={() => handleAddToList(1)}>Equipo de bolos</li>
+                <li onClick={() => handleAddToList(2)}>Para reir</li>
+                <li onClick={() => handleAddToList(3)}>tengo que ver</li>
+                {/* Add more list options as needed */}
+              </ul>
+              {/* <ul>
+                {store.userLists.map(list => (
+                  <li key={list.id} onClick={() => handleAddToList(list.id)}>{list.name}</li>
+                ))}
+              </ul> */}
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
             </div>
           </div>
         </div>
@@ -72,3 +110,4 @@ const Movie = () => {
 };
 
 export default Movie;
+

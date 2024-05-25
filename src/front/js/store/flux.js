@@ -12,6 +12,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       listas: [],
       allInfo: [],
       movie: [],
+      /* ESTO ES PARA ANADIR LAS PELIS A 'FAVORITOS/LISTAS */
+      lists: {
+        1: ['Movie 1', 'Movie 2'],
+        2: ['Movie 3', 'Movie 4'],
+        3: ['Movie 5', 'Movie 6']
+      },
+      lists: {
+        1: ['Movie 1', 'Movie 2'], // Sample list data
+        2: ['Movie 3', 'Movie 4'],
+        3: ['Movie 5', 'Movie 6']
+      },
       pelis: [],
       name: "",
 
@@ -169,7 +180,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
 
-      // pruebas codigo Lucia
+      // pruebas codigo Lucia// PAGE movie//
 
       getMovie: async (id) => { 
         const options = {
@@ -187,6 +198,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           })
           .catch(err => console.error(err));
+
+         /*  ADD movie to LISTs *//* movie.jsx:22 Uncaught TypeError: actions.addMovieToList is not a function */
+         addMovieToList: (listId, movieTitle) => {
+          const store = getStore();
+          const list = store.lists[listId] || [];
+          list.push(movieTitle);
+          setStore({ lists: { ...store.lists, [listId]: list } });
+        }
     
         /* try {
             const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, options);
