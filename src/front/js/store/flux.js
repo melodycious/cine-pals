@@ -139,14 +139,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           method: 'GET',
           headers: {
             accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzQ3OTJjYmM2M2QyNGVjMjE3Yzk0ZTExYWI0YjA2YyIsInN1YiI6IjY2M2Q0YWY0ZTBkNDdhNjc3YzMwMDU4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m8apju8RrkFJoZK8iTvLDshA6b6R-ehBfF8rstG_E8w'
+           
           }
         };
         
         fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, options)
-          .then(response => response.json())
-          .then((data) => setStore ({series: data.results}))
-          .catch(err => console.error(err));
+        .then(response => response.json())
+        .then((data) => setStore ({series: data.series}))
+        .catch(err => console.error(err));
       },
 
      
@@ -164,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
       
         await fetch(
-          `${process.env.BACKEND_URL}/lists/${list_id}/remove/${id}`,  // ha de estar el id de la pelicula que se quiere borrar?
+          `${process.env.BACKEND_URL}/lists/${list_id}/remove`,  // ha de estar el id de la pelicula que se quiere borrar?
           requestOptions
         )
           .then((response) => response.json())

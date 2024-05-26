@@ -102,7 +102,7 @@ def handle_edit_user(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists', methods=['POST'])
+@api.route('/lists', methods=['POST']) #crear una lista
 def handle_new_list():
     request_body = request.get_json()
     name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
@@ -116,7 +116,7 @@ def handle_new_list():
     }
     return jsonify(response_body), 200
 
-@api.route('/lists/<int:id>', methods=['PUT'])
+@api.route('/lists/<int:id>', methods=['PUT']) #editar una lista
 def handle_edit_list(id):
     name = request.json.get('name')
     list = List.query.get(id)           #query para buscar el id (es consulta)
@@ -138,7 +138,7 @@ def handle_delete_list(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists/<int:list_id>/add_user', methods=['POST'])
+@api.route('/lists/<int:list_id>/add_user', methods=['POST']) #añadir un usuario a una lista
 def add_user_to_list(list_id):
     user_id = request.json.get('user_id')
     list = List.query.get(list_id)
