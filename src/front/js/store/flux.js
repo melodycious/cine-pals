@@ -128,6 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           } 
           const data = await response.json();
           setStore({ usuario: data });
+          getActions().getTraerUsuario();
           console.log(data);
       } catch (error) {
           console.error("Error al editar usuario", error);
