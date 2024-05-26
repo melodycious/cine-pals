@@ -136,21 +136,16 @@ def handle_new_list():
 
 @api.route('/lists/<int:id>', methods=['PUT'])
 def handle_edit_list(id):
-    try:
-        name = request.json.get('name')
-        list = List.query.get(id)
-        if list:
-            list.name = name
-            db.session.commit()
-            response_body = {
-                "msg": "The list was modified",
-                "list": list.serialize()
-            }
-            return jsonify(response_body), 200
-        else:
-            return jsonify({"msg": "List not found"}), 404
-    except Exception as e:
-        return jsonify({"msg": str(e)}), 500
+    name = request.json.get('name')
+    list = List.query.get(id)           #query para buscar el id (es consulta)
+    list.name = name
+    db.session.commit()
+    response_body = {
+        "msg": "The list was modified ",
+        "list": list.serialize()
+
+    }
+    return jsonify(response_body), 200
 
 @api.route('/lists/<int:id>', methods=['DELETE'])    #elimina la lista por completo
 def handle_delete_list(id):

@@ -31,13 +31,13 @@ const ListCard = (props) => {
             <p className="card-text">
               Películas ({movieCount}) <br></br> Series ({seriesCount})
             </p>
-            <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal1">
               Editar
             </button>
             <button className="deleteButton btn btn-primary btn-sm" type="button" onClick={handleDeleteList}>
               Eliminar
             </button>
-                  <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
