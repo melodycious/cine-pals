@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
 import './movie.css';
 import './modal.css';
+import { addMovieToList } from '../store/flux.js';
 
 const Movie = () => {
   const { store, actions } = useContext(Context);
