@@ -215,55 +215,57 @@ const getState = ({ getStore, getActions, setStore }) => {
             .catch((error) => console.error(error));
     },
 
-      getEditarLista: async (name) => {
-        const store = getStore();
-        const token = store.token;
-        console.log(store.listas.id);
-    
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${token}`);
-    
-        const raw = JSON.stringify({
-            name: name
-        });
-    
-        const requestOptions = {
-            method: "PUT",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-        };
-    
-        fetch(`${process.env.BACKEND_URL}/api/lists/${store.lista}`, requestOptions)
-            .then((response) => response.text())
-            .then((result) => {
-              setStore({ listas: store.listas.map(lista => lista.id ? result : lista) });
+    getEditarLista: async (id, name) => {
+      const store = getStore();
+      const token = store.token;
+      console.log(`Editing list with ID: ${id}`);
+  
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${token}`);
+  
+      const raw = JSON.stringify({
+          name: name
+      });
+  
+      const requestOptions = {
+          method: "PUT",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+      };
+  
+      fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+              setStore({
+                  listas: store.listas.map(lista => lista.id === id ? result.list : lista)
+              });
               getActions().getTraerUsuario();
-            })
-            .catch((error) => console.error(error));
-    },
+          })
+          .catch((error) => console.error(error));
+  },
 
-    getEliminarLista: async () => {
-        const store = getStore();
-        const token = store.token;
-
-        try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/${store.lista}`, {
+    getEliminarLista: async (id) => {
+      const store = getStore();
+      const token = store.token;
+  
+      try {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, {
               method: 'DELETE',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}` 
+                  'Authorization': `Bearer ${token}`
               }
           });
-
+  
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
-          const deletedListId = store.lista;
-          const updatedLists = store.listas.filter(lista => lista.id !== deletedListId);
+          const updatedLists = store.listas.filter(lista => lista.id !== id);
           setStore({ listas: updatedLists });
-
+          getActions().getTraerUsuario();
+  
           const data = await response.json();
           console.log('List deleted:', data);
       } catch (error) {

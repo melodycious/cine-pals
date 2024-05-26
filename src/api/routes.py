@@ -135,39 +135,36 @@ def handle_new_list():
     return jsonify(response_body), 200
 
 @api.route('/lists/<int:id>', methods=['PUT'])
-@jwt_required()
 def handle_edit_list(id):
-    request_body = request.get_json()
-    list_name = request_body.get('name')
-    user_id = get_jwt_identity()
-
-    list_to_update = List.query.filter_by(id, user_id=user_id).first()
-    if not list_to_update:
-        return jsonify({"msg": "List not found or not authorized"}), 404
-
-    list_to_update.name = list_name
-    db.session.commit()
-
-    return jsonify(list_to_update.serialize()), 200
+    try:
+        name = request.json.get('name')
+        list = List.query.get(id)
+        if list:
+            list.name = name
+            db.session.commit()
+            response_body = {
+                "msg": "The list was modified",
+                "list": list.serialize()
+            }
+            return jsonify(response_body), 200
+        else:
+            return jsonify({"msg": "List not found"}), 404
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
 
 @api.route('/lists/<int:id>', methods=['DELETE'])    #elimina la lista por completo
-@jwt_required()
 def handle_delete_list(id):
     try:
-        user_id = get_jwt_identity()
-        if isinstance(user_id, str):
-            user_id = int(user_id)
-
-        list_to_delete = List.query.filter_by(id, user_id=user_id).first()
+        list_to_delete = List.query.get(id)
         if not list_to_delete:
-            return jsonify({"msg": "List not found or not authorized"}), 404
+            return jsonify({"msg": "List not found"}), 404
 
         db.session.delete(list_to_delete)
         db.session.commit()
-
-        return jsonify({"msg": "List deleted"}), 200
-    except ValueError:
-        return jsonify({"msg": "Invalid user ID format"}), 400
+        response_body = {
+            "msg": "The list was deleted"
+        }
+        return jsonify(response_body), 200
     except Exception as e:
         return jsonify({"msg": str(e)}), 500
 
