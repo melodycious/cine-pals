@@ -76,7 +76,7 @@ def handle_get_one_user(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/users/<int:id>', methods=['DELETE'])
+@api.route('/users/<int:id>', methods=['DELETE'])  
 def handle_delete_user(id):
     user = User.query.get(id)
     db.session.delete(user)
@@ -149,14 +149,14 @@ def add_user_to_list(list_id):
     db.session.commit()
     return jsonify({'msg': 'User added to list'}), 200
 
-@api.route('/lists/<int:list_id>', methods=['GET'])
+@api.route('/lists/<int:list_id>', methods=['GET'])  #obtener los detalles de una lista
 def get_list_details(list_id):
     list = List.query.get(list_id)
     if not list:
         return jsonify({'msg': 'List not found'}), 404
     return jsonify(list.serialize()), 200
 
-@api.route('/lists/<int:list_id>', methods=['PUT'])
+@api.route('/lists/<int:list_id>', methods=['PUT']) #editar una lista
 @jwt_required()
 def edit_list(list_id):
     current_user_email = get_jwt_identity()
@@ -215,7 +215,7 @@ def add_movie_to_list(list_id):
     
     return jsonify({'msg': 'No valid data provided'}), 400
 
-@api.route('/lists/<int:list_id>/remove', methods=['DELETE'])
+@api.route('/lists/<int:list_id>/remove', methods=['DELETE'])  #eliminar una pelicula o serie de una lista
 @jwt_required()
 def remove_item_from_list(list_id):
     list = List.query.get(list_id)

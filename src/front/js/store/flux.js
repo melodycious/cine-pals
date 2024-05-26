@@ -94,24 +94,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       /* ESTE ES EL GET DE LAS PELICULAS */
 
-      getTraerPeliulas : async () => {
+      getTraerPeliulas : async (id) => {
         const options = {
           method: 'GET',
           headers: {
             accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzQ3OTJjYmM2M2QyNGVjMjE3Yzk0ZTExYWI0YjA2YyIsInN1YiI6IjY2M2Q0YWY0ZTBkNDdhNjc3YzMwMDU4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.m8apju8RrkFJoZK8iTvLDshA6b6R-ehBfF8rstG_E8w'
+           
           }
         };
         
-        fetch('https://api.themoviedb.org/3/movie/now_playing', options)
+        fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, options)
           .then(response => response.json())
-          .then((data) => setStore ({pelis: data.results}))
+          .then((data) => setStore ({pelis: data.movies}))
           .catch(err => console.error(err));
       },
       
       /* ESTE TE TRAER EL NOMBRE DE LA LISTA */
 
-      getTraerTitulo : async () => {
+      getTraerTitulo : async (id) => {
         const myHeaders = new Headers();
         myHeaders.append("Cookie", ".Tunnels.Relay.WebForwarding.Cookies=CfDJ8E0FHi1JCVNKrny-ARCYWxP7z1SIMXf07yfX787BPAhxukgyD3MYfMXC7R7A8Cw6FSW9H1bfykwAxOx9PUttUyEn3ITLYNOu6G-aape9TBM4cLNzLt4EnCW-e3ulkBkdwNEtSLjoFk1fk8keaf_tXs_PB7-ZgA0UtKgxK3lKM9-krBVIPdut6bbgbocB-qKvCMtgGgiYpwo7e1KbtSYEkIndRapjHZ4aP_j3sTzcNCmEJTPIKU7rZzaB2GKNQqF7pHHRcLSHBvEfxD1eI2K9NtTWhLderwvVnnMEgorl7IPbehVpF3zq7fBfN5s1CjMxnNX1YUMuSoo2lUlOteRw4Y1X-FdiHe9iPorhTwgUWCIvMIJ0fPHl0wUW4NNW6uzCzSRsy2qMWIyk3eOHQdJWx1Y2nBo6kL_33JhW12zd3wpdjMAEOy0D61dWRp_dh6QMKJEgiqMeouFU5OwFOUH3ZX8yf0ijY0GgZ57Bq8aE6V5A6AYVm3KaMFZUqJ8MGiAaQW1eMkgUcd_6bm6nuG7woAnsYkxlFADc1ClAGWiBjuMSwcUdFF8YezSLqWtC8RLopeWT52ujgkHNjYJbbX2OgfhjmxlGxMi7RaVH5rbR-lOJw4-WPUxo4QNAGPeJH-BzYEC-KQZIDIwWpmZ4wGM4Cdu6z7DNqRWNxIORWenwBnbwOhhs4qLFbW4zSH8u-JIXBdQZj59it8Dy3hlfRC-1n42KDEq5QU8se6MiJ9dYl19IXC7LXXj3r9kpcXTNdKsCMlfG3Z_Hq4IHc8ko2iEwCC-HchwtzItFFgVmiFJzgG-ElAz3RUOhtNmMa91Hpa4g78b6sKsiVXMMd_EVcl-TjB2_SXiAeyET_Ju-wAk3AnU9In0WeE-rn9K2zHUVieKncoDU5QyhnU_sVtzg1Y9moHOxrzCNW1bo1rYPrMJhCcwXP_C4fKIG7zYFsGOYmpsus_uKN9Wc32w2QNvZVJroxhevXwHCna6Ulh9O_YK5-T3yoYuV92na-i7ly7tfmjS6Gg");
         
@@ -122,11 +122,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         await fetch(
-          `${process.env.BACKEND_URL}/api/lists/7`,
+          `${process.env.BACKEND_URL}/api/lists/${id}`,
           requestOptions
         )
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => setStore({ name: data.name }))
           
           .catch((error) => console.log("error", error));
 
@@ -134,7 +134,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       /* TRAE LAS SERIES*/
 
-      getTraerSeries : async () => {
+      getTraerSeries : async (id) => {
         const options = {
           method: 'GET',
           headers: {
@@ -143,38 +143,35 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         };
         
-        fetch('https://api.themoviedb.org/3/tv/on_the_air', options)
+        fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, options)
           .then(response => response.json())
           .then((data) => setStore ({series: data.results}))
           .catch(err => console.error(err));
       },
 
-      /* trae usuario */
+     
 
-      getTraerUsuario : async () => {
+      /* eliminar pelicula o serie */
 
+      getEliminarPelicula: async (list_id, id) => {
         const myHeaders = new Headers();
-
         myHeaders.append("Content-Type", "application/json");
-
+      
         const requestOptions = {
-          method: "GET",
+          method: "DELETE",
           headers: myHeaders,
           redirect: "follow",
         };
-
+      
         await fetch(
-          `${process.env.BACKEND_URL}/api/users/1`,
+          `${process.env.BACKEND_URL}/lists/${list_id}/remove/${id}`,  // ha de estar el id de la pelicula que se quiere borrar?
           requestOptions
         )
           .then((response) => response.json())
-          .then((data) => setStore ({nombreUsuario: data}))
+          .then((data) => console.log(data))
           .catch((error) => console.log("error", error));
-
       },
-
-
- 
+      
 
        
 

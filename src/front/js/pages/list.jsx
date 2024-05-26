@@ -18,6 +18,11 @@ const List = () => {
 
   const navigate = useNavigate();
 
+  const handleDelete = (id) => {
+    actions.getEliminarPelicula(id);  // Aquí va el id de la pelicula que se quiere borrar
+    console.log("borrar");
+  };
+
   const handleAnimation = (id) => {
     setAnimationTriggers((prev) => ({
       ...prev,
@@ -65,12 +70,18 @@ const List = () => {
   useEffect(() => {
     actions.getTraerPeliulas();
     actions.getTraerSeries();
+    actions.getEliminarPelicula();
+    actions.getTraerTitulo();
   }, []);
 
-  console.log(store.pelis)
-  console.log(store.series)
+  const baseImageUrl = "https://image.tmdb.org/t/p/";
+  const size = "w500";
+
+  console.log(store.pelis);
+  console.log(store.series);
   return (
     <div className="container_list">
+     
       <ul
         style={{
           display: "flex",
@@ -83,7 +94,11 @@ const List = () => {
       >
         <li className="nav-item" role="presentation">
           <button
-            style={{ display: "flex", justifyContent: "center", marginLeft: "20%" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: "20%",
+            }}
             className="nav-link active"
             id="pills-home-tab"
             data-bs-toggle="pill"
@@ -93,14 +108,17 @@ const List = () => {
             aria-controls="pills-home"
             aria-selected="true"
           >
-            Films{" "}
-            <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
+            Films <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
           </button>
         </li>
 
         <li className="nav-item" role="presentation">
           <button
-            style={{ display: "flex", justifyContent: "center", marginLeft: "40%" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginLeft: "40%",
+            }}
             className="nav-link"
             id="pills-profile-tab"
             data-bs-toggle="pill"
@@ -124,13 +142,17 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>Nombre de la lista de Peliculas</h2>
+            <h2>{store.name}</h2>
             <div className="row">
               {store.pelis?.map((pelicula) => (
-                <div key={pelicula.id} className="card" style={{ width: "18rem" }}>
+                <div
+                  key={pelicula.id}
+                  className="card"
+                  style={{ width: "18rem", marginLeft: "5%" }}
+                >
                   <img
                     style={{ marginTop: "10px" }}
-                    src={pelicula.poster_path}
+                    src={`${baseImageUrl}${size}${pelicula.poster_path}`}
                     alt="Film Poster"
                   ></img>
                   <div className="card-body">
@@ -154,15 +176,17 @@ const List = () => {
 
                       <span
                         className={`animate__animated ${
-                          animationTriggers[pelicula.id] ? "animate__bounce" : ""
+                          animationTriggers[pelicula.id]
+                            ? "animate__bounce"
+                            : ""
                         }`}
                       >
                         {contadores[pelicula.id] || 0}{" "}
                         {/* Aquí se muestra el contador */}
                       </span>
                       <div>
-                      <AiOutlineDelete className="garbage" />
-
+                        
+                        <AiOutlineDelete onClick={handleDelete} className="garbage" />
                         <ImInfo
                           onClick={() => navigate("/movie")}
                           className="flecha"
@@ -185,12 +209,13 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>Nombre de la lista de Series</h2>
+            <h2>{store.name}</h2>
             <div className="row">
               {store.series?.map((serie) => (
-                <div key={serie.id} className="card" style={{ width: "18rem" }}>
+                <div key={serie.id} className="card"style={{ width: "18rem", marginLeft: "5%" }}>
                   <img
-                    src={serie.poster_path}
+                    style={{ marginTop: "10px" }}
+                    src={`${baseImageUrl}${size}${serie.poster_path}`}
                     className="card-img-top"
                     alt="Film Poster"
                   ></img>
@@ -221,18 +246,9 @@ const List = () => {
                         {contadores[serie.id] || 0}
                       </span>
                       <div>
-                        <input
-                          style={{
-                            margin: "11px 60px 0 0",
-                            height: "20px",
-                            width: "20px",
-                          }}
-                          className="form-check-input"
-                          type="checkbox"
-                          id="checkboxNoLabel"
-                          value=""
-                          aria-label="..."
-                        />
+                        <AiOutlineDelete
+                         onClick={handleDelete} 
+                         className="garbage" />
 
                         <ImInfo
                           onClick={() => navigate("/movie")}
