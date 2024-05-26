@@ -247,8 +247,4 @@ export const Login = () => {
     </div>
   );
 };
-<<<<<<< HEAD
 export default Login;
-=======
-export default Login;
->>>>>>> origin/main

@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 body {
     font-family: "Montserrat", sans-serif;
-    overflow-y: hidden; /* Oculta la barra de desplazamiento vertical */
+    /* overflow-y: hidden; */ /* Oculta la barra de desplazamiento vertical */
   }
   body {
     background: #1d5b79; 
