@@ -200,12 +200,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(err => console.error(err));
 
    ////*  ADD movie to LISTs *//* movie.jsx:22 Uncaught TypeError: actions.addMovieToList is not a function *////
-         addMovieToList: (listId, movieTitle) => {
-          const store = getStore();
-          const list = store.lists[listId] || [];
-          list.push(movieTitle);
-          setStore({ lists: { ...store.lists, [listId]: list } });
-        }
+         
     ////*  ADD movie to LISTs *//* movie.jsx:22 Uncaught TypeError: actions.addMovieToList is not a function *////
 
         /* try {
@@ -216,6 +211,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
             console.error('Error fetching movie details:', error);
         } */
+    },
+    addMovieToList: (listId, movieTitle) => {
+      const store = getStore();
+      const list = store.lists[listId] || [];
+      list.push(movieTitle);
+      setStore({ lists: { ...store.lists, [listId]: list } });
     },
 
 /* 
