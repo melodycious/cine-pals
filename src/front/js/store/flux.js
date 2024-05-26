@@ -168,7 +168,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           myHeaders.append("Authorization", `Bearer ${token}`);
       
           const raw = JSON.stringify({
-              name: name,
+              name: name
           });
       
           const requestOptions = {
@@ -180,20 +180,51 @@ const getState = ({ getStore, getActions, setStore }) => {
       
           fetch(`${process.env.BACKEND_URL}/api/lists`, requestOptions)
               .then((response) => response.json())
-              .then((result) => setStore({ lista: result }))
+              .then((result) => {
+                setStore({ listas: [...store.listas, result] });
+                getActions().getTraerUsuario();
+              })
               .catch((error) => console.error(error));
       },
         
-      getEditarLista: async (name, id) => {
+      getAñadirParticipante: async (email) => {
         const store = getStore();
         const token = store.token;
+
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${token}`);
+
+        const raw = JSON.stringify({
+            email: email
+        });
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        fetch(`${process.env.BACKEND_URL}/api/lists/${store.listas}/share`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+              setStore({ listas: store.listas.map(lista => lista.id === store.listas.id ? result : lista) });
+            })
+            .catch((error) => console.error(error));
+    },
+
+      getEditarLista: async (name) => {
+        const store = getStore();
+        const token = store.token;
+        console.log(store.listas.id);
     
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${token}`);
     
         const raw = JSON.stringify({
-            name: name,
+            name: name
         });
     
         const requestOptions = {
@@ -203,32 +234,43 @@ const getState = ({ getStore, getActions, setStore }) => {
             redirect: "follow",
         };
     
-        fetch(`${process.env.BACKEND_URL}/api/lists/${id}`, requestOptions)
+        fetch(`${process.env.BACKEND_URL}/api/lists/${store.lista}`, requestOptions)
             .then((response) => response.text())
-            .then((result) => console.log(result))
+            .then((result) => {
+              setStore({ listas: store.listas.map(lista => lista.id ? result : lista) });
+              getActions().getTraerUsuario();
+            })
             .catch((error) => console.error(error));
     },
 
     getEliminarLista: async () => {
-      const store = getStore();
-      try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/${store.list.id}`, {
+        const store = getStore();
+        const token = store.token;
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/${store.lista}`, {
               method: 'DELETE',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${store.token}`
+                  'Authorization': `Bearer ${token}` 
               }
           });
-  
-          if (response.status !== 200) {
-              throw new Error("Error al eliminar lista");
+
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
           }
-          const data = await response.json(data);
-          console.log(store);
+          const deletedListId = store.lista;
+          const updatedLists = store.listas.filter(lista => lista.id !== deletedListId);
+          setStore({ listas: updatedLists });
+
+          const data = await response.json();
+          console.log('List deleted:', data);
       } catch (error) {
-          console.error("Error al eliminar la lista", error);
+          console.error('Error deleting list:', error);
       }
   },
+
+
 
 
 

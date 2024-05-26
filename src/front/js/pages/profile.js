@@ -7,15 +7,19 @@ import { Context } from "../store/appContext.js";
 
 const Profile = (props) => {
         const { store, actions } = useContext(Context);
+
         const [editMode, setEditMode] = useState(false);
+
         const [name, setName] = useState("");
+        const [email, setEmail] = useState("");
+
+        const navigate = useNavigate();
+
         const [editedProfile, setEditedProfile] = useState({
             nombre: store.usuario.nombre,
             email: store.usuario.email,
             password: store.usuario.password
         });
-
-        const navigate = useNavigate();
 
         
 
@@ -42,12 +46,12 @@ const Profile = (props) => {
 
         const handleCreateList = () => {
             actions.getCrearLista(name);
+            actions.añadirParticipante(email);
         };
 
         const handleSaveChanges = () => {
             actions.getEditUser(editedProfile);
             toggleEditMode();
-            actions.getTraerUsuario();
         };
 
         const handleDeleteUser = () => {
@@ -88,7 +92,9 @@ const Profile = (props) => {
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label">Participantes</label>
-                                        <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"/>
+                                        <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}/>
                                         <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más? Introduce su email.</div>
                                     </div>
                                 </form>
@@ -126,7 +132,7 @@ const Profile = (props) => {
                             </>
                         ) : (
                             <>
-                                <h3 className="m-4">{store.usuario.nombre}</h3>
+                                <h3 className="m-4">{store.usuario.name}</h3>
                                 <h4 className="m-4">{store.usuario.email}</h4>
                             </>
                         )}

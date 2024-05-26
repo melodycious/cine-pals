@@ -7,14 +7,23 @@ const ListCard = (props) => {
   const movieCount = props.movies ? props.movies.length : 0;
   const seriesCount = props.series ? props.series.length : 0;
   const { store, actions } = useContext(Context);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
+
+  const handleEditarLista = () => {
+    actions.getEditarLista(props.id, name);
+    if (email) {
+      actions.getAñadirParticipante(props.id, email);
+    }
+  };
 
   const handleDeleteList = () => {
-    actions.getEliminarLista();
+    actions.getEliminarLista(props.id);
   };
 
   return (
-    <Link to={`/users/${props.id}`} >
+    
       <div className="col">
         <div className="card h-100 text-center">
           <div className="card-body">
@@ -37,28 +46,33 @@ const ListCard = (props) => {
                         </div>
                         <div className="modal-body">
                         <form>
-                          <div className="mb-3">
-                            <label type="text" className="form-label">Nombre de la lista</label>
-                            <input type="text" className="form-control" id="text" aria-describedby="emailHelp" placeholder="Lista de la familia"/>
-                          </div>
-                          <div className="mb-3">
-                            <label type="exampleInputPassword1" className="form-label">Participantes</label>
-                            <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"/>
-                            <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más. Introduce su email.</div>
-                          </div>
+                        <div className="mb-3">
+                                        <label htmlFor="text" className="form-label">Nombre de la lista</label>
+                                        <input type="text" className="form-control" id="text" placeholder="Lista de la familia"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="email" className="form-label">Participantes</label>
+                                        <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}/>
+                                        <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más? Introduce su email.</div>
+                                    </div>
                         </form>
                         </div>
                         <div className="modal-footer">
-                          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                          <button type="button" className="btn btn-primary">Guardar cambios</button>
-                        </div>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleEditarLista}>Guardar cambios</button>
+                            </div>
                       </div>
                     </div>
                   </div>
           </div> 
         </div>
       </div>
-    </Link>
+    
   );
 };
 
