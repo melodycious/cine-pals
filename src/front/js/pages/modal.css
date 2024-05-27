@@ -1,0 +1,132 @@
+/* modal.css */
+
+/* Modal Styles */
+/* modal.css */
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hide the modal by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+    backdrop-filter: blur(3px); /* Apply blur to background */
+    animation: fadeIn 0.5s; /* Smooth fade-in animation */
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background: linear-gradient(
+      -45deg,
+      #1d5b79 0%,
+      #468b97 50%,
+      #ef6262 75%,
+      #f3aa60 100%
+    );
+    color: white;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: none;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 400px; /* Set max width */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    animation: slideIn 0.8s; /* Smooth slide-in animation */
+  }
+  
+  /* Slide-in animation */
+  @keyframes slideIn {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Close Button */
+  .close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #ef6262; /* Change color on hover */
+    text-decoration: none;
+  }
+  
+  /* List Items */
+  .modal-content ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .modal-content ul li {
+    padding: 10px;
+    margin: 5px 0;
+    background: white;
+    color: #1d5b79;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .modal-content ul li:hover {
+    background: #ef6262;
+    color: white; /* Change color on hover */
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .modal-header h5 {
+    margin: 0;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 10px;
+  }
+  
+  .modal-footer .btn {
+    background: white;
+    color: #1d5b79;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .modal-footer .btn:hover {
+    background: #ef6262;
+    color: white; /* Change color on hover */
+  }
+  

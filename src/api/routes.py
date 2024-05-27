@@ -171,6 +171,7 @@ def edit_list(list_id):
     db.session.commit()
     return jsonify({'msg': 'List updated', 'list': list.serialize()}), 200
 
+
 @api.route('/lists/<int:list_id>/add', methods=['PATCH']) #añadir una pelicula o serie a una lista
 @jwt_required()
 def add_movie_to_list(list_id):
@@ -252,3 +253,4 @@ def remove_item_from_list(list_id):
    
    
    
+
