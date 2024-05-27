@@ -1,14 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { ImInfo } from "react-icons/im";
 import { Context } from "../store/appContext";
-import { PiFilmSlateLight } from "react-icons/pi";
-import { PiTelevisionSimpleBold } from "react-icons/pi";
+import { PiFilmSlateLight, PiTelevisionSimpleBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import "./list.css";
 import "animate.css";
 import PropTypes from "prop-types";
 import { AiOutlineDelete } from "react-icons/ai";
-
 
 const List = () => {
   const { store, actions } = useContext(Context);
@@ -17,6 +15,11 @@ const List = () => {
   const [animationTriggers, setAnimationTriggers] = useState({});
 
   const navigate = useNavigate();
+
+  const handleDelete = (list_id, id) => {
+    actions.getEliminarPelicula(list_id, id);
+    console.log("borrar");
+  };
 
   const handleAnimation = (id) => {
     setAnimationTriggers((prev) => ({
@@ -62,23 +65,21 @@ const List = () => {
     handleAnimation(id);
   };
 
+  useEffect(() => {
+    actions.getTraerPeliulas();
+    actions.getTraerSeries();
+    actions.getEliminarPelicula();
+    actions.getTraerTitulo();
+  }, []);
 
+  const baseImageUrl = "https://image.tmdb.org/t/p/";
+  const size = "w500";
 
   return (
     <div className="container_list">
-      <ul
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginRight: "10%",
-        }}
-        className="nav nav-pills mb-3"
-        id="pills-tab"
-        role="tablist"
-      >
+      <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li className="nav-item" role="presentation">
           <button
-            style={{ display: "flex", justifyContent: "center", marginLeft: "20%" }}
             className="nav-link active"
             id="pills-home-tab"
             data-bs-toggle="pill"
@@ -88,14 +89,12 @@ const List = () => {
             aria-controls="pills-home"
             aria-selected="true"
           >
-            Films{" "}
-            <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
+            Films <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
           </button>
         </li>
 
         <li className="nav-item" role="presentation">
           <button
-            style={{ display: "flex", justifyContent: "center", marginLeft: "40%" }}
             className="nav-link"
             id="pills-profile-tab"
             data-bs-toggle="pill"
@@ -119,18 +118,16 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>Nombre de la lista de Peliculas</h2>
+            <h2>{store.name}</h2>
             <div className="row">
-              {store.pelis.map((pelicula) => (
-                <div key={pelicula.id} className="card" style={{ width: "18rem" }}>
+              {store.pelis?.map((pelicula) => (
+                <div key={pelicula.id} className="card">
                   <img
-                    style={{ marginTop: "10px" }}
-                    src={pelicula.poster_path}
+                    src={`${baseImageUrl}${size}${pelicula.poster_path}`}
                     alt="Film Poster"
                   ></img>
                   <div className="card-body">
                     <h5 className="card-title">{pelicula.title}</h5>
-                    <p className="card-text"></p>
                     <div className="form_check">
                       <div className="container_button">
                         <button
@@ -146,23 +143,24 @@ const List = () => {
                           +
                         </button>
                       </div>
-
                       <span
                         className={`animate__animated ${
-                          animationTriggers[pelicula.id] ? "animate__bounce" : ""
+                          animationTriggers[pelicula.id]
+                            ? "animate__bounce"
+                            : ""
                         }`}
                       >
-                        {contadores[pelicula.id] || 0}{" "}
-                        {/* Aquí se muestra el contador */}
+                        {contadores[pelicula.id] || 0}
                       </span>
                       <div>
-                      <AiOutlineDelete className="garbage" />
-
+                        <AiOutlineDelete
+                          onClick={() => handleDelete(pelicula.id)}
+                          className="garbage"
+                        />
                         <ImInfo
                           onClick={() => navigate("/movie")}
                           className="flecha"
-                        />{" "}
-                        {/* te lleva a movies, pagina de lucia */}
+                        />
                       </div>
                     </div>
                   </div>
@@ -180,18 +178,17 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>Nombre de la lista de Series</h2>
+            <h2>{store.name}</h2>
             <div className="row">
-              {store.series.map((serie) => (
-                <div key={serie.id} className="card" style={{ width: "18rem" }}>
+              {store.series?.map((serie) => (
+                <div key={serie.id} className="card">
                   <img
-                    src={serie.poster_path}
+                    src={`${baseImageUrl}${size}${serie.poster_path}`}
                     className="card-img-top"
                     alt="Film Poster"
                   ></img>
                   <div className="card-body">
                     <h5 className="card-title">{serie.name}</h5>
-                    <p className="card-text"></p>
                     <div className="form_check">
                       <div className="container_button">
                         <button
@@ -207,7 +204,6 @@ const List = () => {
                           +
                         </button>
                       </div>
-
                       <span
                         className={`animate__animated ${
                           animationTriggers[serie.id] ? "animate__bounce" : ""
@@ -216,19 +212,10 @@ const List = () => {
                         {contadores[serie.id] || 0}
                       </span>
                       <div>
-                        <input
-                          style={{
-                            margin: "11px 60px 0 0",
-                            height: "20px",
-                            width: "20px",
-                          }}
-                          className="form-check-input"
-                          type="checkbox"
-                          id="checkboxNoLabel"
-                          value=""
-                          aria-label="..."
+                        <AiOutlineDelete
+                          onClick={() => handleDelete(serie.id)}
+                          className="garbage"
                         />
-
                         <ImInfo
                           onClick={() => navigate("/movie")}
                           className="flecha"
@@ -251,3 +238,4 @@ List.propTypes = {
 };
 
 export default List;
+
