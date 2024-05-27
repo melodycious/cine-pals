@@ -12,6 +12,7 @@ export const Home = () => {
 
   useEffect(() => {
     actions.getMoviesLanding();
+    console.log(store.token)
   }, []);
 
   const lastMovies = store.latestMovies;

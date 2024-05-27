@@ -50,7 +50,7 @@ def handle_newuser(id,listid):
     db.session.commit()
     return "Pleaseee!!"
 
-@api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
+@api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que tenga el usuario
 def handle_get_one_user(id):
     user = User.query.options(joinedload(User.lists).joinedload(List.movies),joinedload(User.lists).joinedload(List.series)).get(id)
     response_body = {

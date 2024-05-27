@@ -18,12 +18,13 @@ const Movie = () => {
     console.log(store.movie); // Log the movie data from the store
   }, [store.movie]);
 
-  const handleAddToList = (listId) => {
+  const handleAddToList = (list_id) => {
     // Add functionality to add the movie to the selected list
-    actions.addMovieToList(listId, store.movie.title);
-    console.log(`Adding movie to list ${listId}`);
+    actions.addMovieToList(list_id, store.movie.title);
+    console.log(`Adding movie to list ${list_id}`);
     setShowModal(false); // Close modal after adding to list
   };
+  console.log("contenido de listas", store.usuario)
 
   // Renderización condicional
   if (!store.movie || Object.keys(store.movie).length === 0) {
@@ -88,17 +89,16 @@ const Movie = () => {
               </button>
             </div>
             <div className="modal-body">
-              <ul>
+               {/* <ul>
                 <li onClick={() => handleAddToList(1)}>Equipo de bolos</li>
                 <li onClick={() => handleAddToList(2)}>Para reir</li>
                 <li onClick={() => handleAddToList(3)}>tengo que ver</li>
-                {/* Add more list options as needed */}
-              </ul>
-              {/* <ul>
-                {store.userLists.map(list => (
-                  <li key={list.id} onClick={() => handleAddToList(list.id)}>{list.name}</li>
+              </ul>  */}
+              <ul>
+                {store.listasArray?.map(lista => (
+                  <li key={lista.id} onClick={() => handleAddToList(lista.id)}>{lista.name}</li>
                 ))}
-              </ul> */}
+              </ul>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>

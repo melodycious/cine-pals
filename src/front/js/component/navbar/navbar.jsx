@@ -21,7 +21,7 @@ export const Navbar = () => {
 					<img src={logo} alt="Logo" width="100" height="90" className="d-inline-block align-text-top"/>
 				</Link>
 				{
-					!store.token ? (
+					!store.token || store.token == undefined ? (
 						<Link to="/login">
 							<button className="btn btn-primary">Iniciar Sesión</button>
 						</Link>
