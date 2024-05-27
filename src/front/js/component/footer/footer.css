@@ -1,9 +1,12 @@
-.footer {
-  background-color: #1d5b79;
-  color: #f3aa60;
-  position: fixed; 
+.footer{
+  background-color: #1D5B79;
+  color: #F3AA60;
+/*   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100%; */
+}
+.creadores{
+  color:#f3aa60;
 }
 a {
   color: #468b97;

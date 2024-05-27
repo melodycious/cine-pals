@@ -25,10 +25,12 @@ export const Login = () => {
     actions.getLogin();
   }, []);
   useEffect(() => {
-    if (store.token !== "") {
-      navigate("/profile"); 
+    console.log(store.token, store.userId);
+    if (store.token !== "" && store.token) {
+      navigate(`/profile/${store.userId}`); 
     }
   }, [store.token]);
+  console.log(store);
   return (
     <div className="fondoLogin">
     <div 

@@ -1,25 +1,35 @@
-h1, p {
-    color: white;
-  }
-  .white-placeholder::placeholder {
-      color: #CCCCCC;
-  }
-  
-  .container_list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .fondoLogin {
-    background: #1d5b79; 
-    background: -moz-linear-gradient(-45deg,  #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
-    background: -webkit-linear-gradient(-45deg,  #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
-    background: linear-gradient(135deg, #1d5b79 0%, #468b97 50%, #ef6262 75%, #f3aa60 100%); 
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1d5b79', endColorstr='#f3aa60', GradientType=1 ); 
-    height: 100%;
-    margin: 0;
-  }
+h1,
+p {
+  color: white;
+}
+.white-placeholder::placeholder {
+  color: #cccccc;
+}
 
+.fondoLogin {
+  background: #1d5b79;
+  background: -moz-linear-gradient(
+    -45deg,
+    #1d5b79 0%,
+    #468b97 50%,
+    #ef6262 75%,
+    #f3aa60 100%
+  );
+  background: -webkit-linear-gradient(
+    -45deg,
+    #1d5b79 0%,
+    #468b97 50%,
+    #ef6262 75%,
+    #f3aa60 100%
+  );
+  background: linear-gradient(
+    135deg,
+    #1d5b79 0%,
+    #468b97 50%,
+    #ef6262 75%,
+    #f3aa60 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1d5b79', endColorstr='#f3aa60', GradientType=1 );
+  height: 100%;
+  margin: 0;
+}

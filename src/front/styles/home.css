@@ -5,3 +5,46 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+body {
+    background-color: #FCFCFB !important;
+  }
+
+h1, p {
+    color: black;
+  }
+
+.landingback {
+    margin: 20px;
+    padding: 10px;
+    background-color: #FCFCFF;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px;
+    font-family: "Montserrat", sans-serif;
+  }
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+.card-img-top {
+    border-bottom: 1px solid #ddd;
+  }
+  
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+.card-text {
+    color: #555;
+  }
+  
