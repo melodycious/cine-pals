@@ -3,15 +3,19 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/home.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar/navbar.jsx";
 import { Footer } from "./component/footer/footer.jsx";
+import { Navbar } from "./component/navbar/navbar.jsx";
+import { Footer } from "./component/footer/footer.jsx";
 import Profile from "./pages/profile";
 import Login from "./pages/login.jsx";
-import Movie from "./pages/movie";
+import Movie from "./pages/movie.jsx";
 import List from "./pages/list.jsx";
+import Searcher from "./component/search/searcher.jsx";
+import SerieDetail from "./pages/serie.jsx";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +37,9 @@ const Layout = () => {
                         <Route element={<Movie />} path="/movie" />
                         <Route element={<List />} path="/list" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route path="/search" element={<Searcher />} />
+                        <Route path="/movie/:id" element={<Movie />} /> 
+                        <Route path="/serie/:id" element={<SerieDetail />} />   
                     </Routes>
                     <Footer />
                 </ScrollToTop>

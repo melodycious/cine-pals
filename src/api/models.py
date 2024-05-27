@@ -1,16 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-
 db = SQLAlchemy()
-
-
 user_list_association = db.Table('user_list_association',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('list_id', db.Integer, db.ForeignKey('list.id'), primary_key=True)
 )
 
-
-
 class User(db.Model):
+    id = db.Column(db.Integer, unique=True, primary_key=True)
     id = db.Column(db.Integer, unique=True, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
@@ -21,7 +17,6 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.email}>'
-
     def serialize(self):
         return {
             "id": self.id,
