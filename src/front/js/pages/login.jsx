@@ -70,7 +70,7 @@ export const Login = () => {
                 aria-controls="login-tab-pane"
                 aria-selected="true"
               >
-                <span style={{ color: "white" }}>Login</span>
+                <span style={{ color: "white" }}>Iniciar Sesión</span>
               </button>
             </li>
             <li className="nav-item" role="presentation">
@@ -85,7 +85,7 @@ export const Login = () => {
                 aria-controls="signup-tab-pane"
                 aria-selected="false"
               >
-                <span style={{ color: "white" }}>Sign up</span>
+                <span style={{ color: "white" }}>Registrarse</span>
               </button>
             </li>
           </ul>
