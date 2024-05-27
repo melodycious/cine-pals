@@ -5,12 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       usuario: {},
-
       series: [], 
-      nombreUsuario: {}
-
-     
-
+      nombreUsuario: {},
       userId: {},
       token: {},
       latestMovies: [],
