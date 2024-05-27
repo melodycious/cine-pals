@@ -2,12 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
-
 import { Home } from "./pages/home.jsx";
 import injectContext from "./store/appContext";
-
-import { Navbar } from "./component/navbar/navbar.jsx";
-import { Footer } from "./component/footer/footer.jsx";
 import { Navbar } from "./component/navbar/navbar.jsx";
 import { Footer } from "./component/footer/footer.jsx";
 import Profile from "./pages/profile";
@@ -34,7 +30,6 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Login/>} path="/login" />
                         <Route element={<Profile />} path="/profile/:id" />
-                        <Route element={<Movie />} path="/movie" />
                         <Route element={<List />} path="/list" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route path="/search" element={<Searcher />} />
