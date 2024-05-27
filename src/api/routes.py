@@ -4,12 +4,11 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, List, Movie, Serie
 from sqlalchemy.orm import joinedload
+from api.models import db, User, List, Movie, Serie
+from sqlalchemy.orm import joinedload
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
-from flask_cors import CORS
+
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
