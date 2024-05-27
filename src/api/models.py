@@ -7,7 +7,6 @@ user_list_association = db.Table('user_list_association',
 
 class User(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True)
-    id = db.Column(db.Integer, unique=True, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False, default=True)
