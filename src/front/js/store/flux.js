@@ -76,13 +76,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
         .then((response) => response.json())
         .then((result) => {
-            setStore({ token: result.access_token, userId: result.userId });
+          const store = getStore()
+            setStore({...store,token: result.access_token, userId: result.userId });
             console.log('result: ' + JSON.stringify(result));
             // Llamar a getTraerUsuario justo después de obtener el token y el userId
             getActions().getTraerUsuario(result.userId);
         })
         .catch((error) => console.log("error", error));
     },
+
+    
 
       /* ESTE ES EL LOGOUT */
 
@@ -91,8 +94,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(token);
 
         setStore({ token: "" });
+        localStorage.clear();
         navigate("/");
 
+      },
+      setSession: (token,usuario) => {
+        const store = getStore()
+        setStore({...store, token, usuario:JSON.parse(usuario)})
       },
 
 
@@ -314,7 +322,7 @@ getTraerUsuario: async () => {
     
             const data = await response.json();
             console.log("Datos del usuario:", data);
-            setStore({ usuario: data });
+            setStore({...store,usuario: data });
         } catch (error) {
             console.error("Error al obtener el usuario", error);
         }
