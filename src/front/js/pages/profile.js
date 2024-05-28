@@ -16,21 +16,21 @@ const Profile = (props) => {
         const navigate = useNavigate();
 
         const [editedProfile, setEditedProfile] = useState({
-            nombre: store.usuario.nombre,
-            email: store.usuario.email,
-            password: store.usuario.password
+            nombre: store.userInfo.nombre,
+            email: store.userInfo.email,
+            password: store.userInfo.password
         });
 
         
 
         useEffect(() => {
             setEditedProfile({
-                nombre: store.usuario.nombre,
-                email: store.usuario.email,
-                password: store.usuario.password
+                nombre: store.userInfo.nombre,
+                email: store.userInfo.email,
+                password: store.userInfo.password
             });
             
-        }, [store.usuario]);
+        }, [store.userInfo]);
 
         const toggleEditMode = () => {
             setEditMode(!editMode);
@@ -59,7 +59,9 @@ const Profile = (props) => {
         };
         
         useEffect(() => {
-          actions.getTraerUsuario().then(() => {actions.getTraerTodasLasListas()});
+            console.log(store.userId);
+          actions.getTraerUsuario();
+          actions.getTraerTodasLasListas();
 
       }, []);
 
@@ -116,7 +118,7 @@ const Profile = (props) => {
                         {editMode ? (
                             <>
                                 <div className="mb-3">
-                                    <label htmlFor="nombre" className="form-label">Nombre de usuario</label>
+                                    <label htmlFor="nombre" className="form-label">Nombre de userInfo</label>
                                     <input type="name" className="form-control" id="nombre" name="nombre" placeholder="Nuevo nombre" value={editedProfile.nombre} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
@@ -130,8 +132,8 @@ const Profile = (props) => {
                             </>
                         ) : (
                             <>
-                                <h3 className="m-4">{store.usuario.name}</h3>
-                                <h4 className="m-4">{store.usuario.email}</h4>
+                                <h3 className="m-4">{store.userInfo.name}</h3>
+                                <h4 className="m-4">{store.userInfo.email}</h4>
                             </>
                         )}
                         <div className="d-grid gap-2 col-6 mx-auto">

@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      usuario: {},
+      userInfo:{},
       series: [], 
       nombreUsuario: {},
-      userId: {},
+      userId: "",
       token: "",
       latestMovies: [],
       lista: {},
@@ -279,7 +279,7 @@ getTraerUsuario: async () => {
     
             const data = await response.json();
             console.log("Datos del usuario:", data);
-            setStore({...store, usuario: data });
+            setStore({...store, userInfo: data });
         } catch (error) {
             console.error("Error al obtener el usuario", error);
         }
@@ -306,6 +306,7 @@ getTraerUsuario: async () => {
       }   
   },
 
+  
 
     getEditUser: async (editedProfile) => {
       const store = getStore();
@@ -322,7 +323,7 @@ getTraerUsuario: async () => {
               throw new Error("Error al editar usuario");
           }
           const data = await response.json();
-          setStore({ usuario: data });
+          setStore({ userInfo: data });
           getActions().getTraerUsuario();
           console.log(data);
       } catch (error) {
@@ -381,6 +382,32 @@ getTraerUsuario: async () => {
           })
           .catch((error) => console.error(error));
   },
+
+  getAñadirParticipante: async (id, email) => {
+    const store = getStore();
+    const token = store.token;
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    const raw = JSON.stringify({
+        email: email
+    });
+    const requestOptions = {
+        method: "PUT",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+    };
+    fetch(`${process.env.BACKEND_URL}/api/lists/${id}/add_user`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            setStore({
+                listas: store.listas.map(lista => lista.id === id ? result.list : lista)
+            });
+            getActions().getTraerTodasLasListas();
+        })
+        .catch((error) => console.error(error));
+},
         
   getEditarLista: async (id, name) => {
     const store = getStore();

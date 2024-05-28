@@ -9,7 +9,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-from sqlalchemy.sql import text
+from sqlalchemy import text
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
@@ -150,11 +150,11 @@ def handle_delete_list(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists/<int:list_id>/add_user', methods=['POST']) #añadir un usuario a una lista
+@api.route('/lists/<int:list_id>/add_user', methods=['PUT']) #añadir un usuario a una lista
 def add_user_to_list(list_id):
-    user_id = request.json.get('user_id')
+    email = request.json.get('email')
     list = List.query.get(list_id)
-    user = User.query.get(user_id)
+    user = User.query.filter(User.email == email).first()
     if not list or not user:
         return jsonify({'msg': 'List or User not found'}), 404
     list.owners.append(user)

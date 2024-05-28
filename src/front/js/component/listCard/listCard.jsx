@@ -12,8 +12,10 @@ const ListCard = (props) => {
 
 
   const handleEditarLista = () => {
+    if (name.length > 0) {
     actions.getEditarLista(props.id, name);
-    if (email) {
+    }
+    if (email.length > 0) {
       actions.getAñadirParticipante(props.id, email);
     }
   };

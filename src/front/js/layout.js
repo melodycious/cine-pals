@@ -26,16 +26,16 @@ const Layout = () => {
 
     useEffect(() => {
         console.log(store.token);
-        console.log(store.usuario)
-        if (!!store.token && !!store.usuario){
+        console.log(store.userInfo)
+        if (!!store.token && !!store.userInfo){
             localStorage.setItem("token",store.token)
-            localStorage.setItem("usuario",JSON.stringify(store.usuario))
+            localStorage.setItem("userInfo",JSON.stringify(store.userInfo))
             return 
         }
-        if (localStorage.getItem("token") && localStorage.getItem("usuario")){
-            actions.setSession(localStorage.getItem("token"), localStorage.getItem("usuario"))
+        if (localStorage.getItem("token") && localStorage.getItem("userInfo")){
+            actions.setSession(localStorage.getItem("token"), localStorage.getItem("userInfo"))
         }
-    },[store.token, store.usuario])
+    },[store.token, store.userInfo])
 
     return (
         <div>
