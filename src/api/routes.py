@@ -102,17 +102,26 @@ def handle_edit_user(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists', methods=['POST']) #crear una lista
+@api.route('/lists', methods=['POST'])
+@jwt_required()
 def handle_new_list():
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+
+    if not current_user:
+        return jsonify({'msg': 'User not found'}), 404
+
     request_body = request.get_json()
-    name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
-    user_id = request_body.get('user_id')
-    list = List(name=name, user_id=user_id)
-    db.session.add(list)
+    name = request_body.get('name')
+
+    new_list = List(name=name)
+    new_list.owners.append(current_user)
+    db.session.add(new_list)
     db.session.commit()
+
     response_body = {
         "msg": "List created successfully",
-        "list": list.serialize()
+        "list": new_list.serialize()
     }
     return jsonify(response_body), 200
 

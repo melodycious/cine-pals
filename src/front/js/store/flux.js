@@ -335,18 +335,22 @@ getTraerUsuario: async () => {
     getCrearLista: async (name) => {
       const store = getStore();
       const token = store.token;
+  
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${token}`);
+  
       const raw = JSON.stringify({
           name: name
       });
+  
       const requestOptions = {
           method: "POST",
           headers: myHeaders,
           body: raw,
           redirect: "follow",
       };
+  
       fetch(`${process.env.BACKEND_URL}/api/lists`, requestOptions)
           .then((response) => response.json())
           .then((result) => {

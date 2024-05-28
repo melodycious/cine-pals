@@ -28,7 +28,9 @@ const ListCard = (props) => {
       <div className="col">
         <div className="card h-100 text-center">
           <div className="card-body">
-            <h4 className="card-title mt-2">{props.name}</h4>
+          <a href={`/list/${props.id}`} className="card-title mt-2 text-decoration-none">
+            {props.name}
+          </a>
             <p className="card-text">
               Películas ({movieCount}) <br></br> Series ({seriesCount})
             </p>
