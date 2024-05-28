@@ -62,9 +62,6 @@ const Profile = (props) => {
           actions.getTraerUsuario();
       }, []);
 
-        console.log(store.usuario);
-        console.log(store);
-
       return (
         <>
             <div className="d-inline m-1 p-2">
@@ -74,7 +71,7 @@ const Profile = (props) => {
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     + Nueva Lista
                 </button>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                {<div className="modal fade modalCarla" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -105,7 +102,7 @@ const Profile = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}
             </div>
             <div className="sideBar m-3">
                 <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -119,7 +116,7 @@ const Profile = (props) => {
                             <>
                                 <div className="mb-3">
                                     <label htmlFor="nombre" className="form-label">Nombre de usuario</label>
-                                    <input type="text" className="form-control" id="nombre" name="nombre" value={editedProfile.nombre} onChange={handleInputChange} />
+                                    <input type="name" className="form-control" id="nombre" name="nombre" placeholder="Nuevo nombre" value={editedProfile.nombre} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Email</label>
@@ -127,7 +124,7 @@ const Profile = (props) => {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">Nueva contraseña</label>
-                                    <input type="password" className="form-control" id="password" name="password" value={editedProfile.password} onChange={handleInputChange} />
+                                    <input type="password" className="form-control" id="password" name="password" placeholder="Nueva Contraseña" value={editedProfile.password} onChange={handleInputChange} />
                                 </div>
                             </>
                         ) : (
