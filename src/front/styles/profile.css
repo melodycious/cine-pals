@@ -35,6 +35,8 @@ h1,.card, .card-title{
 p{
     color: #1D5B79;
 }
-.empty{
-    
+.modalDeCarla{
+    animation: fadeIn 0.5s; 
+    z-index: 1050; 
+    backdrop-filter: blur(3px); 
 }
