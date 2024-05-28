@@ -4,7 +4,6 @@ import gifcinepals3 from "../../img/gifcinepals3.gif";
 import "../../styles/home.css";
 import { BoxArrowInRight, StarFill, ShareFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import Searcher from '../component/search/searcher.jsx';
 
 export const Home = () => {
  
@@ -69,10 +68,6 @@ export const Home = () => {
         );
       })}
     </div>
-    <div>
-                    <h1>Buscar Películas y Series</h1>
-                    <Searcher />
-                  </div>
     </div>
   </div>
 );
