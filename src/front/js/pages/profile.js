@@ -59,7 +59,8 @@ const Profile = (props) => {
         };
         
         useEffect(() => {
-          actions.getTraerUsuario();
+          actions.getTraerUsuario().then(() => {actions.getTraerTodasLasListas()});
+
       }, []);
 
       return (
@@ -154,10 +155,10 @@ const Profile = (props) => {
                 <div className="divisor"></div>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4 m-2 p-1 align-items-center justify-content-md-center">
-                {store.usuario.lists === null || store.usuario.lists?.length === 0 ? (
+                {store.listas === null || store.listas?.length === 0 ? (
                     <p className="empty">Aún no has añadido ninguna lista</p>
                 ) : (
-                    store.usuario.lists?.map((list, index) => (
+                    store.listas?.map((list, index) => (
                         <ListCard
                             id={list.id}
                             key={index}

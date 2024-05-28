@@ -285,6 +285,28 @@ getTraerUsuario: async () => {
         }
     },
 
+    getTraerTodasLasListas: async () => {
+      const store = getStore();
+      try {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/all/${store.userId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${store.token}`
+            },
+          });
+          if (response.status !== 200) {
+              throw new Error("Error al obtener las listas");
+          }
+          const data = await response.json();
+          setStore({ listas: data });
+          console.log(data);
+      } catch (error) {
+          console.error("Error al obtener las listas", error);
+      }   
+  },
+
+
     getEditUser: async (editedProfile) => {
       const store = getStore();
       try {
@@ -355,7 +377,7 @@ getTraerUsuario: async () => {
           .then((response) => response.json())
           .then((result) => {
             setStore({ listas: [...store.listas, result] });
-            getActions().getTraerUsuario();
+            getActions().getTraerTodasLasListas();
           })
           .catch((error) => console.error(error));
   },
@@ -382,7 +404,7 @@ getTraerUsuario: async () => {
             setStore({
                 listas: store.listas.map(lista => lista.id === id ? result.list : lista)
             });
-            getActions().getTraerUsuario();
+            getActions().getTraerTodasLasListas();
         })
         .catch((error) => console.error(error));
 },
@@ -403,7 +425,7 @@ getEliminarLista: async (id) => {
       }
       const updatedLists = store.listas.filter(lista => lista.id !== id);
       setStore({ listas: updatedLists });
-      getActions().getTraerUsuario();
+      getActions().getTraerTodasLasListas();
       const data = await response.json();
       console.log('List deleted:', data);
   } catch (error) {
