@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import "../../../styles/profile.css";
 import { Context } from "../../store/appContext.js";
 
 const ListCard = (props) => {
