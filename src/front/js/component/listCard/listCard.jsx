@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Context } from "../../store/appContext.js";
 
@@ -27,7 +26,9 @@ const ListCard = (props) => {
       <div className="col">
         <div className="card h-100 text-center">
           <div className="card-body">
-            <h4 className="card-title mt-2">{props.name}</h4>
+          <a href={`/list/${props.id}`} className="card-title mt-2 text-decoration-none">
+            {props.name}
+          </a>
             <p className="card-text">
               Películas ({movieCount}) <br></br> Series ({seriesCount})
             </p>
@@ -37,7 +38,7 @@ const ListCard = (props) => {
             <button className="deleteButton btn btn-primary btn-sm" type="button" onClick={handleDeleteList}>
               Eliminar
             </button>
-                  <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div className="modal" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
