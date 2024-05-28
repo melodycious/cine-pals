@@ -9,6 +9,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from sqlalchemy.sql import text
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
@@ -42,11 +43,13 @@ def handle_login():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token, userId=user.id), 200
 
-@api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
-def handle_newuser(id,listid):
-    user = User.query.get(id)
+@api.route('/users/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
+def handle_newuser(listid):
+    email = request.json.get('email')
+    user = User.query.get(email)
     targetList = List.query.get(listid)
     user.lists.append(targetList)
+    targetList.owners.append(user)
     db.session.commit()
     return "Pleaseee!!"
 
@@ -164,6 +167,11 @@ def get_list_details(list_id):
     if not list:
         return jsonify({'msg': 'List not found'}), 404
     return jsonify(list.serialize()), 200
+
+@api.route('/lists/all/<int:id>', methods=['GET'])  #obtener todas las listas
+def get_all_lists(id):
+    lists = List.query.filter(List.owners.any(id=text(str(id)))).all()
+    return jsonify([list.serialize() for list in lists]), 200
 
 @api.route('/lists/<int:list_id>', methods=['PUT']) #editar una lista
 @jwt_required()

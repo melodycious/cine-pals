@@ -41,7 +41,10 @@ const ListCard = (props) => {
               Eliminar
             </button>
             </div>
-                  <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  
+          </div> 
+        </div>
+        <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
@@ -73,8 +76,6 @@ const ListCard = (props) => {
                       </div>
                     </div>
                   </div>
-          </div> 
-        </div>
       </div>
     
   );

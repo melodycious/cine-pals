@@ -5,7 +5,6 @@
 
 /* Modal Styles */
 .modal {
-    display: none; /* Hide the modal by default */
     position: fixed; /* Stay in place */
     z-index: 10000; /* Sit on top */
     left: 0;
@@ -71,7 +70,7 @@
   
   .close:hover,
   .close:focus {
-    color: #ef6262; /* Change color on hover */
+    color: #ef6262; 
     text-decoration: none;
   }
   
