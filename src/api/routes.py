@@ -9,6 +9,7 @@ from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from sqlalchemy import text
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
@@ -42,15 +43,17 @@ def handle_login():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token, userId=user.id), 200
 
-@api.route('/users/<int:id>/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
-def handle_newuser(id,listid):
-    user = User.query.get(id)
+@api.route('/users/<int:listid>', methods=['POST']) #para añadir una lista a un usuario
+def handle_newuser(listid):
+    email = request.json.get('email')
+    user = User.query.get(email)
     targetList = List.query.get(listid)
     user.lists.append(targetList)
+    targetList.owners.append(user)
     db.session.commit()
     return "Pleaseee!!"
 
-@api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que pollas tenga el usuario jejeje
+@api.route('/users/<int:id>', methods=['GET'])  #para obtener todas las listas o lo que tenga el usuario
 def handle_get_one_user(id):
     user = User.query.options(joinedload(User.lists).joinedload(List.movies),joinedload(User.lists).joinedload(List.series)).get(id)
     response_body = {
@@ -102,17 +105,26 @@ def handle_edit_user(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists', methods=['POST']) #crear una lista
+@api.route('/lists', methods=['POST'])
+@jwt_required()
 def handle_new_list():
+    current_user_email = get_jwt_identity()
+    current_user = User.query.filter_by(email=current_user_email).first()
+
+    if not current_user:
+        return jsonify({'msg': 'User not found'}), 404
+
     request_body = request.get_json()
-    name = request_body.get('name')             #request_body es lo que requiere (es un diccionario)
-    user_id = request_body.get('user_id')
-    list = List(name=name, user_id=user_id)
-    db.session.add(list)
+    name = request_body.get('name')
+
+    new_list = List(name=name)
+    new_list.owners.append(current_user)
+    db.session.add(new_list)
     db.session.commit()
+
     response_body = {
         "msg": "List created successfully",
-        "list": list.serialize()
+        "list": new_list.serialize()
     }
     return jsonify(response_body), 200
 
@@ -138,11 +150,11 @@ def handle_delete_list(id):
     }
     return jsonify(response_body), 200
 
-@api.route('/lists/<int:list_id>/add_user', methods=['POST']) #añadir un usuario a una lista
+@api.route('/lists/<int:list_id>/add_user', methods=['PUT']) #añadir un usuario a una lista
 def add_user_to_list(list_id):
-    user_id = request.json.get('user_id')
+    email = request.json.get('email')
     list = List.query.get(list_id)
-    user = User.query.get(user_id)
+    user = User.query.filter(User.email == email).first()
     if not list or not user:
         return jsonify({'msg': 'List or User not found'}), 404
     list.owners.append(user)
@@ -155,6 +167,11 @@ def get_list_details(list_id):
     if not list:
         return jsonify({'msg': 'List not found'}), 404
     return jsonify(list.serialize()), 200
+
+@api.route('/lists/all/<int:id>', methods=['GET'])  #obtener todas las listas
+def get_all_lists(id):
+    lists = List.query.filter(List.owners.any(id=text(str(id)))).all()
+    return jsonify([list.serialize() for list in lists]), 200
 
 @api.route('/lists/<int:list_id>', methods=['PUT']) #editar una lista
 @jwt_required()

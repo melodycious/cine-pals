@@ -23,16 +23,29 @@
   margin: 10px;
   height: 50px;
   width: 250px;
+  
 }
 
+.nav-link.active {
+  border: 1px solid white !important;
+  background-color: #468b97 !important;
+  color: white !important;
+}
+
+
 .nav-link:hover {
-  border: 2px solid #468b97;
+
   color: #468b97;
 }
 
 .nav-link:not(.active) {
   background-color: transparent !important;
-  color: #468b97 !important;
+  color: white !important;
+}
+
+.nav-link:not(.active):hover {
+ border : 1px solid white;
+  color: white !important;
 }
 
 .tab-content {
@@ -51,7 +64,39 @@ h2 {
   text-align: center;
   margin: 30px 0;
 }
-
+.titulito {
+  font-size: 3rem; /* Tamaño grande para destacar */
+  color: #FFFFFF; /* Texto blanco para contraste */
+  text-align: center; /* Centrar el texto */
+  background: linear-gradient(135deg, #F3AA60, antiquewhite); /* Fondo degradado cálido */
+  padding: 15px 30px; /* Espaciado interno */
+  border-radius: 50px; /* Bordes muy redondeados */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra de caja pronunciada */
+  position: relative; /* Posicionamiento relativo para el pseudo-elemento */
+  overflow: hidden; /* Ocultar contenido desbordante */
+  transition: all 0.3s ease-in-out; /* Transiciones suaves */
+}
+.titulito::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1), rgba(255,255,255,0) 70%);
+  transform: rotate(45deg);
+  transition: all 0.5s ease-in-out;
+}
+.titulito:hover::before {
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+}
+.titulito:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); /* Mayor sombra al pasar el ratón */
+  transform: translateY(-5px); /* Efecto de elevación */
+}
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -142,4 +187,5 @@ h2 {
 
 body {
   background-color: antiquewhite;
+  
 }

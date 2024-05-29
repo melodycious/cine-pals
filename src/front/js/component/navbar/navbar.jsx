@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import './navbar.css';
 import logo from "../../../img/logo-sin-fondo.png";
 import { Context } from "../../store/appContext";
@@ -7,6 +7,7 @@ import Searcher from "../search/searcher.jsx";
 
 export const Navbar = () => {
 	const navigate = useNavigate();
+	const { id } = useParams();
 	const { store, actions } = useContext(Context);
 
 	const handleLogOut = () => {
@@ -21,7 +22,7 @@ export const Navbar = () => {
 					<img src={logo} alt="Logo" width="100" height="90" className="d-inline-block align-text-top"/>
 				</Link>
 				{
-					!store.token ? (
+					!store.token || store.token == undefined ? (
 						<Link to="/login">
 							<button className="btn btn-primary">Iniciar Sesión</button>
 						</Link>
@@ -31,8 +32,8 @@ export const Navbar = () => {
 								<Searcher />
 							</form>
 							<div className="d-flex align-items-center">
-								<Link to="/profile" className="btn btn-outline-success me-2">Mis Listas</Link>
-								<button className="btn btn-outline-success me-2" type="button" onClick={handleLogOut}>Cerrar sesión</button>
+								<Link to={`/profile/${localStorage.getItem('userId')}`} className="btn btn-outline-success me-2">Mis Listas</Link>
+								<button className="btn btn-outline-success me-2" type="button" onClick={() => handleLogOut()}>Cerrar sesión</button>
 							</div>
 						</div>
 					)

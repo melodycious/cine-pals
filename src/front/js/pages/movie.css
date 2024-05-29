@@ -73,3 +73,75 @@
     /* Shadow effect on hover (optional) */
     box-shadow: 0 20px 10px rgb(0, 7, 8); /* Example shadow values */
   }
+  .container1 {
+    margin: 20px;
+    padding: 10px;
+    background-color: antiquewhite;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px;
+    font-family: "Montserrat", sans-serif;
+  }
+  .container2 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start  ;
+    padding: 0px;
+    gap: 10px;
+    margin-left: 25px;
+  }
+  .border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; /* Adds padding inside the spans */
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .col-md-4 {
+    flex: 1 0 33.3333%;
+    max-width: 33.3333%;
+    padding: 10px;
+  }
+  .col-md-8 {
+    flex: 1 0 66.6667%;
+    max-width: 66.6667%;
+    padding: 10px;
+  }
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  .card-body {
+    padding: 20px;
+    font-palette: black;
+  }
+  .card-title {
+    margin-bottom: 20px;
+  }
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-group .btn {
+    width: max-content;
+    box-shadow: 0 2px 4px rgba(1, 19, 21, 0.874);
+    display: center;
+    position: relative;
+    left: 50%; /* Move the button to the center horizontally */
+    transform: translateX(-50%)
+  }
+  btn:hover {
+    /* Shadow effect on hover (optional) */
+    box-shadow: 0 20px 10px rgb(0, 7, 8); /* Example shadow values */
+  }
+.ContainerSerie {
+    margin: 20px;
+    padding: 10px;
+    background-color: antiquewhite;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px;
+    font-family: "Montserrat", sans-serif;
+}

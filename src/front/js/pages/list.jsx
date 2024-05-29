@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { ImInfo } from "react-icons/im";
 import { Context } from "../store/appContext";
 import { PiFilmSlateLight, PiTelevisionSimpleBold } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./list.css";
 import "animate.css";
 import PropTypes from "prop-types";
@@ -15,9 +15,11 @@ const List = () => {
   const [animationTriggers, setAnimationTriggers] = useState({});
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleDelete = (list_id, id) => {
     actions.getEliminarPelicula(list_id, id);
+    actions.getEliminarSeries(list_id, id);
     console.log("borrar");
   };
 
@@ -66,10 +68,9 @@ const List = () => {
   };
 
   useEffect(() => {
-    actions.getTraerPeliulas();
-    actions.getTraerSeries();
-    actions.getEliminarPelicula();
-    actions.getTraerTitulo();
+    actions.getTraerPeliculas(id);
+    actions.getTraerSeries(id);
+    actions.getTraerTitulo(id);
   }, []);
 
   const baseImageUrl = "https://image.tmdb.org/t/p/";
@@ -89,7 +90,7 @@ const List = () => {
             aria-controls="pills-home"
             aria-selected="true"
           >
-            Films <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
+            Películas <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
           </button>
         </li>
 
@@ -118,11 +119,11 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>{store.name}</h2>
+            <h2 className="titulito">{store.name}</h2>
             <div className="row">
               {store.pelis?.map((pelicula) => (
-                <div key={pelicula.id} className="card">
-                  <img
+                <div key={pelicula.id} className="card" >
+                  <img style={{ height: '18rem' }}
                     src={`${baseImageUrl}${size}${pelicula.poster_path}`}
                     alt="Film Poster"
                   ></img>
@@ -154,7 +155,7 @@ const List = () => {
                       </span>
                       <div>
                         <AiOutlineDelete
-                          onClick={() => handleDelete(pelicula.id)}
+                          onClick={() => handleDelete(id, pelicula.id)}
                           className="garbage"
                         />
                         <ImInfo
@@ -213,7 +214,7 @@ const List = () => {
                       </span>
                       <div>
                         <AiOutlineDelete
-                          onClick={() => handleDelete(serie.id)}
+                          onClick={() => handleDelete(id, serie.id)}
                           className="garbage"
                         />
                         <ImInfo

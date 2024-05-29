@@ -1,5 +1,4 @@
-
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../../store/appContext.js';
 import "./searcher.css";
@@ -9,6 +8,7 @@ const Searcher = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation(); // Hook para obtener la ubicación actual
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -17,8 +17,6 @@ const Searcher = () => {
       setResults(store.allInfo);
     }
   };
-
-  // aqui mira si el resultado es peli o serie y te lleva a la ruta que toca
 
   const handleResultClick = (item) => {
     if (item.media_type === 'movie') {
@@ -30,25 +28,29 @@ const Searcher = () => {
     }
   };
 
+  // Limpiar los resultados de búsqueda cuando la ruta cambia
+  useEffect(() => {
+    setResults([]); 
+  }, [location]); 
 
-    return (
-      <div style={{ position: 'relative' }}>
+  return (
+    <div style={{ position: 'relative' }}>
       <form onSubmit={handleSearch} style={{ position: 'relative' }}>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar películas y series..."
-          style={{ width: '300px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+          style={{ width: '400px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
         />
-        <button type="submit">Buscar</button>
+        <button className="btn btn-primary ms-2" type="submit">Buscar</button>
       </form>
       {results && results.length > 0 && (
         <div style={{
           position: 'absolute',
           top: '40px',
           left: '0',
-          width: '300px',
+          width: '400px',
           background: 'white',
           border: '1px solid #ccc',
           borderRadius: '4px',
@@ -68,7 +70,7 @@ const Searcher = () => {
         </div>
       )}
     </div>
-    );
+  );
 };
 
 export default Searcher;

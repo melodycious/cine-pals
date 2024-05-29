@@ -4,6 +4,7 @@ import { Context } from '../store/appContext.js';
 import './movie.css';
 import './modal.css';
 import { addMovieToList } from '../store/flux.js';
+import ListCard from '../component/listCard/listCard.jsx';
 
 const Movie = () => {
   const { store, actions } = useContext(Context);
@@ -15,15 +16,17 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log(store.movie); // Log the movie data from the store
+    actions.getTraerTodasLasListas();
   }, [store.movie]);
 
-  const handleAddToList = (listId) => {
-    // Add functionality to add the movie to the selected list
-    actions.addMovieToList(listId, store.movie.title);
-    console.log(`Adding movie to list ${listId}`);
-    setShowModal(false); // Close modal after adding to list
+  const handleAddToList = (list_id) => {
+    console.log("movie", store.movie.title);
+    actions.addMovieToList(list_id, store.movie.title, store.movie.overview, store.movie.poster_path, store.movie.release_date, store.movie.tagline, store.movie.runtime);
+    console.log(store.listas);
+    console.log(`Adding movie to list ${list_id}`);
+    /* setShowModal(false); */ 
   };
+  console.log("contenido de listas", store.usuario)
 
   // Renderización condicional
   if (!store.movie || Object.keys(store.movie).length === 0) {
@@ -88,17 +91,20 @@ const Movie = () => {
               </button>
             </div>
             <div className="modal-body">
-              <ul>
+               {/* <ul>
                 <li onClick={() => handleAddToList(1)}>Equipo de bolos</li>
                 <li onClick={() => handleAddToList(2)}>Para reir</li>
                 <li onClick={() => handleAddToList(3)}>tengo que ver</li>
-                {/* Add more list options as needed */}
+              </ul>  */}
+              <ul>
+              {store.listas === null || store.listas?.length === 0 ? (
+                    <p className="empty">Aún no has añadido ninguna lista</p>
+                ) : (
+                    store.listas?.map((list, index) => (
+                      <li key={index} onClick={() => handleAddToList(list.id)}>{list.name}</li>
+                    ))
+                )}
               </ul>
-              {/* <ul>
-                {store.userLists.map(list => (
-                  <li key={list.id} onClick={() => handleAddToList(list.id)}>{list.name}</li>
-                ))}
-              </ul> */}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>

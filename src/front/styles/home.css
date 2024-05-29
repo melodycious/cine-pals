@@ -47,4 +47,6 @@ h1, p {
 .card-text {
     color: #555;
   }
-  
+  .pooter{
+    margin-bottom: 10000px !important;
+  }

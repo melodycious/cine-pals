@@ -49,12 +49,12 @@ class List(db.Model):
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genres = db.Column(db.ARRAY(db.String), nullable=True)
-    title = db.Column(db.String(120), nullable=False)   
-    overview = db.Column(db.String(120), nullable=False)
+    title = db.Column(db.String(250), nullable=False)   
+    overview = db.Column(db.String(1500), nullable=False)
     poster_path = db.Column(db.String(120), nullable=False)
     release_date = db.Column(db.String(120), nullable=False)
     runtime = db.Column(db.Integer, nullable=False)
-    tagline = db.Column(db.Integer, nullable=False)
+    tagline = db.Column(db.String, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
 
     def __repr__(self):
@@ -75,14 +75,14 @@ class Movie(db.Model):
 class Serie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genres = db.Column(db.ARRAY(db.String), nullable=True)
-    name = db.Column(db.String(120), nullable=False)   
-    overview = db.Column(db.String(120), nullable=False)
-    poster_path = db.Column(db.String(120), nullable=False)
-    first_air_date = db.Column(db.String(120), nullable=False)
-    last_air_date = db.Column(db.String(120), nullable=False)
-    number_of_episodes = db.Column(db.Integer, nullable=False)
-    number_of_seasons = db.Column(db.Integer, nullable=False)
-    status = db.Column(db.String(120), nullable=False)
+    name = db.Column(db.String(120), nullable=True)   
+    overview = db.Column(db.String(1500), nullable=True)
+    poster_path = db.Column(db.String(120), nullable=True)
+    first_air_date = db.Column(db.String(120), nullable=True)
+    last_air_date = db.Column(db.String(120), nullable=True)
+    number_of_episodes = db.Column(db.Integer, nullable=True)
+    number_of_seasons = db.Column(db.Integer, nullable=True)
+    status = db.Column(db.String(120), nullable=True)
     network = db.Column(db.ARRAY(db.String), nullable=True)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
 

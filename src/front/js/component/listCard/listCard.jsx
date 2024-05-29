@@ -12,8 +12,10 @@ const ListCard = (props) => {
 
 
   const handleEditarLista = () => {
+    if (name.length > 0) {
     actions.getEditarLista(props.id, name);
-    if (email) {
+    }
+    if (email.length > 0) {
       actions.getAñadirParticipante(props.id, email);
     }
   };
@@ -27,17 +29,24 @@ const ListCard = (props) => {
       <div className="col">
         <div className="card h-100 text-center">
           <div className="card-body">
-            <h4 className="card-title mt-2">{props.name}</h4>
+          <a href={`/list/${props.id}`} className="card-title mt-2 text-decoration-none">
+            {props.name}
+          </a>
             <p className="card-text">
               Películas ({movieCount}) <br></br> Series ({seriesCount})
             </p>
-            <button type="button" className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+            <div className="d-grid gap-2 d-md-block">
+            <button type="button" className="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
               Editar
             </button>
-            <button className="deleteButton btn btn-primary btn-sm" type="button" onClick={handleDeleteList}>
+            <button className="deleteButton btn btn-primary btn-sm m-1" type="button" onClick={handleDeleteList}>
               Eliminar
             </button>
-                  <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            </div>
+                  
+          </div> 
+        </div>
+        <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
@@ -69,8 +78,6 @@ const ListCard = (props) => {
                       </div>
                     </div>
                   </div>
-          </div> 
-        </div>
       </div>
     
   );

@@ -16,21 +16,21 @@ const Profile = (props) => {
         const navigate = useNavigate();
 
         const [editedProfile, setEditedProfile] = useState({
-            nombre: store.usuario.nombre,
-            email: store.usuario.email,
-            password: store.usuario.password
+            nombre: store.userInfo.nombre,
+            email: store.userInfo.email,
+            password: store.userInfo.password
         });
 
         
 
         useEffect(() => {
             setEditedProfile({
-                nombre: store.usuario.nombre,
-                email: store.usuario.email,
-                password: store.usuario.password
+                nombre: store.userInfo.nombre,
+                email: store.userInfo.email,
+                password: store.userInfo.password
             });
             
-        }, [store.usuario]);
+        }, [store.userInfo]);
 
         const toggleEditMode = () => {
             setEditMode(!editMode);
@@ -46,7 +46,7 @@ const Profile = (props) => {
 
         const handleCreateList = () => {
             actions.getCrearLista(name);
-            actions.añadirParticipante(email);
+           /*  actions.getAñadirParticipante(id, email); */
         };
 
         const handleSaveChanges = () => {
@@ -59,11 +59,11 @@ const Profile = (props) => {
         };
         
         useEffect(() => {
+            console.log(store.userId);
           actions.getTraerUsuario();
-      }, []);
+          actions.getTraerTodasLasListas();
 
-        console.log(store.usuario);
-        console.log(store);
+      }, []);
 
       return (
         <>
@@ -74,7 +74,7 @@ const Profile = (props) => {
                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     + Nueva Lista
                 </button>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                {<div className="modal fade modalCarla" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -90,13 +90,13 @@ const Profile = (props) => {
                                             onChange={(e) => setName(e.target.value)}
                                         />
                                     </div>
-                                    <div className="mb-3">
+                                    {/* <div className="mb-3">
                                         <label htmlFor="email" className="form-label">Participantes</label>
                                         <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}/>
                                         <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más? Introduce su email.</div>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
                             <div className="modal-footer">
@@ -105,7 +105,7 @@ const Profile = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}
             </div>
             <div className="sideBar m-3">
                 <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -118,8 +118,8 @@ const Profile = (props) => {
                         {editMode ? (
                             <>
                                 <div className="mb-3">
-                                    <label htmlFor="nombre" className="form-label">Nombre de usuario</label>
-                                    <input type="text" className="form-control" id="nombre" name="nombre" value={editedProfile.nombre} onChange={handleInputChange} />
+                                    <label htmlFor="nombre" className="form-label">Nombre de userInfo</label>
+                                    <input type="name" className="form-control" id="nombre" name="nombre" placeholder="Nuevo nombre" value={editedProfile.nombre} onChange={handleInputChange} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Email</label>
@@ -127,13 +127,13 @@ const Profile = (props) => {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">Nueva contraseña</label>
-                                    <input type="password" className="form-control" id="password" name="password" value={editedProfile.password} onChange={handleInputChange} />
+                                    <input type="password" className="form-control" id="password" name="password" placeholder="Nueva Contraseña" value={editedProfile.password} onChange={handleInputChange} />
                                 </div>
                             </>
                         ) : (
                             <>
-                                <h3 className="m-4">{store.usuario.name}</h3>
-                                <h4 className="m-4">{store.usuario.email}</h4>
+                                <h3 className="m-4">{store.userInfo.name}</h3>
+                                <h4 className="m-4">{store.userInfo.email}</h4>
                             </>
                         )}
                         <div className="d-grid gap-2 col-6 mx-auto">
@@ -157,10 +157,10 @@ const Profile = (props) => {
                 <div className="divisor"></div>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4 m-2 p-1 align-items-center justify-content-md-center">
-                {store.usuario.lists === null || store.usuario.lists?.length === 0 ? (
+                {store.listas === null || store.listas?.length === 0 ? (
                     <p className="empty">Aún no has añadido ninguna lista</p>
                 ) : (
-                    store.usuario.lists?.map((list, index) => (
+                    store.listas?.map((list, index) => (
                         <ListCard
                             id={list.id}
                             key={index}
