@@ -68,7 +68,7 @@ export const Login = () => {
                 aria-controls="login-tab-pane"
                 aria-selected="true"
               >
-                <span style={{ color: "white" }}>Login</span>
+                <span style={{ color: "white" }}>Conectarme</span>
               </button>
             </li>
             <li className="nav-item" role="presentation">
@@ -83,7 +83,7 @@ export const Login = () => {
                 aria-controls="signup-tab-pane"
                 aria-selected="false"
               >
-                <span style={{ color: "white" }}>Sign up</span>
+                <span style={{ color: "white" }}>Registrarme</span>
               </button>
             </li>
           </ul>
@@ -97,7 +97,7 @@ export const Login = () => {
             >
               <div className="text-center mt-5">
                 <h1>Login</h1>
-                <p>Access to the content</p>
+                <p>Acceder a mi cuenta</p>
                 <br />
                 <form>
                   <div className="form-group">
@@ -153,7 +153,7 @@ export const Login = () => {
                       </div>
                       <div className="col">
                         <input
-                          placeholder="Password"
+                          placeholder="Contraseña"
                           value={loginPassword}
                           onChange={(e) => setLoginPassword(e.target.value)}
                           type="password"
@@ -188,7 +188,7 @@ export const Login = () => {
             >
               <div className="text-center mt-5">
                 <h1>Sign up</h1>
-                <p>Register to access the content</p>
+                <p>Registrate para acceder al contenido</p>
                 <br />
                 <form>
                   <div className="form-group">
@@ -199,7 +199,7 @@ export const Login = () => {
                       className="form-control white-placeholder"
                       id="exampleInputEmail2"
                       aria-describedby="emailHelp"
-                      placeholder="Enter your email"
+                      placeholder="Introduce tu email"
                       style={{
                         marginBottom: "1rem",
                         backgroundColor: "transparent",
@@ -214,7 +214,7 @@ export const Login = () => {
                       type="password"
                       className="form-control white-placeholder"
                       id="exampleInputPassword2"
-                      placeholder="Enter your password"
+                      placeholder="Introduce tu contraseña"
                       style={{
                         marginBottom: "1rem",
                         backgroundColor: "transparent",
@@ -228,7 +228,7 @@ export const Login = () => {
                   onClick={() => {
                     if (!email || email.indexOf("@") === -1) {
                       alert(
-                        "The email must contain an @ Provide a valid email."
+                        "El email tiene que contener @. Por Favor, introduce un email correcto."
                       );
                       return;
                     }
