@@ -69,7 +69,7 @@ const List = () => {
   useEffect(() => {
     actions.getTraerPeliculas(id);
     actions.getTraerSeries(id);
-    actions.getTraerTitulo();
+    actions.getTraerTitulo(id);
   }, []);
 
   const baseImageUrl = "https://image.tmdb.org/t/p/";
