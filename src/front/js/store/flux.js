@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       userInfo:{},
       series: [], 
+      serie: [],
       nombreUsuario: {},
       userId: "",
       token: "",
@@ -287,6 +288,26 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(err => console.error(err));
   
     },
+    getSerie: async (id) => { 
+      const options = {
+          method: 'GET',
+          headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTUwZDQyNjQ2NGQxOGY0ZGRjMGM3ZWEwZjFjNTU2MyIsInN1YiI6IjY2NDI0ZTQ3M2MzMGM1ZjRhYzNhMWQ3ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1qYEcWtzCfR7JEiJLg5B4Nn9WdrFrwydfN68kLVNf-o'
+          }
+      };
+
+      fetch(`https://api.themoviedb.org/3/tv/${id}?language=es-ES`, options)
+        .then(response => response.json())
+        .then((response) => {
+          setStore({ serie: response });
+          console.log(response);
+        })
+        .catch(err => console.error(err));
+
+  },
+
+
     addMovieToList: (list_id, movieTitle, overview, poster_path, release_date, tagline, runtime) => {
       const store = getStore();
       fetch(`${process.env.BACKEND_URL}/api/lists/${list_id}/add`,
@@ -297,6 +318,25 @@ const getState = ({ getStore, getActions, setStore }) => {
             'Authorization': `Bearer ${store.token}`
           },
         body: JSON.stringify({movie:{ title: movieTitle, overview: overview, poster_path: poster_path, release_date: release_date, tagline: tagline, runtime: runtime }})
+         })
+          .then(response => response.json())
+          .then((response) => {
+            getActions().getTraerTodasLasListas();
+            console.log(response);
+          })
+          .catch(err => console.error(err));
+    },
+
+    addSerieToList: (list_id, name, overview, poster_path, first_air_date) => {
+      const store = getStore();
+      fetch(`${process.env.BACKEND_URL}/api/lists/${list_id}/add`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${store.token}`
+          },
+        body: JSON.stringify({serie:{ name: name, overview: overview, poster_path: poster_path, first_air_date: first_air_date}})
          })
           .then(response => response.json())
           .then((response) => {

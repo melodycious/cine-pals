@@ -119,11 +119,11 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>{store.name}</h2>
+            <h2 className="titulito">{store.name}</h2>
             <div className="row">
               {store.pelis?.map((pelicula) => (
-                <div key={pelicula.id} className="card">
-                  <img
+                <div key={pelicula.id} className="card" >
+                  <img style={{ height: '18rem' }}
                     src={`${baseImageUrl}${size}${pelicula.poster_path}`}
                     alt="Film Poster"
                   ></img>

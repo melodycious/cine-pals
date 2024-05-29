@@ -16,7 +16,7 @@ const Movie = () => {
   }, [id]);
 
   useEffect(() => {
-    console.log(store.movie); // Log the movie data from the store
+    actions.getTraerTodasLasListas();
   }, [store.movie]);
 
   const handleAddToList = (list_id) => {
