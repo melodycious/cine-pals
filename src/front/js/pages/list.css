@@ -23,16 +23,29 @@
   margin: 10px;
   height: 50px;
   width: 250px;
+  
 }
 
+.nav-link.active {
+  border: 1px solid white !important;
+  background-color: #468b97 !important;
+  color: white !important;
+}
+
+
 .nav-link:hover {
-  border: 2px solid #468b97;
+
   color: #468b97;
 }
 
 .nav-link:not(.active) {
   background-color: transparent !important;
-  color: #468b97 !important;
+  color: white !important;
+}
+
+.nav-link:not(.active):hover {
+ border : 1px solid white;
+  color: white !important;
 }
 
 .tab-content {

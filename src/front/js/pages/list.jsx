@@ -89,7 +89,7 @@ const List = () => {
             aria-controls="pills-home"
             aria-selected="true"
           >
-            Films <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
+            Películas <PiFilmSlateLight style={{ height: "35px", width: "35px" }} />
           </button>
         </li>
 
