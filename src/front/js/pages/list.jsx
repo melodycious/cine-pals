@@ -19,6 +19,7 @@ const List = () => {
 
   const handleDelete = (list_id, id) => {
     actions.getEliminarPelicula(list_id, id);
+    actions.getEliminarSeries(list_id, id);
     console.log("borrar");
   };
 
@@ -213,7 +214,7 @@ const List = () => {
                       </span>
                       <div>
                         <AiOutlineDelete
-                          onClick={() => handleDelete(serie.id)}
+                          onClick={() => handleDelete(id, serie.id)}
                           className="garbage"
                         />
                         <ImInfo

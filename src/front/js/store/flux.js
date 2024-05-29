@@ -194,6 +194,31 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch((error) => console.log("error", error));
       },
       
+      getEliminarSeries: async (list_id, id) => {
+        
+        const requestOptions = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({ serie_id: id }),
+          redirect: "follow",
+        };
+      
+        await fetch(
+          `${process.env.BACKEND_URL}/api/lists/${list_id}/remove`,
+          requestOptions
+        )
+          .then((response) => {
+            if (response.status === 200) {
+              getActions().getTraerSeries(list_id);
+            }
+            return  response.json()})
+          .then((data) => console.log(data))
+          .catch((error) => console.log("error", error));
+      },
+      
 
        
 
