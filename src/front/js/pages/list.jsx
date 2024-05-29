@@ -154,7 +154,7 @@ const List = () => {
                       </span>
                       <div>
                         <AiOutlineDelete
-                          onClick={() => handleDelete(pelicula.id)}
+                          onClick={() => handleDelete(id, pelicula.id)}
                           className="garbage"
                         />
                         <ImInfo

@@ -46,7 +46,7 @@ const Profile = (props) => {
 
         const handleCreateList = () => {
             actions.getCrearLista(name);
-            actions.añadirParticipante(email);
+           /*  actions.getAñadirParticipante(id, email); */
         };
 
         const handleSaveChanges = () => {
@@ -90,13 +90,13 @@ const Profile = (props) => {
                                             onChange={(e) => setName(e.target.value)}
                                         />
                                     </div>
-                                    <div className="mb-3">
+                                    {/* <div className="mb-3">
                                         <label htmlFor="email" className="form-label">Participantes</label>
                                         <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}/>
                                         <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más? Introduce su email.</div>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
                             <div className="modal-footer">

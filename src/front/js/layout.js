@@ -50,9 +50,9 @@ const Layout = () => {
                         <Route element={<h1>Not found!</h1>} />
                         <Route path="/search" element={<Searcher />} />
                         <Route path="/movie/:id" element={<Movie />} /> 
-                        <Route path="/serie/:id" element={<SerieDetail />} />   
+                        <Route path="/serie/:id" element={<SerieDetail />} />            
                     </Routes>
-                    <Footer />
+                   {/* <Footer /> */}
                 </ScrollToTop>
             </BrowserRouter>
         </div>

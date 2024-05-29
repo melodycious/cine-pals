@@ -19,7 +19,7 @@ export const Home = () => {
   const lastMovies = store.latestMovies;
 
   return (
-    <div className="container text-center">
+    <div className="container text-center pooter">
     <div className="row landingback">
       <div className="col mt-4 mb-4">
         <h1>Comparte tus pelis y series</h1>
