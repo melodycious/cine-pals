@@ -255,13 +255,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(err => console.error(err));
   
     },
-    addMovieToList: (list_id, movieTitle) => {
+    addMovieToList: (list_id, movieTitle, overview, poster_path, release_date, tagline, runtime) => {
       const store = getStore();
-      const list = store.lista[list_id] || [];
-      list.push(movieTitle);
-      setStore({ listas: { ...store.listas, [list_id]: list } });
+      fetch(`${process.env.BACKEND_URL}/api/lists/${list_id}/add`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${store.token}`
+          },
+        body: JSON.stringify({movie:{ title: movieTitle, overview: overview, poster_path: poster_path, release_date: release_date, tagline: tagline, runtime: runtime }})
+         })
+          .then(response => response.json())
+          .then((response) => {
+            getActions().getTraerTodasLasListas();
+            console.log(response);
+          })
+          .catch(err => console.error(err));
     },
-
 
 getTraerUsuario: async () => {
         const store = getStore();

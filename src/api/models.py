@@ -49,12 +49,12 @@ class List(db.Model):
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     genres = db.Column(db.ARRAY(db.String), nullable=True)
-    title = db.Column(db.String(120), nullable=False)   
-    overview = db.Column(db.String(120), nullable=False)
+    title = db.Column(db.String(250), nullable=False)   
+    overview = db.Column(db.String(1500), nullable=False)
     poster_path = db.Column(db.String(120), nullable=False)
     release_date = db.Column(db.String(120), nullable=False)
     runtime = db.Column(db.Integer, nullable=False)
-    tagline = db.Column(db.Integer, nullable=False)
+    tagline = db.Column(db.String, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
 
     def __repr__(self):

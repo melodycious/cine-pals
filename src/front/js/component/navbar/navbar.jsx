@@ -32,7 +32,7 @@ export const Navbar = () => {
 							</form>
 							<div className="d-flex align-items-center">
 								<Link to={`/profile/${store.userId}`} className="btn btn-outline-success me-2">Mis Listas</Link>
-								<button className="btn btn-outline-success me-2" type="button" onClick={handleLogOut}>Cerrar sesión</button>
+								<button className="btn btn-outline-success me-2" type="button" onClick={() => handleLogOut()}>Cerrar sesión</button>
 							</div>
 						</div>
 					)

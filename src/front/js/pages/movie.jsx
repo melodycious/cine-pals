@@ -4,6 +4,7 @@ import { Context } from '../store/appContext.js';
 import './movie.css';
 import './modal.css';
 import { addMovieToList } from '../store/flux.js';
+import ListCard from '../component/listCard/listCard.jsx';
 
 const Movie = () => {
   const { store, actions } = useContext(Context);
@@ -19,10 +20,11 @@ const Movie = () => {
   }, [store.movie]);
 
   const handleAddToList = (list_id) => {
-    // Add functionality to add the movie to the selected list
-    actions.addMovieToList(list_id, store.movie.title);
+    console.log("movie", store.movie.title);
+    actions.addMovieToList(list_id, store.movie.title, store.movie.overview, store.movie.poster_path, store.movie.release_date, store.movie.tagline, store.movie.runtime);
+    console.log(store.listas);
     console.log(`Adding movie to list ${list_id}`);
-    setShowModal(false); // Close modal after adding to list
+    /* setShowModal(false); */ 
   };
   console.log("contenido de listas", store.usuario)
 
@@ -95,9 +97,13 @@ const Movie = () => {
                 <li onClick={() => handleAddToList(3)}>tengo que ver</li>
               </ul>  */}
               <ul>
-                {store.listasArray?.map(lista => (
-                  <li key={lista.id} onClick={() => handleAddToList(lista.id)}>{lista.name}</li>
-                ))}
+              {store.listas === null || store.listas?.length === 0 ? (
+                    <p className="empty">Aún no has añadido ninguna lista</p>
+                ) : (
+                    store.listas?.map((list, index) => (
+                      <li key={index} onClick={() => handleAddToList(list.id)}>{list.name}</li>
+                    ))
+                )}
               </ul>
             </div>
             <div className="modal-footer">
