@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import gifcinepals3 from "../../img/gifcinepals3.gif";
+import equipo from "../../img/equipo.png";
+import compartir from "../../img/compartir.png";
+import verificacion from "../../img/verificacion.png";
 import "../../styles/home.css";
-import { BoxArrowInRight, StarFill, ShareFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
 export const Home = () => {
@@ -35,15 +37,15 @@ export const Home = () => {
       <div className="container mt-3 mb-4">
         <div className="row">
           <div className="col-sm">
-            <p><BoxArrowInRight size={40} /></p>
+            <p><img width="50px" src={equipo} /></p>
             <h5>Únete y busca todas tus pelis y series favoritas</h5>
           </div>
           <div className="col-sm">
-            <p><StarFill size={40} /></p>
+            <p><img width="50px" src={verificacion} /></p>
             <h5>Crea tus listas, puedes crear todas las que quieras</h5>
           </div>
           <div className="col-sm">
-            <p><ShareFill size={40} /></p>
+            <p><img width="50px" src={compartir} /></p>
             <h5>Comparte tu lista para que puedan añadir más pelis y series</h5>
           </div>
         </div>
