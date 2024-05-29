@@ -116,7 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         };
         
-        fetch(`${process.env.BACKEND_URL}/api/lists/1`, options)
+        fetch(`${process.env.BACKEND_URL}/api/lists/${list_id}`, options)
           .then(response => response.json())
           .then((data) => setStore ({pelis: data.movies}))
           .catch(err => console.error(err));
