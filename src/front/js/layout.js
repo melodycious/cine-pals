@@ -22,20 +22,20 @@ const Layout = () => {
 
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
-    const{store, actions} = useContext(Context);
-
-    useEffect(() => {
+  const{store, actions} = useContext(Context); 
+ 
+   useEffect(() => {
         console.log(store.token);
-        console.log(store.userInfo)
-        if (!!store.token && !!store.userInfo){
+        console.log(store.userId)
+        if (!!store.token && !!store.userId){
             localStorage.setItem("token",store.token)
-            localStorage.setItem("userInfo",JSON.stringify(store.userInfo))
+            localStorage.setItem("userId",store.userId)
             return 
         }
-        if (localStorage.getItem("token") && localStorage.getItem("userInfo")){
-            actions.setSession(localStorage.getItem("token"), localStorage.getItem("userInfo"))
+        if (localStorage.getItem("token") && localStorage.getItem("userId")){
+            actions.setSession(localStorage.getItem("token"), localStorage.getItem("userId"))
         }
-    },[store.token, store.userInfo])
+    },[store.token, store.userId])
 
     return (
         <div>

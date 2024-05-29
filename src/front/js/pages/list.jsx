@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { ImInfo } from "react-icons/im";
 import { Context } from "../store/appContext";
 import { PiFilmSlateLight, PiTelevisionSimpleBold } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./list.css";
 import "animate.css";
 import PropTypes from "prop-types";
@@ -15,6 +15,7 @@ const List = () => {
   const [animationTriggers, setAnimationTriggers] = useState({});
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleDelete = (list_id, id) => {
     actions.getEliminarPelicula(list_id, id);
@@ -66,9 +67,8 @@ const List = () => {
   };
 
   useEffect(() => {
-    actions.getTraerPeliulas();
-    actions.getTraerSeries();
-    actions.getEliminarPelicula();
+    actions.getTraerPeliculas(id);
+    actions.getTraerSeries(id);
     actions.getTraerTitulo();
   }, []);
 

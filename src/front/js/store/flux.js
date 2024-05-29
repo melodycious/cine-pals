@@ -99,15 +99,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       },
 
-      setSession: (token,usuario) => {
+      setSession: (token,userId) => {
         const store = getStore()
-        setStore({...store, token, usuario:JSON.parse(usuario)})
+        setStore({...store, token, userId})
       },
 
 
       /* ESTE ES EL GET DE LAS PELICULAS */
 
-      getTraerPeliulas : async (list_id) => {
+      getTraerPeliculas : async (list_id) => {
         const options = {
           method: 'GET',
           headers: {
@@ -179,7 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
       
         await fetch(
-          `${process.env.BACKEND_URL}/lists/${list_id}/remove`,  // ha de estar el id de la pelicula que se quiere borrar?
+          `${process.env.BACKEND_URL}/lists/${list_id}/remove`,
           requestOptions
         )
           .then((response) => response.json())
@@ -278,7 +278,7 @@ getTraerUsuario: async () => {
         const store = getStore();
         console.log("Token en getTraerUsuario:", store.token);
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/users/${store.userId}`, {
+            const response = await fetch(`${process.env.BACKEND_URL}/api/users/${localStorage.getItem('userId')}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -301,7 +301,7 @@ getTraerUsuario: async () => {
     getTraerTodasLasListas: async () => {
       const store = getStore();
       try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/all/${store.userId}`, {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/lists/all/${localStorage.getItem('userId')}`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
