@@ -57,7 +57,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       /* ESTE ES EL LOGIN */
 
       getLogin: async (email, password) => {
-        console.log(email, password)
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
     
@@ -91,8 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       /* ESTE ES EL LOGOUT */
 
       getLogout: async (navigate, token) => {
-        console.log("Saliendo");
-        console.log(token);
+        
 
         setStore({ token: "" });
         localStorage.clear();
@@ -237,7 +235,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=es-ES&page=1', options);
           const result = await response.json();
           setStore({ latestMovies: result.results });
-          console.log(result);
         } catch (error) {
           console.error(error);
         }
@@ -348,7 +345,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 getTraerUsuario: async () => {
         const store = getStore();
-        console.log("Token en getTraerUsuario:", store.token);
         try {
             const response = await fetch(`${process.env.BACKEND_URL}/api/users/${localStorage.getItem('userId')}`, {
                 method: 'GET',
@@ -363,7 +359,6 @@ getTraerUsuario: async () => {
             }
     
             const data = await response.json();
-            console.log("Datos del usuario:", data);
             setStore({...store, userInfo: data });
         } catch (error) {
             console.error("Error al obtener el usuario", error);
@@ -385,7 +380,7 @@ getTraerUsuario: async () => {
           }
           const data = await response.json();
           setStore({ listas: data });
-          console.log(data);
+
       } catch (error) {
           console.error("Error al obtener las listas", error);
       }   
@@ -410,7 +405,7 @@ getTraerUsuario: async () => {
           const data = await response.json();
           setStore({ userInfo: data });
           getActions().getTraerUsuario();
-          console.log(data);
+        
       } catch (error) {
           console.error("Error al editar usuario", error);
       }
@@ -433,7 +428,6 @@ getTraerUsuario: async () => {
     
             const data = await response.json(data);
             setStore({ token: "", userId: ""});
-            console.log(store);
             navigate(`/`);
         } catch (error) {
             console.error("Error al eliminar el usuario", error);
@@ -486,9 +480,7 @@ getTraerUsuario: async () => {
     fetch(`${process.env.BACKEND_URL}/api/lists/${id}/add_user`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-            setStore({
-                listas: store.listas.map(lista => lista.id === id ? result.list : lista)
-            });
+           
             getActions().getTraerTodasLasListas();
         })
         .catch((error) => console.error(error));
@@ -497,7 +489,7 @@ getTraerUsuario: async () => {
   getEditarLista: async (id, name) => {
     const store = getStore();
     const token = store.token;
-    console.log(`Editing list with ID: ${id}`);
+    
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -539,7 +531,7 @@ getEliminarLista: async (id) => {
       setStore({ listas: updatedLists });
       getActions().getTraerTodasLasListas();
       const data = await response.json();
-      console.log('List deleted:', data);
+     
   } catch (error) {
       console.error('Error deleting list:', error);
   }
@@ -557,10 +549,10 @@ getEliminarLista: async (id) => {
           const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
           const data = await resp.json();
           setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
+
           return data;
         } catch (error) {
-          console.log("Error loading message from backend", error);
+         
         }
       },
       changeColor: (index, color) => {

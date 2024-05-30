@@ -25,8 +25,6 @@ const Layout = () => {
   const{store, actions} = useContext(Context); 
  
    useEffect(() => {
-        console.log(store.token);
-        console.log(store.userId)
         if (!!store.token && !!store.userId){
             localStorage.setItem("token",store.token)
             localStorage.setItem("userId",store.userId)

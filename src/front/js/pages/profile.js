@@ -59,7 +59,6 @@ const Profile = (props) => {
         };
         
         useEffect(() => {
-            console.log(store.userId);
           actions.getTraerUsuario();
           actions.getTraerTodasLasListas();
 
