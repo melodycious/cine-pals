@@ -22,13 +22,12 @@ const List = () => {
     actions.getEliminarSeries(list_id, id);
     console.log("borrar");
   };
-
-  const handleAnimation = (id) => {
+/* 
+ const handleAnimation = (id) => {
     setAnimationTriggers((prev) => ({
       ...prev,
       [id]: true,
-    }));
-
+    })); 
     setTimeout(() => {
       setAnimationTriggers((prev) => ({
         ...prev,
@@ -65,7 +64,7 @@ const List = () => {
       }
     });
     handleAnimation(id);
-  };
+  }; */
 
   useEffect(() => {
     actions.getTraerPeliculas(id);
@@ -130,7 +129,7 @@ const List = () => {
                   <div className="card-body">
                     <h5 className="card-title">{pelicula.title}</h5>
                     <div className="form_check">
-                      <div className="container_button">
+                      {/* <div className="container_button">
                         <button
                           onClick={() => restar(pelicula.id)}
                           className="contador"
@@ -152,14 +151,14 @@ const List = () => {
                         }`}
                       >
                         {contadores[pelicula.id] || 0}
-                      </span>
+                      </span> */}
                       <div>
                         <AiOutlineDelete
                           onClick={() => handleDelete(id, pelicula.id)}
                           className="garbage"
                         />
                         <ImInfo
-                          onClick={() => navigate("/movie")}
+                          onClick={() => navigate(`/movie/${pelicula.id}`)}
                           className="flecha"
                         />
                       </div>
@@ -218,7 +217,7 @@ const List = () => {
                           className="garbage"
                         />
                         <ImInfo
-                          onClick={() => navigate("/movie")}
+                          onClick={() => navigate(`/tv/${serie.id}`)}
                           className="flecha"
                         />
                       </div>
@@ -239,4 +238,3 @@ List.propTypes = {
 };
 
 export default List;
-
