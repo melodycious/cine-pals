@@ -22,7 +22,14 @@ const Movie = () => {
 
   const handleAddToList = (list_id) => {
     console.log("movie", store.movie.title);
-    actions.addMovieToList(list_id, store.movie.title, store.movie.overview, store.movie.poster_path, store.movie.release_date, store.movie.tagline, store.movie.runtime);
+    actions.addMovieToList(list_id,
+       store.movie.title, 
+       store.movie.overview, 
+       store.movie.poster_path, 
+       store.movie.release_date,
+        store.movie.tagline, 
+        store.movie.runtime,
+      store.movie.id);
     console.log(store.listas);
     console.log(`Adding movie to list ${list_id}`);
     /* setShowModal(false); */ 

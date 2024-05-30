@@ -22,13 +22,12 @@ const List = () => {
     actions.getEliminarSeries(list_id, id);
     console.log("borrar");
   };
-
-  const handleAnimation = (id) => {
+/* 
+ const handleAnimation = (id) => {
     setAnimationTriggers((prev) => ({
       ...prev,
       [id]: true,
-    }));
-
+    })); 
     setTimeout(() => {
       setAnimationTriggers((prev) => ({
         ...prev,
@@ -65,7 +64,7 @@ const List = () => {
       }
     });
     handleAnimation(id);
-  };
+  }; */
 
   useEffect(() => {
     actions.getTraerPeliculas(id);
@@ -130,7 +129,7 @@ const List = () => {
                   <div className="card-body">
                     <h5 className="card-title">{pelicula.title}</h5>
                     <div className="form_check">
-                      <div className="container_button">
+                      {/* <div className="container_button">
                         <button
                           onClick={() => restar(pelicula.id)}
                           className="contador"
@@ -152,14 +151,14 @@ const List = () => {
                         }`}
                       >
                         {contadores[pelicula.id] || 0}
-                      </span>
+                      </span> */}
                       <div>
                         <AiOutlineDelete
                           onClick={() => handleDelete(id, pelicula.id)}
                           className="garbage"
                         />
                         <ImInfo
-                          onClick={() => navigate("/movie")}
+                          onClick={() => navigate(`/movie/${pelicula.api_id}`)}
                           className="flecha"
                         />
                       </div>
@@ -179,7 +178,7 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>{store.name}</h2>
+            <h2 className="titulito">{store.name}</h2>
             <div className="row">
               {store.series?.map((serie) => (
                 <div key={serie.id} className="card">
@@ -191,7 +190,7 @@ const List = () => {
                   <div className="card-body">
                     <h5 className="card-title">{serie.name}</h5>
                     <div className="form_check">
-                      <div className="container_button">
+                     {/*  <div className="container_button">
                         <button
                           onClick={() => restar(serie.id)}
                           className="contador"
@@ -211,14 +210,14 @@ const List = () => {
                         }`}
                       >
                         {contadores[serie.id] || 0}
-                      </span>
-                      <div>
+                      </span> */}
+                      <div style={{display: 'flex', justifyContent: 'center'}}>
                         <AiOutlineDelete
                           onClick={() => handleDelete(id, serie.id)}
                           className="garbage"
                         />
                         <ImInfo
-                          onClick={() => navigate("/movie")}
+                          onClick={() => navigate(`/tv/${serie.api_id}`)}
                           className="flecha"
                         />
                       </div>
@@ -239,4 +238,3 @@ List.propTypes = {
 };
 
 export default List;
-

@@ -23,7 +23,7 @@ const SerieDetail = () => {
 
   const handleAddToList = (list_id) => {
     console.log("serie", store.serie.name);
-    actions.addSerieToList(list_id, store.serie.name, store.serie.overview, store.serie.poster_path, store.serie.first_air_date);
+    actions.addSerieToList(list_id, store.serie.name, store.serie.overview, store.serie.poster_path, store.serie.first_air_date, store.serie.id);
     console.log(store.listas);
     console.log(`Adding serie to list ${list_id}`);
     /* setShowModal(false); */ 
