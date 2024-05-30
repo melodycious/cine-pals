@@ -5,6 +5,7 @@ import './movie.css';
 import './modal.css';
 import { addMovieToList } from '../store/flux.js';
 import ListCard from '../component/listCard/listCard.jsx';
+import Swal from "sweetalert2";
 
 const Movie = () => {
   const { store, actions } = useContext(Context);
@@ -25,6 +26,15 @@ const Movie = () => {
     console.log(store.listas);
     console.log(`Adding movie to list ${list_id}`);
     /* setShowModal(false); */ 
+  };
+  const handleAlert = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Ya se ha añadido a tus listas, ole tu!!! ",
+      showConfirmButton: false,
+      timer: 2000,
+    });
   };
   console.log("contenido de listas", store.usuario)
 
@@ -84,17 +94,12 @@ const Movie = () => {
               </button>
             </div>
             <div className="modal-body">
-               {/* <ul>
-                <li onClick={() => handleAddToList(1)}>Equipo de bolos</li>
-                <li onClick={() => handleAddToList(2)}>Para reir</li>
-                <li onClick={() => handleAddToList(3)}>tengo que ver</li>
-              </ul>  */}
               <ul>
               {store.listas === null || store.listas?.length === 0 ? (
                     <p className="empty">Aún no has añadido ninguna lista</p>
                 ) : (
                     store.listas?.map((list, index) => (
-                      <li key={index} onClick={() => handleAddToList(list.id)}>{list.name}</li>
+                      <li key={index} onClick={() =>{ handleAddToList(list.id);handleAlert();}}>{list.name}</li>
                     ))
                 )}
               </ul>

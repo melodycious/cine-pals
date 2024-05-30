@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './modal.css';
 import './movie.css';
 import { addSerieToList } from '../store/flux.js';
+import Swal from "sweetalert2";
 
 
 const SerieDetail = () => {
@@ -27,12 +28,22 @@ const SerieDetail = () => {
     console.log(`Adding serie to list ${list_id}`);
     /* setShowModal(false); */ 
   };
+  const handleAlert = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Ya se ha añadido a tus listas, ole tu!!! ",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
   console.log("contenido de listas", store.usuario)
 
   // Renderización condicional
   if (!store.serie || Object.keys(store.serie).length === 0) {
     return <div>Loading...</div>;
   }
+  console.log(handleAlert);
 
   return (
     <div className="container1">
@@ -81,15 +92,17 @@ const SerieDetail = () => {
               </button>
             </div>
             <div className="modal-body">
-              <ul>
-              {store.listas === null || store.listas?.length === 0 ? (
-                    <p className="empty">Aún no has añadido ninguna lista</p>
-                ) : (
-                    store.listas?.map((list, index) => (
-                      <li key={index} onClick={() => handleAddToList(list.id)}>{list.name}</li>
-                    ))
-                )}
-              </ul>
+            <ul>
+  {store.listas === null || store.listas?.length === 0 ? (
+    <p className="empty">Aún no has añadido ninguna lista</p>
+  ) : (
+    store.listas?.map((list, index) => (
+      <li key={index} onClick={() => { handleAddToList(list.id); handleAlert(); }}>{list.name}</li>
+    ))
+  )}
+</ul>
+
+
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
