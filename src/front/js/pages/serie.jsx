@@ -44,15 +44,20 @@ const SerieDetail = () => {
             alt="Poster"
           />
         </div>
-        <div className="col-md-8 text-center">
+        <div className="col-md-8">
           <div className='ContainerSerie'>
-          <h4 className='card-title border border-top-0'>&#8212;{store.serie.name}&#8212;</h4>
-          <p className="card-text">:diamante_naranja_pequeño:{store.serie.overview}</p>
-          <p><strong>:diamante_naranja_pequeño:Número de temporadas: </strong>{store.serie.number_of_seasons}</p>
-          <p><strong>:diamante_naranja_pequeño:Fecha de Estreno:</strong>{store.serie.first_air_date}</p>
-          <div className='col-md-12'>
+          <h4 className='card-title border border-top-0'>🔹{store.serie.name}🔹</h4>
+          <p className="card-text">{store.serie.overview}</p>
+          <br/>
+          <div className='container2'>
+          <p className="card-text"><strong>🔹Número de temporadas: </strong>{store.serie.number_of_seasons}</p>
+          <p className="card-text"><strong>🔹Numero de Episodios:</strong>{store.serie.number_of_episodes}</p>
+          <p className="card-text"><strong>🔹Fecha de Estreno:</strong>{store.serie.first_air_date}</p>
+          </div>
+          <br/>
+          
           <div className="btn-group">
-            <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mi listas, ya!</button>
+            <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mis listas!</button>
             <br />
             <Link to="/">
               <button className="btn btn-info btn-sm">
@@ -60,7 +65,7 @@ const SerieDetail = () => {
               </button>
             </Link>
           </div>
-        </div>
+        {/* </div> */}
         </div>
         </div>
         <div className='col-md-12'>

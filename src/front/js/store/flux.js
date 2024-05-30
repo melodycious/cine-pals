@@ -241,7 +241,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
     
-    // prueba para buscador, busca pelis y series en la BBDD de la api
+    // Busca pelis y series en la BBDD de la api
 
     
       getAllMoviesSeries: async (query) => {
@@ -265,7 +265,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
 
-      // pruebas codigo Lucia// PAGE movie//
+      // Page Movie /  Series //
 
       getMovie: async (id) => { 
         const options = {

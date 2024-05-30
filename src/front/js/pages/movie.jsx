@@ -44,31 +44,24 @@ const Movie = () => {
           />
         </div>
         <div className="col-md-8">
-          <div className="card-body">
-            <h4 className="card-title border border-top-0">&#8212;  {store.movie.title}  &#8212;</h4>
+          <div className="ContainerSerie">
+            <h4 className="card-title border border-top-0">🔹 {store.movie.title}🔹</h4>
             <p className="card-text">
-              overview: {store.movie.overview}
+               {store.movie.overview}
             </p>
 
             <br />
             <div className="container2">
-              <span>🔸</span>
-              <span>
-                <p><strong>Genero:</strong> {store.movie.genres.map(genre => genre.name).join(', ') }</p>
-              </span>
-              <span>🔸</span>
-              <span>
-                <p><strong>Duracion:</strong> {store.movie.runtime}</p>
-              </span>
-              <span>🔸</span>
-              <span>
-                <p><strong>Fecha de Estreno:</strong> {store.movie.release_date}</p>
-              </span>
+                <p className="card-text"><strong>🔹Genero:</strong> {store.movie.genres.map(genre => genre.name).join(', ') }</p>
+              
+                <p className="card-text"><strong>🔹Duracion:</strong> {store.movie.runtime}</p>
+              
+                <p className="card-text"><strong>🔹Fecha de Estreno:</strong> {store.movie.release_date}</p>
             </div>
             <br />
 
             <div className="btn-group">
-              <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mi listas, ya!</button>
+              <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mis listas!</button>
               <br />
               <Link to="/">
                 <button className="btn btn-info btn-sm">
