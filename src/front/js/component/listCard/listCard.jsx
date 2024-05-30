@@ -67,7 +67,7 @@ const ListCard = (props) => {
                                         <input type="email" className="form-control" id="email" placeholder="elemaildetuhermana@gmail.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}/>
-                                        <div id="emailHelp" className="form-text">¿Quieres compartir la lista con alguien más? Introduce su email.</div>
+                                        <div id="emailHelp" className="form-text añadirParticipante">¿Quieres compartir la lista con alguien más? Introduce su email.</div>
                                     </div>
                         </form>
                         </div>
