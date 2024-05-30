@@ -118,7 +118,7 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>{store.name}</h2>
+            <h2 className="titulo_lista_peliculas">{store.name}</h2>
             <div className="row">
               {store.pelis?.map((pelicula) => (
                 <div key={pelicula.id} className="card">
