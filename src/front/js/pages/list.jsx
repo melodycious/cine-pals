@@ -158,7 +158,7 @@ const List = () => {
                           className="garbage"
                         />
                         <ImInfo
-                          onClick={() => navigate(`/movie/${pelicula.id}`)}
+                          onClick={() => navigate(`/movie/${pelicula.api_id}`)}
                           className="flecha"
                         />
                       </div>
@@ -178,7 +178,7 @@ const List = () => {
           tabIndex="0"
         >
           <div className="container-fluid">
-            <h2>{store.name}</h2>
+            <h2 className="titulito">{store.name}</h2>
             <div className="row">
               {store.series?.map((serie) => (
                 <div key={serie.id} className="card">
@@ -217,7 +217,7 @@ const List = () => {
                           className="garbage"
                         />
                         <ImInfo
-                          onClick={() => navigate(`/tv/${serie.id}`)}
+                          onClick={() => navigate(`/tv/${serie.api_id}`)}
                           className="flecha"
                         />
                       </div>

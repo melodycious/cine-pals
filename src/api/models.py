@@ -56,6 +56,7 @@ class Movie(db.Model):
     runtime = db.Column(db.Integer, nullable=False)
     tagline = db.Column(db.String, nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
+    api_id = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         return f'<Movie {self.title}>'
@@ -69,7 +70,8 @@ class Movie(db.Model):
             "poster_path": self.poster_path,
             "release_date": self.release_date,
             "runtime": self.runtime,
-            "tagline": self.tagline
+            "tagline": self.tagline,
+            "api_id": self.api_id,
         }
 
 class Serie(db.Model):
@@ -85,6 +87,7 @@ class Serie(db.Model):
     status = db.Column(db.String(120), nullable=True)
     network = db.Column(db.ARRAY(db.String), nullable=True)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
+    api_id = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):    
         return f'<Serie {self.name}>'
@@ -101,5 +104,6 @@ class Serie(db.Model):
             "number_of_episodes": self.number_of_episodes,
             "number_of_seasons": self.number_of_seasons,
             "status": self.status,
-            "network": self.network
+            "network": self.network,
+            "api_id": self.api_id,
         }

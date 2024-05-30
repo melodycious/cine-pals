@@ -208,6 +208,7 @@ def add_movie_to_list(list_id):
             release_date=movie_data['release_date'],
             runtime=movie_data['runtime'],
             tagline=movie_data['tagline'],
+            api_id=movie_data['api_id'],
             list_id=list_id
         )
         db.session.add(new_movie)
@@ -223,6 +224,7 @@ def add_movie_to_list(list_id):
             overview=serie_data['overview'],
             poster_path=serie_data['poster_path'],
             first_air_date=serie_data['first_air_date'],
+            api_id=serie_data['api_id'],
             list_id=list_id
         )
         db.session.add(new_serie)

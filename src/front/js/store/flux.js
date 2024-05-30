@@ -281,6 +281,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((response) => {
             setStore({ movie: response });
             console.log(response);
+            console.log(getStore().movie);
           })
           .catch(err => console.error(err));
   
@@ -305,7 +306,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   },
 
 
-    addMovieToList: (list_id, movieTitle, overview, poster_path, release_date, tagline, runtime) => {
+    addMovieToList: (list_id, movieTitle, overview, poster_path, release_date, tagline, runtime, api_id) => {
       const store = getStore();
       fetch(`${process.env.BACKEND_URL}/api/lists/${list_id}/add`,
         {
@@ -314,7 +315,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${store.token}`
           },
-        body: JSON.stringify({movie:{ title: movieTitle, overview: overview, poster_path: poster_path, release_date: release_date, tagline: tagline, runtime: runtime }})
+        body: JSON.stringify({movie:
+          { title: movieTitle,
+             overview: overview, 
+             poster_path: poster_path,
+              release_date: release_date, 
+              tagline: tagline,
+              runtime: runtime,
+              api_id: api_id}})
          })
           .then(response => response.json())
           .then((response) => {
@@ -324,7 +332,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(err => console.error(err));
     },
 
-    addSerieToList: (list_id, name, overview, poster_path, first_air_date) => {
+    addSerieToList: (list_id, name, overview, poster_path, first_air_date, api_id) => {
       const store = getStore();
       fetch(`${process.env.BACKEND_URL}/api/lists/${list_id}/add`,
         {
@@ -333,7 +341,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${store.token}`
           },
-        body: JSON.stringify({serie:{ name: name, overview: overview, poster_path: poster_path, first_air_date: first_air_date}})
+        body: JSON.stringify({serie:
+          { name: name,
+             overview: overview,
+              poster_path: poster_path,
+               first_air_date: first_air_date,
+                api_id: api_id}})
          })
           .then(response => response.json())
           .then((response) => {
