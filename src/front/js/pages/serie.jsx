@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './modal.css';
 import './movie.css';
 import { addSerieToList } from '../store/flux.js';
+import Swal from "sweetalert2";
 
 
 const SerieDetail = () => {
@@ -27,12 +28,22 @@ const SerieDetail = () => {
     console.log(`Adding serie to list ${list_id}`);
     /* setShowModal(false); */ 
   };
+  const handleAlert = () => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Ya se ha añadido a tus listas, ole tu!!! ",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
   console.log("contenido de listas", store.usuario)
 
   // Renderización condicional
   if (!store.serie || Object.keys(store.serie).length === 0) {
     return <div>Loading...</div>;
   }
+  console.log(handleAlert);
 
   return (
     <div className="container1">
@@ -44,15 +55,20 @@ const SerieDetail = () => {
             alt="Poster"
           />
         </div>
-        <div className="col-md-8 text-center">
+        <div className="col-md-8">
           <div className='ContainerSerie'>
-          <h4 className='card-title border border-top-0'>&#8212;{store.serie.name}&#8212;</h4>
-          <p className="card-text">:diamante_naranja_pequeño:{store.serie.overview}</p>
-          <p><strong>:diamante_naranja_pequeño:Número de temporadas: </strong>{store.serie.number_of_seasons}</p>
-          <p><strong>:diamante_naranja_pequeño:Fecha de Estreno:</strong>{store.serie.first_air_date}</p>
-          <div className='col-md-12'>
+          <h4 className='card-title border border-top-0'>🔹{store.serie.name}🔹</h4>
+          <p className="card-text">{store.serie.overview}</p>
+          <br/>
+          <div className='container2'>
+          <p className="card-text"><strong>🔹Número de temporadas: </strong>{store.serie.number_of_seasons}</p>
+          <p className="card-text"><strong>🔹Numero de Episodios:</strong>{store.serie.number_of_episodes}</p>
+          <p className="card-text"><strong>🔹Fecha de Estreno:</strong>{store.serie.first_air_date}</p>
+          </div>
+          <br/>
+          
           <div className="btn-group">
-            <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mi listas, ya!</button>
+            <button id="openModalBtn" className="btn btn-info rounded" onClick={() => setShowModal(true)}>Guardar en mis listas!</button>
             <br />
             <Link to="/">
               <button className="btn btn-info btn-sm">
@@ -60,7 +76,7 @@ const SerieDetail = () => {
               </button>
             </Link>
           </div>
-        </div>
+        {/* </div> */}
         </div>
         </div>
         <div className='col-md-12'>
@@ -76,15 +92,17 @@ const SerieDetail = () => {
               </button>
             </div>
             <div className="modal-body">
-              <ul>
-              {store.listas === null || store.listas?.length === 0 ? (
-                    <p className="empty">Aún no has añadido ninguna lista</p>
-                ) : (
-                    store.listas?.map((list, index) => (
-                      <li key={index} onClick={() => handleAddToList(list.id)}>{list.name}</li>
-                    ))
-                )}
-              </ul>
+            <ul>
+  {store.listas === null || store.listas?.length === 0 ? (
+    <p className="empty">Aún no has añadido ninguna lista</p>
+  ) : (
+    store.listas?.map((list, index) => (
+      <li key={index} onClick={() => { handleAddToList(list.id); handleAlert(); }}>{list.name}</li>
+    ))
+  )}
+</ul>
+
+
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
