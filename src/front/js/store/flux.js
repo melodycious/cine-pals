@@ -486,9 +486,7 @@ getTraerUsuario: async () => {
     fetch(`${process.env.BACKEND_URL}/api/lists/${id}/add_user`, requestOptions)
         .then((response) => response.json())
         .then((result) => {
-            setStore({
-                listas: store.listas.map(lista => lista.id === id ? result.list : lista)
-            });
+           
             getActions().getTraerTodasLasListas();
         })
         .catch((error) => console.error(error));

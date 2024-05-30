@@ -17,6 +17,7 @@ const ListCard = (props) => {
     }
     if (email.length > 0) {
       actions.getAñadirParticipante(props.id, email);
+      setTimeout(() => {return}, 2000);
     }
   };
 
@@ -36,7 +37,7 @@ const ListCard = (props) => {
               Películas ({movieCount}) <br></br> Series ({seriesCount})
             </p>
             <div className="d-grid gap-2 d-md-block">
-            <button type="button" className="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+            <button type="button" className="btn btn-primary btn-sm m-1" data-bs-toggle="modal" data-bs-target={`#exampleModal${props.id}`} >
               Editar
             </button>
             <button className="deleteButton btn btn-primary btn-sm m-1" type="button" onClick={handleDeleteList}>
@@ -46,7 +47,7 @@ const ListCard = (props) => {
                   
           </div> 
         </div>
-        <div className="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id={`exampleModal${props.id}`} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
