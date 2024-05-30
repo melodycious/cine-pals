@@ -190,7 +190,7 @@ const List = () => {
                   <div className="card-body">
                     <h5 className="card-title">{serie.name}</h5>
                     <div className="form_check">
-                      <div className="container_button">
+                     {/*  <div className="container_button">
                         <button
                           onClick={() => restar(serie.id)}
                           className="contador"
@@ -210,8 +210,8 @@ const List = () => {
                         }`}
                       >
                         {contadores[serie.id] || 0}
-                      </span>
-                      <div>
+                      </span> */}
+                      <div style={{display: 'flex', justifyContent: 'center'}}>
                         <AiOutlineDelete
                           onClick={() => handleDelete(id, serie.id)}
                           className="garbage"
