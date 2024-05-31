@@ -106,7 +106,7 @@ const Movie = () => {
                     <p className="empty">Aún no has añadido ninguna lista</p>
                 ) : (
                     store.listas?.map((list, index) => (
-                      <li key={index} onClick={() =>{ handleAddToList(list.id);handleAlert();}}>{list.name}</li>
+                      <li key={index} onClick={() =>{ handleAddToList(list.id);handleAlert();setShowModal(false);}}>{list.name}</li>
                     ))
                 )}
               </ul>
